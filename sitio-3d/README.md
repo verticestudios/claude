@@ -31,5 +31,6 @@ npx serve sitio-3d
 - Títulos y créditos de cada caso (salen de los nombres de archivo).
 - Permiso de uso con marca de los trabajos para clientes.
 - Texto de la nota de highlights y párrafos de cada caso: hoy son marcadores entre corchetes.
-- Que los videos de highlights usados (Adlatina y Marketers) sean los de Octubre.
+- Que los videos de highlights usados (Adlatina y Marketers) sean los de Octubre: los archivos de la carpeta parecen de agosto.
+- Los párrafos de los casos son una propuesta redactada: validar datos y cifras.
 - Ícono de Live streaming: no está en el brand board, se dibujó en el mismo estilo.

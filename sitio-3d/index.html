@@ -63,6 +63,7 @@ main,footer{position:relative;z-index:1}
 .soc a:hover{background:var(--lima);color:var(--negro);box-shadow:none}
 .soc svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .soc circle[r=".6"]{fill:currentColor}
+.wa{min-height:40px;padding:0 18px;font-size:11px;gap:10px}.wa svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:860px){.nav{gap:14px}.nav ul{display:none}.nav .soc{margin-left:auto}}
 
 /* hero */
@@ -70,6 +71,7 @@ main,footer{position:relative;z-index:1}
 .hero .top{display:flex;flex-direction:column;gap:10px;max-width:620px}
 .hero h1{color:var(--blanco);font-size:clamp(50px,9vw,172px)}
 .hero h1 span{display:block;overflow:hidden}
+.hero h1 span:nth-child(2){color:var(--negro)}
 .hero h1 b{display:block;font-weight:inherit;animation:rise .9s var(--ease) both}
 .hero h1 span:nth-child(2) b{animation-delay:.12s}
 @keyframes rise{from{transform:translateY(105%)}to{transform:none}}
@@ -166,7 +168,7 @@ main,footer{position:relative;z-index:1}
 @media (max-width:760px){.svc li{grid-template-columns:auto minmax(0,1fr)}.svc .ic{width:44px;height:44px}.svc p{grid-column:2}.svc .ar{display:none}.svc h3 small{display:block;margin:6px 0 0;vertical-align:0}}
 
 /* método: ascenso a la cumbre */
-.met{background:var(--carbon);color:var(--blanco);padding-block:clamp(72px,10vw,150px) clamp(64px,8vw,120px)}
+.met{background:transparent;color:var(--blanco);padding-block:clamp(72px,10vw,150px) clamp(64px,8vw,120px)}
 .met .sec-head h2{color:var(--blanco)}
 .met .sec-head h2 em{font-style:normal;color:var(--rojo)}
 .met .sec-head p{color:var(--gris-claro);font-weight:400}
@@ -177,7 +179,7 @@ main,footer{position:relative;z-index:1}
 .route-on{fill:none;stroke:var(--lima);stroke-width:3;stroke-linecap:round;opacity:0;transition:stroke-dashoffset 1.1s var(--ease)}
 .climb.js .route-on{opacity:1}
 .node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;z-index:3;color:var(--blanco)}
-.node .ic{position:relative;width:clamp(44px,4.6vw,68px);height:clamp(44px,4.6vw,68px);background:var(--c);color:var(--negro);box-shadow:0 0 0 6px var(--carbon);transition:transform .5s var(--ease),opacity .4s,filter .4s}
+.node .ic{position:relative;width:clamp(44px,4.6vw,68px);height:clamp(44px,4.6vw,68px);background:var(--c);color:var(--negro);box-shadow:0 0 0 6px var(--negro);transition:transform .5s var(--ease),opacity .4s,filter .4s}
 .node .ic::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--c);opacity:0}
 .node b{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(20px,2.2vw,34px);line-height:1;position:absolute;left:calc(100% + 12px);white-space:nowrap;transition:opacity .4s,color .4s}
 .node:hover .ic,.node:focus-visible .ic{transform:scale(1.1)}
@@ -229,7 +231,12 @@ main,footer{position:relative;z-index:1}
 .nw:hover .more{color:var(--rojo-texto)}
 .nw-a{grid-column:span 8}.nw-a .media{aspect-ratio:16/9}.nw-a h3{font-size:clamp(34px,4.4vw,68px)}
 .nw-b{grid-column:span 4}.nw-b .media{aspect-ratio:4/5}
-.nw-s{grid-column:span 4}.nw-s .media{aspect-ratio:4/3}
+.nw-s{grid-column:span 3}.nw-s .media{aspect-ratio:4/3}
+.nw-c{background:var(--negro);color:var(--blanco);border-radius:8px;padding:clamp(20px,2vw,30px);justify-content:space-between}
+.nw-c .meta{color:var(--lima)}.nw-c p{color:var(--gris-claro)}.nw-c h3,.nw-c .more{color:var(--blanco)}.nw-c:hover .more{color:var(--lima)}
+.nw .fig{font-family:var(--display);font-weight:600;font-size:clamp(56px,5.4vw,88px);line-height:.86;color:var(--rojo);max-width:none;white-space:nowrap}
+.nw-s h3{font-size:clamp(24px,2.1vw,32px)}
+@media (max-width:1100px){.nw-s{grid-column:span 6}}
 @media (max-width:900px){.nw-a,.nw-b,.nw-s{grid-column:1/-1}.nw-b .media{aspect-ratio:4/3}.nw-b .media img{object-position:50% 20%}}
 .vlog-all{margin-top:clamp(36px,5vw,64px)}
 
@@ -287,7 +294,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <p class="lead plate">No hacemos publicidad tradicional, hacemos contenido relevante y que convierte.</p>
     <div class="cta">
       <a class="btn btn-k" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Hablemos <i>→</i></a>
-      <button class="btn btn-o" id="playReel">Ver el reel con sonido <i>▶</i></button>
+      <a class="btn btn-o" href="blog/reel.html">Ver el reel con sonido <i>▶</i></a>
     </div>
   </div>
 </section>
@@ -332,13 +339,13 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <div class="head">
       <h2 class="tg">Casos</h2>
       <ol class="works" id="works">
-        <li><button data-id="aftermovie" data-t="After Movie" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
-        <li><button data-id="vecinos" data-t="Vecinos Felices" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
-        <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
-        <li><button data-id="verduras" data-t="Save The Verduras" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
-        <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
-        <li><button data-id="auren" data-v="1" data-t="Auren+" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
-        <li><button data-id="soyrada" data-t="Soy Rada Show" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
+        <li><button data-id="aftermovie" data-t="After Movie" data-d="El evento no termina cuando se apagan las luces. Este after movie condensa [nombre del evento] en un video con ritmo y emoción: el escenario, los protagonistas y la energía de la sala, listo para volver a compartirse en redes." data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
+        <li><button data-id="vecinos" data-t="Vecinos Felices" data-d="Una campaña de Prime contada como una serie de situaciones de consorcio: avisos en el ascensor, vecinos y notas pegadas en la puerta. Con humor y un tono cercano, convirtió un tema delicado en conversación, y la pieza cierra con un +9% en ventas." data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
+        <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-d="Promo de estreno de Bake Off Famosos Argentina para Telefe: una cocina en plena explosión, celebridades al límite y el humor del programa condensado en una pieza de pocos segundos, pensada para generar expectativa antes de la primera emisión." data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
+        <li><button data-id="verduras" data-t="Save The Verduras" data-d="Cada año, miles de personas usan objetos del hogar para explorar su sexualidad, y eso puede terminar en un riesgo real para la salud. Para Prime, una campaña de concientización en «modo protesta»: humor, verduras como protagonistas y un mensaje claro, ¡hoy decimos basta!" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
+        <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-d="Cuando Di María anunció su retiro de la Selección tras la Copa América 2024, Coca-Cola convirtió el momento en una acción de marca en el Obelisco. El caso reúne la pantalla en vivo y la conversación que generó: +3M de impactos orgánicos y +70k asistentes." data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
+        <li><button data-id="auren" data-v="1" data-t="Auren+" data-d="Para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini, produjimos fotografía de producto, contenido lifestyle y piezas verticales para redes y e-commerce. Una gota de sérum dice más que un cuadro de ingredientes." data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
+        <li><button data-id="soyrada" data-t="Soy Rada Show" data-d="Promo de lanzamiento de Soy Rada Show, el nuevo programa de Telefe que se emite los miércoles a las 19 hs. Un camarín, un personaje y mucho humor para presentar el show en pocos segundos y dejar ganas de verlo." data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
       </ol>
     </div>
     <button class="hit" id="hit" aria-label="Ver el caso del centro"></button>
@@ -348,7 +355,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
         <h3 class="tg" id="capT">After Movie</h3>
         <span class="nx c" id="capC">Eventos</span>
       </div>
-      <p class="desc" id="capD">[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]</p>
+      <p class="desc" id="capD">El evento no termina cuando se apagan las luces. Este after movie condensa [nombre del evento] en un video con ritmo y emoción: el escenario, los protagonistas y la energía de la sala, listo para volver a compartirse en redes.</p>
       <div class="ctl">
         <button class="rnd" id="prev" aria-label="Caso anterior">←</button>
         <button class="rnd" id="next" aria-label="Caso siguiente">→</button>
@@ -392,8 +399,8 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <div class="climb" id="climb">
       <div class="art" id="art">
         <svg id="climbSvg" viewBox="0 0 520 510" preserveAspectRatio="none" aria-hidden="true">
-          <polygon id="mtn" fill="#1f1f1f" points="0,507 52,419 91,367 112,345 145,321 240,276 305,229 367,165 427,75 443,60 452,60 465,68 520,116 520,510 0,510"></polygon>
-          <polygon id="ridge" fill="#2a2a2a" points="427,75 443,60 452,60 465,68 520,116 520,180 470,130 452,100 440,112"></polygon>
+          <polygon id="mtn" fill="rgba(0,0,0,.55)" points="0,507 52,419 91,367 112,345 145,321 240,276 305,229 367,165 427,75 443,60 452,60 465,68 520,116 520,510 0,510"></polygon>
+          <polygon id="ridge" fill="rgba(255,255,255,.07)" points="427,75 443,60 452,60 465,68 520,116 520,180 470,130 452,100 440,112"></polygon>
           <polyline id="route" class="route" points="0,507 60,408 170,309 280,247 380,145 447,60"></polyline>
           <polyline id="routeOn" class="route-on" points="0,507 60,408 170,309 280,247 380,145 447,60"></polyline>
         </svg>
@@ -425,11 +432,12 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     </div>
     <div class="news">
       <!--VLOG-->
-      <article class="nw nw-a"><div class="media"><video src="assets/video/vlog-festival.mp4" poster="assets/video/vlog-festival.jpg" muted loop playsinline preload="none" data-auto aria-label="Adlatina Highlights, adelanto"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Episodio</span></div><span class="nx meta">Lanzamiento · Contenido · Octubre 2026</span><h3>Los highlights de Octubre para Adlatina y Marketers</h3><p>Lanzamos los highlights de Octubre para Adlatina y Marketers. Mirá el episodio completo.</p><a class="more" href="blog/highlights-octubre.html">Ver episodio →</a></article>
-      <article class="nw nw-b"><div class="media"><img src="assets/blog/effie-jurado.jpg" alt="Premios Effie Argentina" loading="lazy"><span class="nx tag">Nota · Foto</span></div><span class="nx meta">Reconocimiento · Industria · Octubre 2026</span><h3>Hernán Sampó integra el jurado Effie Awards Argentina 2026</h3><p>El founder de Vértice fue convocado como jurado de los Effie Awards Argentina, el certamen de referencia del marketing efectivo en el país.</p><a class="more" href="blog/effie-jurado-2026.html">Leer la nota →</a></article>
-      <article class="nw nw-s"><div class="media"><img src="assets/blog/streaming.jpg" alt="Producción de streaming en vivo" loading="lazy"><span class="nx tag">Nota</span></div><span class="nx meta">Nuevos servicios · Producción · Agosto 2026</span><h3>Vértice lanza su servicio de producción de streaming en vivo para marcas</h3><p>Vértice suma la producción técnica y estratégica de transmisiones en vivo como servicio para marcas. Lanzamientos, eventos corporativos y activaciones en tiempo real con calidad broadcast.</p><a class="more" href="blog/streaming-marcas.html">Leer la nota →</a></article>
-      <article class="nw nw-s"><div class="media"><img src="assets/blog/auren.jpg" alt="Línea Auren+ de Laboratorios Ferrini" loading="lazy"><span class="nx tag">Nota</span></div><span class="nx meta">Producción · Branding · Junio 2026</span><h3>Vértice produce el lanzamiento visual de Auren+, la nueva línea de Laboratorios Ferrini</h3><p>Vértice desarrolla la producción completa de fotografía y video para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini. Contenido para e-commerce, redes sociales y comunicación de marca.</p><a class="more" href="blog/auren-plus.html">Leer la nota →</a></article>
-      <article class="nw nw-s"><div class="media"><img src="assets/blog/ferrini.jpg" alt="Sapolán Ferrini: es cuestión de piel" loading="lazy" style="object-position:50% 35%"><span class="nx tag">Nota</span></div><span class="nx meta">Creatividad · Campaña · Mayo 2026</span><h3>&quot;Es cuestión de piel&quot;: el concepto creativo que Vértice desarrolló para Sapolán Ferrini</h3><p>Vértice crea el territorio de marca y el concepto &#x27;Es cuestión de piel&#x27; para Sapolán Ferrini. Una campaña que convierte un producto genérico en una historia de identidad.</p><a class="more" href="blog/ferrini-cuestion-de-piel.html">Leer la nota →</a></article>
+      <article class="nw nw-a"><div class="media"><video src="assets/video/vlog-festival.mp4" poster="assets/video/vlog-festival.jpg" muted loop playsinline preload="none" data-auto aria-label="Adlatina Highlights, adelanto"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Episodio</span></div><span class="nx meta">Lanzamiento · Contenido · Noviembre 2026</span><h3>Los highlights de Octubre para Adlatina y Marketers</h3><p>Lanzamos los highlights de Octubre para Adlatina y Marketers by Adlatina: lo más importante del mes para la industria, en video.</p><a class="more" href="blog/highlights-octubre.html">Ver episodio →</a></article>
+      <article class="nw nw-b"><div class="media"><img src="assets/blog/effie-jurado.jpg" alt="Premios Effie Argentina" loading="lazy"><span class="nx tag">Nota · Foto</span></div><span class="nx meta">Reconocimiento · Industria · Octubre 2026</span><h3>Hernán Sampó integra el jurado de los Effie Argentina 2026</h3><p>El founder de Vértice fue convocado como jurado de los Effie Awards Argentina, el certamen de referencia del marketing efectivo en el país.</p><a class="more" href="blog/effie-jurado-2026.html">Leer la nota →</a></article>
+      <article class="nw nw-s nw-c"><span class="nx meta">Dato · [Fecha]</span><p class="fig">[00]%</p><h3>El dato que cambia cómo planificamos</h3><p>Una cifra con fuente y qué hacer con ella el lunes. Nota editorial, sin video.</p><a class="more" href="blog/dato.html">Leer la nota →</a></article>
+      <article class="nw nw-s"><div class="media"><img src="assets/blog/streaming.jpg" alt="Producción de streaming en vivo" loading="lazy"><span class="nx tag">Nota</span></div><span class="nx meta">Nuevos servicios · Producción · Agosto 2026</span><h3>Vértice lanza su servicio de streaming en vivo para marcas</h3><p>Vértice suma la producción técnica y estratégica de transmisiones en vivo como servicio para marcas.</p><a class="more" href="blog/streaming-marcas.html">Leer la nota →</a></article>
+      <article class="nw nw-s"><div class="media"><img src="assets/blog/auren.jpg" alt="Línea Auren+ de Laboratorios Ferrini" loading="lazy"><span class="nx tag">Nota</span></div><span class="nx meta">Producción · Branding · Junio 2026</span><h3>Vértice produce el lanzamiento visual de Auren+</h3><p>Vértice desarrolla la producción completa de fotografía y video para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini.</p><a class="more" href="blog/auren-plus.html">Leer la nota →</a></article>
+      <article class="nw nw-s"><div class="media"><img src="assets/blog/ferrini.jpg" alt="Sapolán Ferrini: es cuestión de piel" loading="lazy" style="object-position:50% 35%"><span class="nx tag">Nota</span></div><span class="nx meta">Creatividad · Campaña · Mayo 2026</span><h3>«Es cuestión de piel»: el concepto para Sapolán Ferrini</h3><p>Vértice crea el territorio de marca y el concepto &#x27;Es cuestión de piel&#x27; para Sapolán Ferrini.</p><a class="more" href="blog/ferrini-cuestion-de-piel.html">Leer la nota →</a></article>
       <!--/VLOG-->
     </div>
     <p class="vlog-all"><a class="btn btn-k" href="blog/index.html">Ver todas las notas <i>→</i></a></p>
@@ -455,6 +463,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <div class="wrap">
       <img src="assets/img/logo-blanco.png" alt="Vértice">
       <span class="soc"><a href="https://www.instagram.com/vertice.estudios/" target="_blank" rel="noopener" aria-label="Instagram de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r=".6"></circle></svg></a><a href="https://www.linkedin.com/company/vertice-content-marketing/" target="_blank" rel="noopener" aria-label="LinkedIn de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10.5V16M8 7.8v.01M12 16v-5.5M12 13a2.6 2.6 0 0 1 5.2 0V16"></path></svg></a></span>
+      <a class="btn btn-l wa" href="https://wa.me/5491123442635" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 8 19.2z"></path><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8a4.5 4.5 0 0 1-2-2l.8-1-1-2z"></path></svg>WhatsApp</a>
       <p class="nx">Strategy that inspires. Creativity that performs.</p>
       <p class="nx">© 2026 Vértice Content Marketing Studio</p>
     </div>
@@ -479,7 +488,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   var smooth = function (t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
-  var reel = $('casos'), hero = $('inicio'), cont = $('contacto');
+  var reel = $('casos'), hero = $('inicio'), cont = $('contacto'), met = $('metodo');
   var btns = [].slice.call(document.querySelectorAll('#works button'));
   var WORKS = btns.map(function (b) { return { id: b.dataset.id, v: !!b.dataset.v, t: b.dataset.t, c: b.dataset.c, d: b.dataset.d || '', btn: b }; });
   var N = WORKS.length, current = -1, glOn = false;
@@ -497,7 +506,6 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   lb.addEventListener('close', function () { lbV.pause(); lbV.removeAttribute('src'); lbV.load(); });
   lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
   $('lbX').addEventListener('click', closeLb);
-  $('playReel').addEventListener('click', function () { openVideo('Reel Vértice', 'assets/video/reel.mp4', true); });
 
   /* ---------- navegación de casos ---------- */
   function setCurrent(i) {
@@ -693,9 +701,9 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   function frame(now) {
     requestAnimationFrame(frame);
     var dt = Math.min((now - last) / 1000, .1); last = now;
-    var hr = hero.getBoundingClientRect(), rr = reel.getBoundingClientRect(), cr = cont.getBoundingClientRect();
-    var heroOn = hr.bottom > 0, reelOn = rr.top < H && rr.bottom > 0;
-    if (!(heroOn || reelOn || cr.top < H)) {
+    var hr = hero.getBoundingClientRect(), rr = reel.getBoundingClientRect(), cr = cont.getBoundingClientRect(), mr = met.getBoundingClientRect();
+    var heroOn = hr.bottom > 0, reelOn = rr.top < H && rr.bottom > 0, metOn = mr.top < H && mr.bottom > 0;
+    if (!(heroOn || reelOn || metOn || cr.top < H)) {
       WORKS.forEach(function (w) { setPlay(w.p, false); }); return;
     }
     var aspect = W / H, narrow = aspect < .9, VH = 20 * TAN;
@@ -703,6 +711,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     var r = clamp(-rr.top / Math.max(rr.height - H, 1), 0, 1);
     var cIn = smooth(1 - cr.top / H);
     var k = smooth(rIn * 1.5) * (1 - smooth(rOut * 1.5));
+    k = Math.max(k, mr.bottom > 0 ? smooth(smooth(1 - mr.top / H) * 3) : 0);
 
     bg.copy(ROJO).lerp(NEGRO, k); ink.copy(NEGRO).lerp(ROJO, k);
     renderer.setClearColor(bg, 1);
