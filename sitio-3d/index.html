@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--HEAD-->
+<title>Vértice Sitio 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: lienzo WebGL fijo detrás (cordillera de líneas + anillo de videos); encima, placas plenas que alternan rojo · papel · negro · rojo · carbón · rojo. */
+:root{
+  --rojo:#f10a09; --rojo-texto:#c60807; --negro:#000; --carbon:#131313; --blanco:#fff; --papel:#f2f2f0;
+  --lima:#d7fe51; --azul:#0024ad; --gris-texto:#5a5a5a; --gris-claro:#ababab;
+  --hub:#f9bb02; --lens:#b485ff; --spark:#fbfbfb; --aon:#ff73b9;
+  --display:"Tusker Grotesk","Bebas Neue","Arial Narrow",sans-serif;
+  --ext:"Nimbus Sans Extended","Helvetica Neue",Arial,sans-serif;
+  --body:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gut-l:max(clamp(16px,5.5vw,80px),env(safe-area-inset-left,0px));
+  --gut-r:max(clamp(16px,5.5vw,80px),env(safe-area-inset-right,0px));
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+@font-face{font-family:"Tusker Grotesk";src:url("assets/fonts/TuskerGrotesk-6600Semibold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:"Tusker Grotesk";src:url("assets/fonts/TuskerGrotesk-4500Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"Nimbus Sans Extended";src:url("assets/fonts/NimbusSansExtendedD.otf") format("opentype");font-weight:400;font-display:swap}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--rojo);color:var(--negro);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:hidden}
+a{color:inherit}
+h1,h2,h3,p,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--negro);outline-offset:3px}
+.dk :focus-visible,.nav :focus-visible{outline-color:var(--lima)}
+
+.tg{font-family:var(--display);font-weight:600;text-transform:uppercase;line-height:.92;text-wrap:balance}
+.tm{font-family:var(--display);font-weight:500;text-transform:uppercase;line-height:1}
+.nx{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:12px;line-height:1.5}
+.wrap{padding-left:var(--gut-l);padding-right:var(--gut-r);max-width:1600px;margin-inline:auto}
+.rule{display:block;height:4px;background:linear-gradient(currentColor,currentColor) left center/12px 4px no-repeat,linear-gradient(currentColor,currentColor) right center/12px 4px no-repeat,linear-gradient(currentColor,currentColor) center/100% 1px no-repeat}
+
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;background:var(--rojo)}
+main,footer{position:relative;z-index:1}
+
+/* nav */
+.nav{position:fixed;z-index:20;top:calc(14px + env(safe-area-inset-top,0px));left:var(--gut-l);right:var(--gut-r);display:flex;align-items:center;gap:24px;height:56px;padding:0 8px 0 22px;background:var(--negro);color:var(--blanco);border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+.nav img{height:22px;width:auto;display:block}
+.nav ul{display:flex;gap:28px;margin-left:auto}
+.nav ul a{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:11px;text-decoration:none;padding:12px 0}
+.nav ul a:hover{color:var(--lima)}
+.btn{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:12px;text-decoration:none;white-space:nowrap;transition:background .35s var(--ease),color .35s var(--ease)}
+.btn i{font-style:normal;transition:transform .35s var(--ease)}
+.btn:hover i{transform:translateX(5px)}
+.btn-l{background:var(--lima);color:var(--negro)}.btn-l:hover{background:var(--blanco)}
+.btn-k{background:var(--negro);color:var(--blanco)}.btn-k:hover{background:var(--blanco);color:var(--negro)}
+.btn-o{background:var(--rojo);box-shadow:inset 0 0 0 1.5px currentColor}.btn-o:hover{background:var(--negro);color:var(--blanco)}
+.btn-w{background:var(--blanco);color:var(--negro)}.btn-w:hover{background:var(--lima)}
+.nav .btn{min-height:40px;padding:0 18px;font-size:11px}
+@media (max-width:760px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+
+/* hero */
+.hero{min-height:min(100svh,980px);display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding-block:120px 44px;color:var(--negro)}
+.hero .top{display:flex;flex-direction:column;gap:10px;max-width:760px}
+.hero h1{color:var(--blanco);font-size:clamp(52px,9.2vw,172px)}
+.plate{background:var(--rojo);box-shadow:0 0 0 10px var(--rojo)}
+.hero h1 span{display:block;overflow:hidden}
+.hero h1 b{display:block;font-weight:inherit;animation:rise .9s var(--ease) both}
+.hero h1 span:nth-child(2) b{animation-delay:.12s}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.hero .foot{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between}
+.hero .lead{font-size:clamp(17px,1.5vw,22px);line-height:1.35;max-width:26em;font-weight:500}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px}
+@media (max-width:760px){.hero{justify-content:flex-start;min-height:100svh;padding-block:104px 32px}.hero .foot{margin-top:auto}}
+
+/* cinta */
+.tape{background:var(--negro);color:var(--blanco);overflow:hidden;padding-block:18px;border-block:1px solid rgba(255,255,255,.14)}
+.tape div{display:flex;gap:36px;width:max-content;animation:tape 36s linear infinite}
+.tape span{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(26px,3vw,40px);line-height:1;display:flex;align-items:center;gap:36px;white-space:nowrap}
+.tape span::after{content:"";width:.7em;height:.7em;background:url("assets/img/isotipo-rojo.png") center/contain no-repeat}
+@keyframes tape{to{transform:translateX(-50%)}}
+
+/* manifiesto */
+.mani{background:var(--papel);padding-block:clamp(72px,10vw,150px)}
+.mani .grid>*{min-width:0}
+.mani .grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(32px,5vw,80px);align-items:end}
+.mani .k{color:var(--rojo-texto);margin-bottom:22px}
+.mani h2{color:var(--rojo);font-size:clamp(40px,7.4vw,124px)}
+.mani .txt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:20px 40px;margin-top:40px;color:var(--gris-texto);font-size:18px;line-height:1.5;max-width:900px}
+.duo{position:relative;border-radius:8px;overflow:hidden;background:var(--negro);aspect-ratio:4/5;max-width:100%}
+.duo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.25) brightness(1.1)}
+.duo::after{content:"";position:absolute;inset:0;background:var(--rojo);mix-blend-mode:multiply}
+.duo figcaption{position:absolute;z-index:1;left:16px;bottom:14px;color:var(--blanco);font-size:10px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin-top:clamp(48px,7vw,96px);border-top:1px solid var(--negro)}
+.facts li{padding:22px 24px 0 0;display:flex;flex-direction:column;gap:8px}
+.facts .tm{font-size:clamp(30px,3.2vw,44px);color:var(--negro)}
+.facts p{color:var(--gris-texto);font-size:15px;max-width:22em}
+@media (max-width:860px){.mani .grid{grid-template-columns:1fr}.duo{aspect-ratio:16/10}}
+
+/* reel */
+.reel{height:560vh;color:var(--blanco)}
+.reel .stick{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding-block:96px 28px;pointer-events:none}
+.reel .stick>*{pointer-events:auto}
+.reel .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.reel h2{font-size:clamp(44px,6vw,96px);color:var(--rojo)}
+.reel .head p{max-width:30em;color:var(--gris-claro);font-size:15px}
+.hit{justify-self:center;align-self:center;width:min(56vw,640px);height:min(50vh,460px);border-radius:8px;cursor:pointer}
+.reel .cap{display:flex;justify-content:space-between;align-items:flex-end;gap:20px 32px;flex-wrap:wrap}
+.cap .now{display:flex;flex-direction:column;gap:6px;min-width:0}
+.cap .n{color:var(--lima);font-variant-numeric:tabular-nums}
+.cap h3{font-size:clamp(40px,5.2vw,84px);color:var(--blanco)}
+.cap .c{color:var(--gris-claro)}
+.cap .ctl{display:flex;gap:10px;align-items:center}
+.rnd{width:48px;height:48px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--blanco);display:grid;place-items:center;font-size:18px;transition:background .3s var(--ease),color .3s var(--ease)}
+.rnd:hover{background:var(--blanco);color:var(--negro)}
+.works{position:absolute;right:var(--gut-r);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2px;text-align:right}
+.works button{font-family:var(--ext);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--gris-claro);padding:7px 0 7px 12px;display:block;width:100%;text-align:right}
+.works button[aria-current="true"]{color:var(--rojo)}
+.works button:hover{color:var(--blanco)}
+.works img{display:none}
+@media (max-width:980px){.works{display:none}.hit{width:86vw}}
+/* sin WebGL: el reel pasa a grilla de pósters */
+.no-gl #gl{display:none}
+.no-gl .reel{height:auto;background:var(--negro)}
+.no-gl .reel .stick{position:static;height:auto;display:flex;flex-direction:column;gap:32px;padding-block:96px 72px}
+.no-gl .hit,.no-gl .cap{display:none}
+.no-gl .works{position:static;transform:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;text-align:left}
+.no-gl .works button{text-align:left;padding:0;color:var(--blanco);font-size:11px}
+.no-gl .works img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;margin-bottom:10px;filter:grayscale(1) contrast(1.2)}
+
+/* servicios */
+.serv{background:var(--rojo);padding-block:clamp(72px,10vw,150px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,26em);gap:24px 48px;align-items:end;margin-top:26px}
+.sec-head h2{font-size:clamp(52px,9vw,150px);color:var(--blanco)}
+.sec-head p{font-size:18px;line-height:1.45;font-weight:500}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr}}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:clamp(36px,5vw,64px);perspective:1400px}
+.card{border:1.5px solid var(--negro);border-radius:16px;padding:22px 22px 26px;min-height:168px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;transform-style:preserve-3d;transition:transform .5s var(--ease),background .35s var(--ease),color .35s var(--ease);will-change:transform}
+.card h3{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:34px;line-height:1}
+.card p{font-size:15px;line-height:1.4;max-width:20em}
+.card:hover{background:var(--negro);color:var(--blanco)}
+
+/* método */
+.met{background:var(--carbon);color:var(--blanco);padding-block:clamp(72px,10vw,150px)}
+.met .sec-head h2{color:var(--rojo)}
+.met .sec-head p{color:var(--gris-claro);font-weight:400}
+.caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:clamp(36px,5vw,64px)}
+.caps li{display:flex;flex-direction:column;gap:18px}
+.pill{border-radius:999px;color:var(--negro);padding:20px 28px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.pill b{font-family:var(--display);font-weight:600;font-size:40px;line-height:1;text-transform:uppercase}
+.pill span{font-size:10px}
+.caps h3{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:30px;line-height:1;padding-inline:8px}
+.caps p{color:var(--gris-claro);font-size:15px;padding-inline:8px;max-width:22em}
+.caps .n{color:var(--rojo);padding-inline:8px}
+
+/* contacto */
+.cont{padding-block:clamp(88px,12vw,180px) 0;min-height:92svh;display:flex;flex-direction:column;justify-content:space-between;gap:64px}
+.cont h2{font-size:min(14vw,250px);color:var(--blanco);line-height:.86}
+.cont .row{display:flex;flex-wrap:wrap;gap:28px 64px;align-items:flex-end;justify-content:space-between;margin-top:28px}
+.cont .lead{font-size:clamp(18px,1.7vw,24px);line-height:1.35;font-weight:500;max-width:22em}
+.cont dl{display:flex;flex-wrap:wrap;gap:20px 48px;margin:0;min-width:0;max-width:100%;background:var(--rojo);box-shadow:0 0 0 10px var(--rojo)}
+.cont dt{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:10px;margin-bottom:6px}
+.cont dd{margin:0;overflow-wrap:anywhere;font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:30px;line-height:1;color:var(--blanco)}
+footer{background:var(--negro);color:var(--blanco);padding-block:26px calc(26px + env(safe-area-inset-bottom,0px))}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 32px;justify-content:space-between;align-items:center}
+footer img{height:20px;width:auto;display:block}
+footer p{font-size:10px;color:var(--gris-claro)}
+
+/* visor */
+dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;color:var(--blanco)}
+dialog::backdrop{background:rgba(0,0,0,.92)}
+.lb{width:100%;height:100%;display:grid;grid-template-rows:auto 1fr;gap:16px;padding:max(20px,env(safe-area-inset-top,0px)) var(--gut-r) 28px var(--gut-l)}
+.lb .bar{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.lb h3{font-size:clamp(28px,4vw,48px)}
+.lb video{width:100%;height:100%;min-height:0;object-fit:contain;background:#000;border-radius:8px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tape div,.hero h1 b{animation:none}.card{transition:none}}
+</style>
+<!--/HEAD-->
+</head>
+<body>
+<!--BODY-->
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a href="#inicio" aria-label="Vértice, inicio"><img src="assets/img/logo-blanco.png" alt="Vértice"></a>
+  <ul>
+    <li><a href="#manifiesto">Estudio</a></li>
+    <li><a href="#reel">Reel</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#metodo">Método</a></li>
+  </ul>
+  <a class="btn btn-l" href="#contacto">Hablemos <i>→</i></a>
+</header>
+
+<main>
+<section id="inicio" class="hero wrap">
+  <div class="top">
+    <span class="rule"></span>
+    <p class="nx">Content Marketing Studio · Buenos Aires</p>
+  </div>
+  <h1 class="tg"><span><b>Strategy that inspires.</b></span><span><b>Creativity that performs.</b></span></h1>
+  <div class="foot">
+    <p class="lead plate">No hacemos publicidad tradicional, hacemos contenido relevante y que convierte.</p>
+    <div class="cta">
+      <a class="btn btn-k" href="#contacto">Hablemos <i>→</i></a>
+      <a class="btn btn-o" href="#reel">Ver el reel <i>↓</i></a>
+    </div>
+  </div>
+</section>
+
+<div class="tape" aria-hidden="true"><div>
+  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Video vertical</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
+  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Video vertical</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
+</div></div>
+
+<section id="manifiesto" class="mani">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="nx k">Manifiesto</p>
+        <h2 class="tg">Nacimos del encuentro entre dos mundos.</h2>
+        <div class="txt">
+          <p>La visión estratégica y la creatividad para dar vida a ideas que conectan con las audiencias y transforman marcas.</p>
+          <p>Transformamos información en ideas relevantes y accionables. Títulos que afirman, cifras con fuente y nada de relleno.</p>
+        </div>
+      </div>
+      <figure class="duo" style="margin:0">
+        <video src="assets/video/rodaje.mp4" poster="assets/video/rodaje.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Equipo de Vértice en un rodaje"></video>
+        <figcaption class="nx">Rodaje · detrás de escena</figcaption>
+      </figure>
+    </div>
+    <ul class="facts">
+      <li><span class="tm">Servicio uno a uno</span><p>Somos una agencia de personas: un equipo híbrido que te conoce por tu nombre.</p></li>
+      <li><span class="tm">Boutique, con talento de grande</span><p>Agencia boutique con la experiencia de las grandes estructuras.</p></li>
+      <li><span class="tm">End-to-end</span><p>Creadores de experiencias de marketing de punta a punta, especialmente en el ecosistema digital.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section id="reel" class="reel dk" aria-label="Reel de trabajos">
+  <div class="stick wrap">
+    <div class="head">
+      <h2 class="tg">Reel 26</h2>
+      <p>Seguí bajando para girar el anillo. La pieza del frente pasa de duotono a color; tocala para verla completa.</p>
+    </div>
+    <button class="hit" id="hit" aria-label="Ver la pieza del frente"></button>
+    <div class="cap">
+      <div class="now" aria-live="polite">
+        <span class="nx n" id="capN">01 / 08</span>
+        <h3 class="tg" id="capT">After Movie</h3>
+        <span class="nx c" id="capC">Eventos</span>
+      </div>
+      <div class="ctl">
+        <button class="rnd" id="prev" aria-label="Pieza anterior">←</button>
+        <button class="rnd" id="next" aria-label="Pieza siguiente">→</button>
+        <button class="btn btn-w" id="open">Ver clip <i>→</i></button>
+      </div>
+    </div>
+    <ol class="works" id="works">
+      <li><button data-id="aftermovie" data-o="L" data-t="After Movie" data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
+      <li><button data-id="auren" data-o="P" data-t="Auren+" data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
+      <li><button data-id="bakeoff" data-o="L" data-t="Bake Off Famosos" data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
+      <li><button data-id="album" data-o="P" data-t="El Álbum" data-c="Video vertical · Telefe"><img src="assets/video/album.jpg" alt="" loading="lazy">El Álbum</button></li>
+      <li><button data-id="dimaria" data-o="L" data-t="Di María × Coca-Cola" data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
+      <li><button data-id="fotlibre" data-o="P" data-t="Fot Libre" data-c="Cobertura de evento"><img src="assets/video/fotlibre.jpg" alt="" loading="lazy">Fot Libre</button></li>
+      <li><button data-id="saks" data-o="L" data-t="Saks" data-c="Contenido IA"><img src="assets/video/saks.jpg" alt="" loading="lazy">Saks</button></li>
+      <li><button data-id="soyrada" data-o="L" data-t="Soy Rada Show" data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
+    </ol>
+  </div>
+</section>
+
+<section id="servicios" class="serv">
+  <div class="wrap">
+    <span class="rule"></span>
+    <div class="sec-head">
+      <h2 class="tg">Nuestros servicios</h2>
+      <p>De estrategia a paid media, en un solo estudio.</p>
+    </div>
+    <ul class="cards" id="cards">
+      <li class="card"><h3>Estrategia</h3><p>Dónde jugar y por qué: el plan antes de la pieza.</p></li>
+      <li class="card"><h3>Creatividad</h3><p>Ideas que responden primero a un porqué.</p></li>
+      <li class="card"><h3>Producción</h3><p>Rodaje, edición y postproducción con equipo propio.</p></li>
+      <li class="card"><h3>Social media</h3><p>Calendario, community y contenido para cada red.</p></li>
+      <li class="card"><h3>Video vertical</h3><p>Reels y shorts pensados para el scroll.</p></li>
+      <li class="card"><h3>Podcast</h3><p>Formato de audio y video con voz propia.</p></li>
+      <li class="card"><h3>Contenido IA</h3><p>Producción asistida con criterio editorial.</p></li>
+      <li class="card"><h3>Datos</h3><p>Información convertida en decisiones accionables.</p></li>
+      <li class="card"><h3>Contenido</h3><p>Notas, newsletters y piezas de marca.</p></li>
+      <li class="card"><h3>Eventos</h3><p>Cobertura y activaciones que se vuelven contenido.</p></li>
+      <li class="card"><h3>Web</h3><p>Sitios y landings que sostienen la campaña.</p></li>
+      <li class="card"><h3>Paid media</h3><p>Pauta con la misma estrategia que el contenido.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section id="metodo" class="met dk">
+  <div class="wrap">
+    <span class="rule"></span>
+    <div class="sec-head">
+      <h2 class="tg">Vértice CoCreate</h2>
+      <p>Nuestra metodología en cuatro fases: del dato a la pieza publicada, y de vuelta al dato.</p>
+    </div>
+    <ol class="caps">
+      <li><span class="nx n">Fase 1</span><div class="pill" style="background:var(--hub)"><b>Hub</b><span class="nx">Data · Discovery</span></div><h3>Entender</h3><p>Workshops y entrevistas de descubrimiento con el cliente.</p></li>
+      <li><span class="nx n">Fase 2</span><div class="pill" style="background:var(--lens)"><b>Lens</b><span class="nx">Strategy · Creativity</span></div><h3>Transformar</h3><p>Información convertida en ideas relevantes y accionables.</p></li>
+      <li><span class="nx n">Fase 3</span><div class="pill" style="background:var(--spark)"><b>Spark</b><span class="nx">Management · Content</span></div><h3>Conectar</h3><p>Contenido producido y gestionado para cada audiencia.</p></li>
+      <li><span class="nx n">Fase 4</span><div class="pill" style="background:var(--aon)"><b>AON</b><span class="nx">Visualization · Optimization</span></div><h3>Impactar</h3><p>Always on: medimos, aprendemos y optimizamos.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="contacto" class="cont">
+  <div class="wrap">
+    <span class="rule"></span>
+    <h2 class="tg" style="margin-top:26px">¿Hablamos?</h2>
+    <div class="row">
+      <p class="lead plate">Contanos qué querés mover y te respondemos con un plan.</p>
+      <dl>
+        <div><dt>WhatsApp</dt><dd>[Número]</dd></div>
+        <div><dt>Estudio</dt><dd>Buenos Aires, Argentina</dd></div>
+        <div><dt>Web</dt><dd>verticestudios.com</dd></div>
+      </dl>
+    </div>
+  </div>
+  <footer class="dk">
+    <div class="wrap">
+      <img src="assets/img/logo-blanco.png" alt="Vértice">
+      <p class="nx">Strategy that inspires. Creativity that performs.</p>
+      <p class="nx">© 2026 Vértice Content Marketing Studio</p>
+    </div>
+  </footer>
+</section>
+</main>
+
+<dialog id="lb" aria-labelledby="lbT">
+  <div class="lb">
+    <div class="bar"><h3 class="tg" id="lbT"></h3><button class="rnd" id="lbX" aria-label="Cerrar">✕</button></div>
+    <video id="lbV" controls loop playsinline muted></video>
+  </div>
+</dialog>
+
+<script src="assets/vendor/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (id) { return document.getElementById(id); };
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+  var smooth = function (t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+
+  var reel = $('reel'), hero = $('inicio'), cont = $('contacto');
+  var btns = [].slice.call(document.querySelectorAll('#works button'));
+  var WORKS = btns.map(function (b) { return { id: b.dataset.id, o: b.dataset.o, t: b.dataset.t, c: b.dataset.c, btn: b }; });
+  var N = WORKS.length, STEP = Math.PI * 2 / N, current = -1, glOn = false;
+
+  /* ---------- visor ---------- */
+  var lb = $('lb'), lbV = $('lbV');
+  function openWork(i) {
+    var w = WORKS[i]; if (!w) return;
+    $('lbT').textContent = w.t;
+    lbV.src = 'assets/video/' + w.id + '.mp4';
+    if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
+    var p = lbV.play(); if (p && p.catch) p.catch(function () {});
+  }
+  function closeLb() { if (lb.close) lb.close(); else lb.removeAttribute('open'); }
+  lb.addEventListener('close', function () { lbV.pause(); lbV.removeAttribute('src'); lbV.load(); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  $('lbX').addEventListener('click', closeLb);
+
+  /* ---------- navegación del reel ---------- */
+  function setCurrent(i) {
+    if (i === current) return; current = i;
+    var w = WORKS[i];
+    $('capN').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
+    $('capT').textContent = w.t; $('capC').textContent = w.c;
+    btns.forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+  }
+  function goTo(i) {
+    i = clamp(i, 0, N - 1);
+    if (!glOn) { openWork(i); return; }
+    var top = reel.getBoundingClientRect().top + scrollY;
+    var span = reel.offsetHeight - innerHeight;
+    scrollTo({ top: top + span * (i / (N - 1)), behavior: RM ? 'auto' : 'smooth' });
+  }
+  btns.forEach(function (b, i) { b.addEventListener('click', function () { goTo(i); }); });
+  $('prev').addEventListener('click', function () { goTo(current - 1); });
+  $('next').addEventListener('click', function () { goTo(current + 1); });
+  $('open').addEventListener('click', function () { openWork(Math.max(current, 0)); });
+  $('hit').addEventListener('click', function () { openWork(Math.max(current, 0)); });
+  setCurrent(0);
+
+  /* ---------- tarjetas con inclinación ---------- */
+  if (!RM && matchMedia('(hover:hover)').matches) {
+    [].forEach.call(document.querySelectorAll('.card'), function (c) {
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        c.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (-y * 14) + 'deg) translateZ(14px)';
+      });
+      c.addEventListener('pointerleave', function () { c.style.transform = ''; });
+    });
+  }
+
+  /* ---------- WebGL ---------- */
+  var THREE = window.THREE, renderer;
+  try {
+    if (!THREE) throw new Error('three');
+    renderer = new THREE.WebGLRenderer({ canvas: $('gl'), antialias: true, powerPreference: 'high-performance' });
+  } catch (e) { document.documentElement.classList.add('no-gl'); return; }
+  glOn = true;
+
+  var ROJO = new THREE.Color('#f10a09'), NEGRO = new THREE.Color('#000000');
+  var bg = new THREE.Color(), ink = new THREE.Color();
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(35, 1, 0.1, 120);
+  camera.position.set(0, 0, 10);
+  var TAN = Math.tan(17.5 * Math.PI / 180);
+
+  /* cordillera: una superficie del color del campo con una línea por fila */
+  var terrain = new THREE.Mesh(
+    new THREE.PlaneGeometry(64, 30, 260, 110),
+    new THREE.ShaderMaterial({
+      extensions: { derivatives: true },
+      uniforms: { uTime: { value: 0 }, uAmp: { value: 1 }, uBg: { value: bg }, uLine: { value: ink }, uRows: { value: 56 } },
+      vertexShader: [
+        'uniform float uTime,uAmp; varying vec2 vUv;',
+        'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
+        'float fbm(vec2 p){float a=.5,s=0.;for(int i=0;i<4;i++){s+=a*noise(p);p*=2.03;a*=.5;}return s;}',
+        'void main(){vUv=uv;vec3 p=position;',
+        ' vec2 q=vec2(p.x*.2,p.y*.2-uTime*.045);float n=fbm(q);float r=1.-abs(2.*n-1.);',
+        ' float env=exp(-pow(p.x/8.5,2.))*smoothstep(-15.,2.,p.y);',
+        ' p.z+=(r*r*3.4*env+n*.7)*uAmp;',
+        ' gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uBg,uLine; uniform float uRows; varying vec2 vUv;',
+        'void main(){float v=vUv.y*uRows;float w=fwidth(v);float d=abs(fract(v)-.5)/max(w,1e-4);',
+        ' float line=(1.-smoothstep(.55,1.5,d))*(1.-smoothstep(.22,.5,w));',
+        ' float fade=smoothstep(0.,.12,vUv.y)*smoothstep(1.,.72,vUv.y)*smoothstep(0.,.1,vUv.x)*smoothstep(1.,.9,vUv.x);',
+        ' gl_FragColor=vec4(mix(uBg,uLine,line*fade),1.);}'
+      ].join('\n')
+    })
+  );
+  terrain.rotation.x = -1.2;
+  terrain.position.set(0, -3.4, -9);
+  scene.add(terrain);
+
+  /* anillo de videos */
+  var R = 4.3, ring = new THREE.Group();
+  scene.add(ring);
+  var loader = new THREE.TextureLoader();
+  var panelVS = 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}';
+  var panelFS = [
+    'uniform sampler2D map;uniform float uMix,uDim;uniform vec3 uRed;varying vec2 vUv;',
+    'void main(){vec2 uv=gl_FrontFacing?vUv:vec2(1.-vUv.x,vUv.y);vec3 c=texture2D(map,uv).rgb;',
+    ' float l=dot(c,vec3(.299,.587,.114));l=smoothstep(.04,.82,l);',
+    ' vec3 duo=mix(vec3(0.),uRed,l)+vec3(1.,.9,.86)*smoothstep(.78,1.,l)*.35;',
+    ' vec3 o=mix(duo,c,uMix);if(!gl_FrontFacing)o*=.32;gl_FragColor=vec4(o*uDim,1.);}'
+  ].join('\n');
+  WORKS.forEach(function (w, i) {
+    var pw = w.o === 'P' ? 1.42 : 2.9, ph = w.o === 'P' ? 2.52 : 1.63;
+    var g = new THREE.PlaneGeometry(pw, ph, 24, 1), pos = g.attributes.position;
+    for (var k = 0; k < pos.count; k++) { var a = pos.getX(k) / R; pos.setXYZ(k, R * Math.sin(a), pos.getY(k), R * Math.cos(a)); }
+    var tex = loader.load('assets/video/' + w.id + '.jpg');
+    tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+    var m = new THREE.ShaderMaterial({ side: THREE.DoubleSide, vertexShader: panelVS, fragmentShader: panelFS,
+      uniforms: { map: { value: tex }, uMix: { value: 0 }, uDim: { value: 1 }, uRed: { value: ROJO } } });
+    var mesh = new THREE.Mesh(g, m); mesh.rotation.y = i * STEP; ring.add(mesh);
+    var v = document.createElement('video');
+    v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
+    v.preload = 'none'; v.src = 'assets/video/' + w.id + '.mp4';
+    v.addEventListener('playing', function () {
+      if (w.vt) return;
+      w.vt = new THREE.VideoTexture(v); w.vt.minFilter = THREE.LinearFilter; w.vt.generateMipmaps = false;
+      m.uniforms.map.value = w.vt;
+    });
+    w.video = v; w.mat = m; w.on = false;
+  });
+  function setPlay(w, on) {
+    if (w.on === on) return; w.on = on;
+    if (on) { var p = w.video.play(); if (p && p.catch) p.catch(function () { w.on = false; }); } else w.video.pause();
+  }
+
+  var W = 0, H = 0, mx = 0, my = 0, cmx = 0, cmy = 0;
+  function resize() {
+    W = innerWidth; H = innerHeight;
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.setSize(W, H, false);
+    camera.aspect = W / H; camera.updateProjectionMatrix();
+  }
+  addEventListener('resize', resize); resize();
+  addEventListener('pointermove', function (e) { mx = e.clientX / W - .5; my = e.clientY / H - .5; }, { passive: true });
+
+  var spin = 0, last = performance.now();
+  function frame(now) {
+    requestAnimationFrame(frame);
+    var dt = Math.min((now - last) / 1000, .1); last = now;
+    var hr = hero.getBoundingClientRect(), rr = reel.getBoundingClientRect(), cr = cont.getBoundingClientRect();
+    var seen = hr.bottom > 0 || (rr.top < H && rr.bottom > 0) || cr.top < H;
+    if (!seen) { WORKS.forEach(function (w) { setPlay(w, false); }); return; }
+
+    var aspect = W / H;
+    var rIn = smooth(1 - rr.top / H);
+    var rOut = smooth(1 - rr.bottom / H);
+    var r = clamp(-rr.top / Math.max(rr.height - H, 1), 0, 1);
+    var cIn = smooth(1 - cr.top / H);
+    var k = smooth(rIn * 1.5) * (1 - smooth(rOut * 1.5));
+
+    bg.copy(ROJO).lerp(NEGRO, k); ink.copy(NEGRO).lerp(ROJO, k);
+    renderer.setClearColor(bg, 1);
+
+    if (!RM) { terrain.material.uniforms.uTime.value += dt; spin += dt * .16; }
+    terrain.material.uniforms.uAmp.value = lerp(1, 1.7, cIn);
+    terrain.position.y = lerp(-3.4, -4.6, k) + cIn * .5;
+
+    /* pose del anillo: escultura en el hero, carrusel centrado en el reel */
+    var x = r * (N - 1), fx = x - Math.floor(x), sx = Math.floor(x) + smooth((fx - .18) / .64);
+    setCurrent(clamp(Math.round(sx), 0, N - 1));
+    var narrow = aspect < .9;
+    var dist = Math.max(7.4, 3.3 / (2 * TAN * aspect * .86));
+    var hs = narrow ? .46 : .78;
+    var hx = narrow ? 0 : Math.min(4.2, 2.6 * aspect), hy = narrow ? -.9 : .7;
+    ring.position.set(lerp(hx, 0, rIn), lerp(hy, 0, rIn) + rOut * 9 + (1 - rIn) * hr.top / H * -3.2, lerp(-2, 10 - dist - R, rIn));
+    ring.rotation.set(lerp(.3, 0, rIn), lerp(spin, -sx * STEP, rIn), lerp(-.14, 0, rIn));
+    ring.scale.setScalar(lerp(hs, 1, rIn));
+    var live = (hr.bottom > 0 || (rr.top < H && rr.bottom > 0)) && !RM && !lb.open;
+    WORKS.forEach(function (w, i) {
+      var a = i * STEP + ring.rotation.y; a = Math.atan2(Math.sin(a), Math.cos(a)); var d = Math.abs(a);
+      w.mat.uniforms.uMix.value = rIn * (1 - smooth((d - .12) / (STEP * .7)));
+      w.mat.uniforms.uDim.value = lerp(1, lerp(1, .55, smooth(d / 1.6)), rIn);
+      setPlay(w, live && d < (rIn > .5 ? 1.25 : 1.7));
+    });
+
+    cmx += (mx - cmx) * .06; cmy += (my - cmy) * .06;
+    camera.position.set(cmx * .7, -cmy * .45, 10);
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+<!--/BODY-->
+</body>
+</html>
