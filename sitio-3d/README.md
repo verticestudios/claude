@@ -36,3 +36,10 @@ npx serve sitio-3d
 - Que los videos de highlights usados (Adlatina y Marketers) sean los de Octubre: los archivos de la carpeta parecen de agosto.
 - Los párrafos de los casos son una propuesta redactada: validar datos y cifras.
 - Ícono de Live streaming: no está en el brand board, se dibujó en el mismo estilo.
+
+## Netlify
+
+- `netlify.toml`, `_redirects` y `_headers` quedan dentro de la carpeta. Si se sube arrastrando la carpeta, Netlify aplica `_redirects` y `_headers`; si se conecta el repo (publish directory `sitio-3d`), aplica `netlify.toml`.
+- Redirects: `/blog/<nota>` sirve `/blog/<nota>.html` (las notas de la web anterior siguen funcionando) y `/noticias` lleva a `/blog/`.
+- Favicon: `favicon.ico`, `favicon-32.png`, `favicon-192.png` y `apple-touch-icon.png` en la raíz, a partir del isotipo.
+- Casos: los clips tienen audio; el botón de sonido de la sección activa el del caso del centro y "Ver caso" lo abre con sonido.

@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!--HEAD-->
 <title>Vértice Sitio 3D</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* Layout: lienzo WebGL fijo detrás (cordillera de líneas, pared curva de casos); encima, placas plenas que alternan rojo · papel · negro · rojo · carbón · papel · rojo. */
@@ -135,6 +138,9 @@ main,footer{position:relative;z-index:1}
 .cap .ctl{display:flex;gap:10px;align-items:center}
 .rnd{width:48px;height:48px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--blanco);display:grid;place-items:center;font-size:18px;transition:background .3s var(--ease),color .3s var(--ease)}
 .rnd:hover{background:var(--blanco);color:var(--negro)}
+#snd svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#snd .on{display:none}#snd[aria-pressed="true"] .on{display:block}#snd[aria-pressed="true"] .off{display:none}
+#snd[aria-pressed="true"]{background:var(--lima);color:var(--negro);box-shadow:none}
 .works{display:flex;flex-wrap:wrap;gap:4px 22px;justify-content:flex-end;max-width:640px}
 .works button{font-family:var(--ext);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--gris-claro);padding:8px 0;border-bottom:1.5px solid transparent}
 .works button[aria-current="true"]{color:var(--blanco);border-color:var(--rojo)}
@@ -359,6 +365,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       <div class="ctl">
         <button class="rnd" id="prev" aria-label="Caso anterior">←</button>
         <button class="rnd" id="next" aria-label="Caso siguiente">→</button>
+        <button class="rnd" id="snd" aria-pressed="false" aria-label="Activar el sonido del caso" title="Sonido"><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"></path><path d="M16 9.5l5 5M21 9.5l-5 5"></path></svg><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"></path><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"></path></svg></button>
         <button class="btn btn-w" id="open">Ver caso <i>→</i></button>
       </div>
     </div>
@@ -497,11 +504,11 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   var lb = $('lb'), lbV = $('lbV');
   function openVideo(title, src, sound) {
     $('lbT').textContent = title;
-    lbV.muted = !sound; lbV.loop = !sound; lbV.src = src;
+    lbV.muted = !sound; lbV.loop = true; lbV.src = src;
     if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
     var p = lbV.play(); if (p && p.catch) p.catch(function () {});
   }
-  function openWork(i) { var w = WORKS[i]; if (w) openVideo(w.t, 'assets/video/' + w.id + '.mp4', false); }
+  function openWork(i) { var w = WORKS[i]; if (w) openVideo(w.t, 'assets/video/' + w.id + '.mp4', true); }
   function closeLb() { if (lb.close) lb.close(); else lb.removeAttribute('open'); }
   lb.addEventListener('close', function () { lbV.pause(); lbV.removeAttribute('src'); lbV.load(); });
   lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
@@ -514,6 +521,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     $('capN').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
     $('capT').textContent = w.t; $('capC').textContent = w.c; $('capD').textContent = w.d;
     btns.forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    applySound();
   }
   function goTo(i) {
     i = clamp(i, 0, N - 1);
@@ -527,6 +535,12 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   $('next').addEventListener('click', function () { goTo(current + 1); });
   $('open').addEventListener('click', function () { openWork(Math.max(current, 0)); });
   $('hit').addEventListener('click', function () { openWork(Math.max(current, 0)); });
+  var soundOn = false;
+  function applySound() {
+    WORKS.forEach(function (w, i) { if (w.p) w.p.video.muted = !(soundOn && i === current); });
+    var b = $('snd'); b.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); b.setAttribute('aria-label', soundOn ? 'Silenciar el caso' : 'Activar el sonido del caso');
+  }
+  $('snd').addEventListener('click', function () { soundOn = !soundOn; applySound(); });
   setCurrent(0);
 
   /* ---------- videos del vlog y método: se activan al entrar en pantalla ---------- */

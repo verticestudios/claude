@@ -1,0 +1,27 @@
+# Netlify: publicar esta carpeta tal cual, sin build.
+[build]
+  publish = "."
+
+# Las notas del blog de la web anterior (verticestudios.com/blog/<nota>) siguen funcionando.
+# La nota se sirve desde su archivo .html sin cambiar la dirección que ve la persona.
+[[redirects]]
+  from = "/blog/:slug"
+  to = "/blog/:slug.html"
+  status = 200
+
+# El listado anterior de notas era /noticias.
+[[redirects]]
+  from = "/noticias"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/noticias/"
+  to = "/blog/"
+  status = 301
+
+# Videos, imágenes y fuentes: caché de un día.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

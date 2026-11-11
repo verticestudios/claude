@@ -137,7 +137,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 32px;justify-content:space-bet
 
 def page(title, desc, body, extra_css=''):
     return ('<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            '<title>%s</title>\n<meta name="description" content="%s">\n<style>%s%s</style>\n</head>\n<body>\n%s\n</body>\n</html>\n') % (
+            '<title>%s</title>\n<link rel="icon" href="../favicon.ico" sizes="any">\n<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">\n<link rel="apple-touch-icon" href="../apple-touch-icon.png">\n<meta name="description" content="%s">\n<style>%s%s</style>\n</head>\n<body>\n%s\n</body>\n</html>\n') % (
         html.escape(title), html.escape(desc, quote=True), CSS, extra_css, body)
 
 NAV = ('<header class="nav"><a href="../index.html" aria-label="Vértice, inicio"><img src="../assets/img/logo-blanco.png" alt="Vértice"></a>'
@@ -205,11 +205,11 @@ def highlights_page(n):
 
 def reel_page():
     body = (NAV.replace('<a class="back" href="index.html">← <span class="x">Todas las </span>notas</a>', '<a class="back" href="../index.html">← <span class="x">Volver al </span>sitio</a>') + '<main>' +
-            hero('Reel de agencia', 'Reel 26', 'Strategy that inspires. Creativity that performs.') +
+            hero('Reel de agencia', 'Vertice Studios', 'Strategy that inspires. Creativity that performs.') +
             '<section class="paper"><div class="wrap"><figure class="single" style="margin-top:calc(-1 * clamp(56px,7vw,100px))"><video id="reel" controls playsinline preload="auto" poster="../assets/video/reel.jpg" src="../assets/video/reel.mp4" aria-label="Reel de Vértice"></video></figure>' +
             cta_box('¿Hablamos?', 'Contanos qué necesita tu marca y armamos el recorrido juntos.', 'Hablemos →') + '</div></section></main>' + FOOT +
             '<script>(function(){var v=document.getElementById("reel");if(!v)return;try{var p=v.play();if(p&&p.catch)p.catch(function(){})}catch(e){}})();</script>')
-    return page('Reel 26 | Vértice', 'Reel de Vértice Content Marketing Studio.', body)
+    return page('VERTICE STUDIOS', 'Reel de Vértice Content Marketing Studio.', body)
 
 def dato_page(n):
     body = (NAV + '<main>' + hero('Dato · [Fecha]', 'El dato que cambia <br>cómo planificamos') + '<section class="paper"><div class="wrap">' +

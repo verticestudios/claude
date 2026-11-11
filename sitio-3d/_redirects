@@ -1,0 +1,4 @@
+# Misma configuración que netlify.toml: Netlify la lee también al subir la carpeta arrastrándola.
+/blog/:slug    /blog/:slug.html    200
+/noticias      /blog/              301
+/noticias/     /blog/              301
