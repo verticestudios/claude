@@ -17,7 +17,7 @@ npx serve sitio-3d
 
 ## Qué hay en la página
 
-- Hero: cordillera de líneas continuas (cintas de ancho fijo sobre un relieve que tapa lo de atrás). El reel de agencia se abre con el botón "Ver el reel con sonido".
+- Hero: cordillera de líneas (isolíneas sobre un relieve que tapa lo de atrás). El reel de agencia se abre con el botón "Ver el reel con sonido".
 - Marcas: slider de logos de clientes en negro (`assets/img/clients/`).
 - Casos: pared curva de siete videos que gira con el scroll, con un párrafo por caso (editable en `data-d` de cada botón).
 - Servicios: índice de filas con los íconos del brand board.

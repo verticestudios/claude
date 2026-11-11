@@ -7,7 +7,7 @@
 <title>Vértice Sitio 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-/* Layout: lienzo WebGL fijo detrás (cordillera de líneas, pantalla del reel, pared curva de casos); encima, placas plenas que alternan rojo · papel · negro · rojo · carbón · papel · rojo. */
+/* Layout: lienzo WebGL fijo detrás (cordillera de líneas, pared curva de casos); encima, placas plenas que alternan rojo · papel · negro · rojo · carbón · papel · rojo. */
 :root{
   --rojo:#f10a09; --rojo-texto:#c60807; --negro:#000; --carbon:#131313; --carbon-2:#1f1f1f; --blanco:#fff; --papel:#f2f2f0;
   --lima:#d7fe51; --azul:#0024ad; --gris-texto:#5a5a5a; --gris-claro:#ababab; --linea:#e0e0dc;
@@ -638,53 +638,32 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   camera.position.set(0, 0, 10);
   var TAN = Math.tan(17.5 * Math.PI / 180);
 
-  /* cordillera: una cinta por fila, con ancho fijo en pantalla, sobre una superficie que tapa lo que queda atrás */
-  var TW = 64, TH = 30, ROWS = 56, SEG = 240;
-  var tu = { uTime: { value: 0 }, uAmp: { value: 1 }, uBg: { value: bg }, uLine: { value: ink }, uRes: { value: new THREE.Vector2(1, 1) }, uPx: { value: 1.1 } };
-  var NOISE = [
-    'uniform float uTime,uAmp;',
-    'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
-    'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*f*(f*(f*6.-15.)+10.);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
-    'float fbm(vec2 p){float a=.55,s=0.;for(int i=0;i<3;i++){s+=a*noise(p);p*=2.;a*=.45;}return s;}',
-    'vec3 disp(vec2 q0){',
-    ' vec2 q=vec2(q0.x*.2+sin(uTime*.12)*.35,q0.y*.2-uTime*.05);',
-    ' float n=fbm(q);float t=2.*n-1.;float r=(1.-sqrt(t*t+.03))/.827;',
-    ' float env=exp(-pow(q0.x/8.5,2.))*smoothstep(-15.,2.,q0.y);',
-    ' return vec3(q0,(max(r,0.)*max(r,0.)*3.4*env+n*.7)*uAmp);}'
-  ].join('\n');
-  var surfMat = new THREE.ShaderMaterial({
-    side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 3, polygonOffsetUnits: 3, uniforms: tu,
-    vertexShader: NOISE + '\nvoid main(){gl_Position=projectionMatrix*modelViewMatrix*vec4(disp(position.xy),1.);}',
-    fragmentShader: 'uniform vec3 uBg;void main(){gl_FragColor=vec4(uBg,1.);}'
-  });
-  var surf = new THREE.Mesh(new THREE.PlaneGeometry(TW, TH, 160, 70), surfMat); surf.frustumCulled = false;
-  var rp = new Float32Array(ROWS * (SEG + 1) * 2 * 3), rs = new Float32Array(ROWS * (SEG + 1) * 2), ri = [], vi = 0;
-  for (var rr0 = 0; rr0 < ROWS; rr0++) {
-    var ry = -TH / 2 + TH * rr0 / (ROWS - 1);
-    for (var ci = 0; ci <= SEG; ci++) {
-      var rx = -TW / 2 + TW * ci / SEG;
-      for (var sd = 0; sd < 2; sd++) { rp[vi * 3] = rx; rp[vi * 3 + 1] = ry; rs[vi] = sd ? 1 : -1; vi++; }
-      if (ci > 0) { var a0 = vi - 4, b0 = vi - 3, c0 = vi - 2, d0 = vi - 1; ri.push(a0, b0, c0, b0, d0, c0); }
-    }
-  }
-  var rg = new THREE.BufferGeometry();
-  rg.setAttribute('position', new THREE.BufferAttribute(rp, 3)); rg.setAttribute('aSide', new THREE.BufferAttribute(rs, 1)); rg.setIndex(new THREE.BufferAttribute(new Uint16Array(ri), 1));
-  var ribMat = new THREE.ShaderMaterial({
-    side: THREE.DoubleSide, uniforms: tu,
-    vertexShader: NOISE + [
-      'uniform vec2 uRes;uniform float uPx;attribute float aSide;varying float vFade;',
-      'vec4 clipAt(vec2 q){return projectionMatrix*modelViewMatrix*vec4(disp(q),1.);}',
-      'void main(){vec2 q=position.xy;vec4 c=clipAt(q);vec4 a=clipAt(q-vec2(.25,0.));vec4 b=clipAt(q+vec2(.25,0.));',
-      ' vec2 d=(b.xy/b.w-a.xy/a.w)*uRes*.5;float l=length(d);d=l>1e-4?d/l:vec2(1.,0.);',
-      ' vec2 off=vec2(-d.y,d.x)*aSide*uPx/(uRes*.5);',
-      ' gl_Position=c+vec4(off*c.w,0.,0.);',
-      ' vec2 u=vec2((q.x+32.)/64.,(q.y+15.)/30.);',
-      ' vFade=smoothstep(0.,.12,u.y)*smoothstep(1.,.72,u.y)*smoothstep(0.,.1,u.x)*smoothstep(1.,.9,u.x);}'
-    ].join('\n'),
-    fragmentShader: 'uniform vec3 uBg,uLine;varying float vFade;void main(){gl_FragColor=vec4(mix(uBg,uLine,vFade),1.);}'
-  });
-  var ribbons = new THREE.Mesh(rg, ribMat); ribbons.frustumCulled = false; ribbons.renderOrder = 1;
-  var terrain = new THREE.Group(); terrain.add(surf); terrain.add(ribbons);
+  /* cordillera: una superficie del color del campo con una línea por fila */
+  var terrain = new THREE.Mesh(
+    new THREE.PlaneGeometry(64, 30, 260, 110),
+    new THREE.ShaderMaterial({
+      extensions: { derivatives: true },
+      uniforms: { uTime: { value: 0 }, uAmp: { value: 1 }, uBg: { value: bg }, uLine: { value: ink }, uRows: { value: 56 } },
+      vertexShader: [
+        'uniform float uTime,uAmp; varying vec2 vUv;',
+        'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
+        'float fbm(vec2 p){float a=.5,s=0.;for(int i=0;i<4;i++){s+=a*noise(p);p*=2.03;a*=.5;}return s;}',
+        'void main(){vUv=uv;vec3 p=position;',
+        ' vec2 q=vec2(p.x*.2,p.y*.2-uTime*.045);float n=fbm(q);float r=1.-abs(2.*n-1.);',
+        ' float env=exp(-pow(p.x/8.5,2.))*smoothstep(-15.,2.,p.y);',
+        ' p.z+=(r*r*3.4*env+n*.7)*uAmp;',
+        ' gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uBg,uLine; uniform float uRows; varying vec2 vUv;',
+        'void main(){float v=vUv.y*uRows;float w=fwidth(v);float d=abs(fract(v)-.5)/max(w,1e-4);',
+        ' float line=(1.-smoothstep(.55,1.5,d))*(1.-smoothstep(.22,.5,w));',
+        ' float fade=smoothstep(0.,.12,vUv.y)*smoothstep(1.,.72,vUv.y)*smoothstep(0.,.1,vUv.x)*smoothstep(1.,.9,vUv.x);',
+        ' gl_FragColor=vec4(mix(uBg,uLine,line*fade),1.);}'
+      ].join('\n')
+    })
+  );
   terrain.rotation.x = -1.2;
   terrain.position.set(0, -3.4, -9);
   scene.add(terrain);
@@ -734,7 +713,6 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     W = innerWidth; H = innerHeight;
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.setSize(W, H, false);
-    var pr = renderer.getPixelRatio(); tu.uRes.value.set(W * pr, H * pr); tu.uPx.value = 1.1 * pr;
     camera.aspect = W / H; camera.updateProjectionMatrix();
   }
   addEventListener('resize', resize); resize();
@@ -757,10 +735,9 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 
     bg.copy(ROJO).lerp(NEGRO, k); ink.copy(NEGRO).lerp(ROJO, k);
     renderer.setClearColor(bg, 1);
-    if (!RM) { tu.uTime.value += dt; clock += dt; }
-    tu.uAmp.value = lerp(1, 1.7, cIn);
+    if (!RM) { terrain.material.uniforms.uTime.value += dt; clock += dt; }
+    terrain.material.uniforms.uAmp.value = lerp(1, 1.7, cIn);
     terrain.position.y = lerp(-3.4, -4.6, k) + cIn * .5;
-    terrain.position.x = narrow ? 0 : (1 - k) * (1 - cIn) * 3.2 * clamp(aspect / 1.7, .6, 1.2);
 
     /* pared de casos */
     var x = r * (N - 1), fx = x - Math.floor(x), sx = Math.floor(x) + smooth((fx - .18) / .64);
