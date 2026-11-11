@@ -214,30 +214,24 @@ main,footer{position:relative;z-index:1}
 .vlog .sec-head h2{color:var(--rojo)}
 .vlog .sec-head p{color:var(--gris-texto);font-weight:400}
 .vlog .k{color:var(--rojo-texto)}
-.news{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(20px,2.4vw,36px) clamp(16px,2vw,28px);margin-top:clamp(36px,5vw,64px)}
-.nw{display:flex;flex-direction:column;gap:14px;min-width:0}
+.news{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(24px,2.8vw,44px) clamp(16px,2vw,28px);margin-top:clamp(36px,5vw,64px)}
+.nw{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0}
 .nw .media{position:relative;border-radius:8px;overflow:hidden;background:var(--negro)}
-.nw .media video,.nw .media img{display:block;width:100%;height:100%;object-fit:cover}
+.nw .media video,.nw .media img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.nw:hover .media img{transform:scale(1.04)}
 .nw .tag{position:absolute;left:12px;top:12px;background:var(--negro);color:var(--blanco);padding:6px 10px;border-radius:6px;font-size:10px;display:flex;gap:8px;align-items:center}
 .nw .tag svg{width:12px;height:12px;fill:currentColor}
 .nw .meta{color:var(--rojo-texto);font-size:10px}
 .nw h3{font-family:var(--display);font-weight:600;text-transform:uppercase;line-height:.98;font-size:clamp(28px,2.6vw,40px);text-wrap:balance}
 .nw p{color:var(--gris-texto);font-size:15px;line-height:1.5;max-width:34em}
-.nw .more{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin-top:auto;padding-top:6px;color:var(--negro)}
+.nw .more{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin-top:auto;padding-top:6px;color:var(--negro);text-decoration:none}
+.nw .more::after{content:"";position:absolute;inset:0}
+.nw:hover .more{color:var(--rojo-texto)}
 .nw-a{grid-column:span 8}.nw-a .media{aspect-ratio:16/9}.nw-a h3{font-size:clamp(34px,4.4vw,68px)}
 .nw-b{grid-column:span 4}.nw-b .media{aspect-ratio:4/5}
-.nw-c{grid-column:span 5;background:var(--negro);color:var(--blanco);border-radius:8px;padding:clamp(22px,2.6vw,36px);justify-content:space-between}
-.nw-c .meta{color:var(--lima)}.nw-c p{color:var(--gris-claro)}.nw-c .more{color:var(--blanco)}
-.nw-c .fig{font-family:var(--display);font-weight:600;font-size:clamp(84px,10vw,160px);line-height:.86;color:var(--rojo)}
-.nw-c blockquote{margin:0;font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(24px,2.3vw,34px);line-height:1.05}
-.nw-d{grid-column:span 7;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:clamp(16px,2vw,28px);align-items:stretch}
-.nw-d .media{aspect-ratio:9/14}
-.nw-d .body{display:flex;flex-direction:column;gap:14px;min-width:0}
-.nw-d .cols{columns:1;color:var(--gris-texto);font-size:15px;line-height:1.55}
-.nw-d .cols::first-letter{font-family:var(--display);font-weight:600;font-size:3.4em;line-height:.8;float:left;padding:.08em .12em 0 0;color:var(--rojo)}
-@media (max-width:900px){.nw-a,.nw-b,.nw-c,.nw-d{grid-column:1/-1}.nw-b .media{aspect-ratio:4/3}}
-@media (max-width:520px){.nw-d{grid-template-columns:1fr}.nw-d .media{aspect-ratio:4/5}}
-.demo{display:inline-flex;gap:10px;align-items:center;border:1.5px solid var(--negro);border-radius:999px;padding:6px 12px;font-size:10px;margin-top:22px}
+.nw-s{grid-column:span 4}.nw-s .media{aspect-ratio:4/3}
+@media (max-width:900px){.nw-a,.nw-b,.nw-s{grid-column:1/-1}.nw-b .media{aspect-ratio:4/3}.nw-b .media img{object-position:50% 20%}}
+.vlog-all{margin-top:clamp(36px,5vw,64px)}
 
 /* contacto */
 .cont{padding-block:clamp(88px,12vw,180px) 0;min-height:92svh;display:flex;flex-direction:column;justify-content:space-between;gap:64px}
@@ -429,39 +423,16 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       </div>
       <p>Clientes nuevos, premios, festivales, research y datos. Un episodio por novedad, contado por el equipo, y la nota para leerla con calma.</p>
     </div>
-    <p class="nx demo">Boceto · notas de ejemplo</p>
     <div class="news">
-      <article class="nw nw-a">
-        <div class="media"><video src="assets/video/vlog-festival.mp4" poster="assets/video/vlog-festival.jpg" muted loop playsinline preload="none" data-auto aria-label="Video de ejemplo"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Ep. 03</span></div>
-        <span class="nx meta">Festival · [Fecha] · [mm:ss]</span>
-        <h3>Crónica de [festival]</h3>
-        <p>Tres días, charlas y lo que se viene para el contenido. El episodio completo y la nota con los apuntes del equipo.</p>
-        <span class="more">Ver episodio →</span>
-      </article>
-      <article class="nw nw-b">
-        <div class="media"><img src="assets/img/vlog-cliente.jpg" alt="Foto de ejemplo: producto de un cliente" loading="lazy"><span class="nx tag">Foto · Ep. 01</span></div>
-        <span class="nx meta">Nuevo cliente · [Fecha]</span>
-        <h3>[Marca] se suma al estudio</h3>
-        <p>Quién es, qué problema vino a resolver y cómo lo vamos a encarar.</p>
-        <span class="more">Leer la nota →</span>
-      </article>
-      <article class="nw nw-c">
-        <span class="nx meta">Dato · [Fecha] · [N] min de lectura</span>
-        <p class="fig">[00]%</p>
-        <blockquote>El dato que cambia cómo planificamos</blockquote>
-        <p>Una cifra con fuente y qué hacer con ella el lunes. Nota editorial, sin video.</p>
-        <span class="more">Leer la nota →</span>
-      </article>
-      <article class="nw nw-d">
-        <div class="media"><video src="assets/video/vlog-research.mp4" poster="assets/video/vlog-research.jpg" muted loop playsinline preload="none" data-auto aria-label="Video vertical de ejemplo"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Ep. 04</span></div>
-        <div class="body">
-          <span class="nx meta">Research · [Fecha] · [mm:ss]</span>
-          <h3>Los hallazgos de [estudio]</h3>
-          <p class="cols">Los tres datos clave del estudio, en un minuto cada uno. [Texto editorial de la nota: contexto, metodología y qué significa para las marcas. Dos o tres párrafos que acompañan al video.]</p>
-          <span class="more">Ver episodio y nota →</span>
-        </div>
-      </article>
+      <!--VLOG-->
+      <article class="nw nw-a"><div class="media"><video src="assets/video/vlog-festival.mp4" poster="assets/video/vlog-festival.jpg" muted loop playsinline preload="none" data-auto aria-label="Adlatina Highlights, adelanto"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Episodio</span></div><span class="nx meta">Lanzamiento · Contenido · Octubre 2026</span><h3>Los highlights de Octubre para Adlatina y Marketers</h3><p>Lanzamos los highlights de Octubre para Adlatina y Marketers. Mirá el episodio completo.</p><a class="more" href="blog/highlights-octubre.html">Ver episodio →</a></article>
+      <article class="nw nw-b"><div class="media"><img src="assets/blog/effie-jurado.jpg" alt="Premios Effie Argentina" loading="lazy"><span class="nx tag">Nota · Foto</span></div><span class="nx meta">Reconocimiento · Industria · Octubre 2026</span><h3>Hernán Sampó integra el jurado Effie Awards Argentina 2026</h3><p>El founder de Vértice fue convocado como jurado de los Effie Awards Argentina, el certamen de referencia del marketing efectivo en el país.</p><a class="more" href="blog/effie-jurado-2026.html">Leer la nota →</a></article>
+      <article class="nw nw-s"><div class="media"><img src="assets/blog/streaming.jpg" alt="Producción de streaming en vivo" loading="lazy"><span class="nx tag">Nota</span></div><span class="nx meta">Nuevos servicios · Producción · Agosto 2026</span><h3>Vértice lanza su servicio de producción de streaming en vivo para marcas</h3><p>Vértice suma la producción técnica y estratégica de transmisiones en vivo como servicio para marcas. Lanzamientos, eventos corporativos y activaciones en tiempo real con calidad broadcast.</p><a class="more" href="blog/streaming-marcas.html">Leer la nota →</a></article>
+      <article class="nw nw-s"><div class="media"><img src="assets/blog/auren.jpg" alt="Línea Auren+ de Laboratorios Ferrini" loading="lazy"><span class="nx tag">Nota</span></div><span class="nx meta">Producción · Branding · Junio 2026</span><h3>Vértice produce el lanzamiento visual de Auren+, la nueva línea de Laboratorios Ferrini</h3><p>Vértice desarrolla la producción completa de fotografía y video para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini. Contenido para e-commerce, redes sociales y comunicación de marca.</p><a class="more" href="blog/auren-plus.html">Leer la nota →</a></article>
+      <article class="nw nw-s"><div class="media"><img src="assets/blog/ferrini.jpg" alt="Sapolán Ferrini: es cuestión de piel" loading="lazy" style="object-position:50% 35%"><span class="nx tag">Nota</span></div><span class="nx meta">Creatividad · Campaña · Mayo 2026</span><h3>&quot;Es cuestión de piel&quot;: el concepto creativo que Vértice desarrolló para Sapolán Ferrini</h3><p>Vértice crea el territorio de marca y el concepto &#x27;Es cuestión de piel&#x27; para Sapolán Ferrini. Una campaña que convierte un producto genérico en una historia de identidad.</p><a class="more" href="blog/ferrini-cuestion-de-piel.html">Leer la nota →</a></article>
+      <!--/VLOG-->
     </div>
+    <p class="vlog-all"><a class="btn btn-k" href="blog/index.html">Ver todas las notas <i>→</i></a></p>
   </div>
 </section>
 

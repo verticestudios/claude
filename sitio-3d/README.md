@@ -22,7 +22,7 @@ npx serve sitio-3d
 - Casos: pared curva de siete videos que gira con el scroll, con un párrafo por caso (editable en `data-d` de cada botón).
 - Servicios: índice de filas con los íconos del brand board.
 - Vértice CoCreate: ascenso a la cumbre que se anima etapa por etapa desde Entender; al pasar el mouse por una etapa se abre su ficha con logo.
-- Vlog: cuatro notas de ejemplo.
+- Vlog: cinco notas en páginas aparte (`blog/`): los highlights de Octubre (con los dos videos) y cuatro notas migradas de verticestudios.com. `python3 blog/build.py` regenera las páginas y las tarjetas del Vlog de la home a partir de `blog/notes.json`.
 - Redes de Vértice en el header y el footer. Los botones "Hablemos" abren la página de citas.
 - Sin WebGL, los casos pasan a una grilla de pósters. Con `prefers-reduced-motion` no hay reproducción ni animación automática.
 
@@ -30,5 +30,6 @@ npx serve sitio-3d
 
 - Títulos y créditos de cada caso (salen de los nombres de archivo).
 - Permiso de uso con marca de los trabajos para clientes.
-- Contenido real del vlog y párrafos de cada caso: hoy son marcadores entre corchetes.
+- Texto de la nota de highlights y párrafos de cada caso: hoy son marcadores entre corchetes.
+- Que los videos de highlights usados (Adlatina y Marketers) sean los de Octubre.
 - Ícono de Live streaming: no está en el brand board, se dibujó en el mismo estilo.
