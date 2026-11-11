@@ -7,11 +7,11 @@
 <title>Vértice Sitio 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-/* Layout: lienzo WebGL fijo detrás (cordillera de líneas + anillo de videos); encima, placas plenas que alternan rojo · papel · negro · rojo · carbón · rojo. */
+/* Layout: lienzo WebGL fijo detrás (cordillera de líneas, pantalla del reel, pared curva de casos); encima, placas plenas que alternan rojo · papel · negro · rojo · carbón · papel · rojo. */
 :root{
-  --rojo:#f10a09; --rojo-texto:#c60807; --negro:#000; --carbon:#131313; --blanco:#fff; --papel:#f2f2f0;
-  --lima:#d7fe51; --azul:#0024ad; --gris-texto:#5a5a5a; --gris-claro:#ababab;
-  --hub:#f9bb02; --lens:#b485ff; --spark:#fbfbfb; --aon:#ff73b9;
+  --rojo:#f10a09; --rojo-texto:#c60807; --negro:#000; --carbon:#131313; --carbon-2:#1f1f1f; --blanco:#fff; --papel:#f2f2f0;
+  --lima:#d7fe51; --azul:#0024ad; --gris-texto:#5a5a5a; --gris-claro:#ababab; --linea:#e0e0dc;
+  --hub:#f9bb02; --lens:#b485ff; --spark:#ff73b9; --aon:#f10a09;
   --display:"Tusker Grotesk","Bebas Neue","Arial Narrow",sans-serif;
   --ext:"Nimbus Sans Extended","Helvetica Neue",Arial,sans-serif;
   --body:"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -27,7 +27,7 @@
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--rojo);color:var(--negro);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:hidden}
 a{color:inherit}
-h1,h2,h3,p,ol,ul{margin:0}
+h1,h2,h3,p,ol,ul,figure{margin:0}
 ol,ul{padding:0;list-style:none}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--negro);outline-offset:3px}
@@ -38,6 +38,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .nx{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:12px;line-height:1.5}
 .wrap{padding-left:var(--gut-l);padding-right:var(--gut-r);max-width:1600px;margin-inline:auto}
 .rule{display:block;height:4px;background:linear-gradient(currentColor,currentColor) left center/12px 4px no-repeat,linear-gradient(currentColor,currentColor) right center/12px 4px no-repeat,linear-gradient(currentColor,currentColor) center/100% 1px no-repeat}
+.ic{flex:none;display:inline-grid;place-items:center;width:56px;height:56px;border-radius:999px;background:var(--rojo);color:var(--blanco)}
+.ic svg{width:46%;height:46%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 #gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;background:var(--rojo)}
 main,footer{position:relative;z-index:1}
@@ -45,7 +47,7 @@ main,footer{position:relative;z-index:1}
 /* nav */
 .nav{position:fixed;z-index:20;top:calc(14px + env(safe-area-inset-top,0px));left:var(--gut-l);right:var(--gut-r);display:flex;align-items:center;gap:24px;height:56px;padding:0 8px 0 22px;background:var(--negro);color:var(--blanco);border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
 .nav img{height:22px;width:auto;display:block}
-.nav ul{display:flex;gap:28px;margin-left:auto}
+.nav ul{display:flex;gap:26px;margin-left:auto}
 .nav ul a{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:11px;text-decoration:none;padding:12px 0}
 .nav ul a:hover{color:var(--lima)}
 .btn{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:12px;text-decoration:none;white-space:nowrap;transition:background .35s var(--ease),color .35s var(--ease)}
@@ -56,21 +58,23 @@ main,footer{position:relative;z-index:1}
 .btn-o{background:var(--rojo);box-shadow:inset 0 0 0 1.5px currentColor}.btn-o:hover{background:var(--negro);color:var(--blanco)}
 .btn-w{background:var(--blanco);color:var(--negro)}.btn-w:hover{background:var(--lima)}
 .nav .btn{min-height:40px;padding:0 18px;font-size:11px}
-@media (max-width:760px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+@media (max-width:860px){.nav ul{display:none}.nav .btn{margin-left:auto}}
 
 /* hero */
 .hero{min-height:min(100svh,980px);display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding-block:120px 44px;color:var(--negro)}
-.hero .top{display:flex;flex-direction:column;gap:10px;max-width:760px}
-.hero h1{color:var(--blanco);font-size:clamp(52px,9.2vw,172px)}
-.plate{background:var(--rojo);box-shadow:0 0 0 10px var(--rojo)}
+.hero .top{display:flex;flex-direction:column;gap:10px;max-width:620px}
+.hero h1{color:var(--blanco);font-size:clamp(46px,7.6vw,146px)}
 .hero h1 span{display:block;overflow:hidden}
 .hero h1 b{display:block;font-weight:inherit;animation:rise .9s var(--ease) both}
 .hero h1 span:nth-child(2) b{animation-delay:.12s}
 @keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.plate{background:var(--rojo);box-shadow:0 0 0 10px var(--rojo)}
 .hero .foot{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between}
 .hero .lead{font-size:clamp(17px,1.5vw,22px);line-height:1.35;max-width:26em;font-weight:500}
 .hero .cta{display:flex;flex-wrap:wrap;gap:12px}
-@media (max-width:760px){.hero{justify-content:flex-start;min-height:100svh;padding-block:104px 32px}.hero .foot{margin-top:auto}}
+.reel-fb{display:none}
+@media (max-width:760px){.hero{justify-content:flex-start;min-height:100svh;padding-block:100px 28px}.hero .foot{margin-top:auto}}
+.no-gl .reel-fb{display:block;width:100%;max-width:720px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:var(--negro)}
 
 /* cinta */
 .tape{background:var(--negro);color:var(--blanco);overflow:hidden;padding-block:18px;border-block:1px solid rgba(255,255,255,.14)}
@@ -82,28 +86,29 @@ main,footer{position:relative;z-index:1}
 /* manifiesto */
 .mani{background:var(--papel);padding-block:clamp(72px,10vw,150px)}
 .mani .grid>*{min-width:0}
-.mani .grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(32px,5vw,80px);align-items:end}
+.mani .grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(32px,5vw,80px);align-items:end}
 .mani .k{color:var(--rojo-texto);margin-bottom:22px}
-.mani h2{color:var(--rojo);font-size:clamp(40px,7.4vw,124px)}
-.mani .txt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:20px 40px;margin-top:40px;color:var(--gris-texto);font-size:18px;line-height:1.5;max-width:900px}
+.mani h2{color:var(--rojo);font-size:clamp(40px,7vw,118px)}
+.mani .sub{font-size:clamp(26px,3.3vw,54px);margin-top:14px;max-width:16em;text-wrap:balance}
+.mani .txt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:20px 40px;margin-top:36px;color:var(--gris-texto);font-size:18px;line-height:1.5;max-width:900px}
 .duo{position:relative;border-radius:8px;overflow:hidden;background:var(--negro);aspect-ratio:4/5;max-width:100%}
 .duo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.25) brightness(1.1)}
 .duo::after{content:"";position:absolute;inset:0;background:var(--rojo);mix-blend-mode:multiply}
 .duo figcaption{position:absolute;z-index:1;left:16px;bottom:14px;color:var(--blanco);font-size:10px}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin-top:clamp(48px,7vw,96px);border-top:1px solid var(--negro)}
-.facts li{padding:22px 24px 0 0;display:flex;flex-direction:column;gap:8px}
-.facts .tm{font-size:clamp(30px,3.2vw,44px);color:var(--negro)}
-.facts p{color:var(--gris-texto);font-size:15px;max-width:22em}
-@media (max-width:860px){.mani .grid{grid-template-columns:1fr}.duo{aspect-ratio:16/10}}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px clamp(24px,3vw,48px);margin-top:clamp(48px,7vw,96px);border-top:1px solid var(--negro);padding-top:28px}
+.facts li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 18px;align-items:start}
+.facts .ic{grid-row:span 2;width:64px;height:64px}
+.facts .tm{font-size:clamp(28px,2.7vw,40px);color:var(--negro);align-self:center}
+.facts p{color:var(--gris-texto);font-size:15px;max-width:24em;grid-column:2}
+@media (max-width:860px){.mani .grid{grid-template-columns:1fr}.duo{aspect-ratio:16/10}.facts{grid-template-columns:1fr}}
 
-/* reel */
-.reel{height:560vh;color:var(--blanco)}
-.reel .stick{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding-block:96px 28px;pointer-events:none}
+/* casos */
+.reel{height:520vh;color:var(--blanco)}
+.reel .stick{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding-block:92px 28px;pointer-events:none}
 .reel .stick>*{pointer-events:auto}
-.reel .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.reel .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap}
 .reel h2{font-size:clamp(44px,6vw,96px);color:var(--rojo)}
-.reel .head p{max-width:30em;color:var(--gris-claro);font-size:15px}
-.hit{justify-self:center;align-self:center;width:min(56vw,640px);height:min(50vh,460px);border-radius:8px;cursor:pointer}
+.hit{justify-self:center;align-self:center;width:min(52vw,820px);height:min(48vh,460px);border-radius:8px;cursor:pointer}
 .reel .cap{display:flex;justify-content:space-between;align-items:flex-end;gap:20px 32px;flex-wrap:wrap}
 .cap .now{display:flex;flex-direction:column;gap:6px;min-width:0}
 .cap .n{color:var(--lima);font-variant-numeric:tabular-nums}
@@ -112,51 +117,107 @@ main,footer{position:relative;z-index:1}
 .cap .ctl{display:flex;gap:10px;align-items:center}
 .rnd{width:48px;height:48px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--blanco);display:grid;place-items:center;font-size:18px;transition:background .3s var(--ease),color .3s var(--ease)}
 .rnd:hover{background:var(--blanco);color:var(--negro)}
-.works{position:absolute;right:var(--gut-r);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2px;text-align:right}
-.works button{font-family:var(--ext);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--gris-claro);padding:7px 0 7px 12px;display:block;width:100%;text-align:right}
-.works button[aria-current="true"]{color:var(--rojo)}
+.works{display:flex;flex-wrap:wrap;gap:4px 22px;justify-content:flex-end;max-width:640px}
+.works button{font-family:var(--ext);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--gris-claro);padding:8px 0;border-bottom:1.5px solid transparent}
+.works button[aria-current="true"]{color:var(--blanco);border-color:var(--rojo)}
 .works button:hover{color:var(--blanco)}
 .works img{display:none}
 @media (max-width:980px){.works{display:none}.hit{width:86vw}}
-/* sin WebGL: el reel pasa a grilla de pósters */
 .no-gl #gl{display:none}
 .no-gl .reel{height:auto;background:var(--negro)}
-.no-gl .reel .stick{position:static;height:auto;display:flex;flex-direction:column;gap:32px;padding-block:96px 72px}
+.no-gl .reel .stick{position:static;height:auto;display:block;padding-block:96px 72px}
 .no-gl .hit,.no-gl .cap{display:none}
-.no-gl .works{position:static;transform:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;text-align:left}
-.no-gl .works button{text-align:left;padding:0;color:var(--blanco);font-size:11px}
-.no-gl .works img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;margin-bottom:10px;filter:grayscale(1) contrast(1.2)}
+.no-gl .works{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;max-width:none;margin-top:32px;width:100%}
+.no-gl .works button{text-align:left;padding:0;color:var(--blanco);font-size:11px;border:0;width:100%}
+.no-gl .works img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;margin-bottom:10px}
 
-/* servicios */
+/* servicios: índice de filas */
 .serv{background:var(--rojo);padding-block:clamp(72px,10vw,150px)}
 .sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,26em);gap:24px 48px;align-items:end;margin-top:26px}
 .sec-head h2{font-size:clamp(52px,9vw,150px);color:var(--blanco)}
 .sec-head p{font-size:18px;line-height:1.45;font-weight:500}
 @media (max-width:860px){.sec-head{grid-template-columns:1fr}}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:clamp(36px,5vw,64px);perspective:1400px}
-.card{border:1.5px solid var(--negro);border-radius:16px;padding:22px 22px 26px;min-height:168px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;transform-style:preserve-3d;transition:transform .5s var(--ease),background .35s var(--ease),color .35s var(--ease);will-change:transform}
-.card h3{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:34px;line-height:1}
-.card p{font-size:15px;line-height:1.4;max-width:20em}
-.card:hover{background:var(--negro);color:var(--blanco)}
+.svc{margin-top:clamp(36px,5vw,64px);border-bottom:1.5px solid var(--negro)}
+.svc li{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,22em) auto;gap:8px clamp(16px,2.4vw,36px);align-items:center;border-top:1.5px solid var(--negro);padding:14px clamp(8px,1.4vw,22px);margin-inline:calc(-1 * clamp(8px,1.4vw,22px));transition:background .3s var(--ease),color .3s var(--ease),padding-left .45s var(--ease)}
+.svc .ic{background:var(--negro);transition:background .3s var(--ease),color .3s var(--ease),transform .45s var(--ease)}
+.svc h3{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:clamp(38px,5.4vw,84px);line-height:1;padding-top:.06em}
+.svc h3 small{font-family:var(--ext);font-weight:400;font-size:11px;letter-spacing:.16em;vertical-align:.9em;margin-left:14px;white-space:nowrap}
+.svc p{font-size:16px;line-height:1.4;font-weight:500}
+.svc .ar{font-family:var(--ext);font-size:20px;transition:transform .45s var(--ease)}
+.svc li:hover{background:var(--negro);color:var(--blanco);padding-left:calc(clamp(8px,1.4vw,22px) + 18px)}
+.svc li:hover .ic{background:var(--lima);color:var(--negro);transform:rotate(-12deg) scale(1.08)}
+.svc li:hover .ar{transform:translateX(8px)}
+@media (max-width:760px){.svc li{grid-template-columns:auto minmax(0,1fr)}.svc .ic{width:44px;height:44px}.svc p{grid-column:2}.svc .ar{display:none}.svc h3 small{display:block;margin:6px 0 0;vertical-align:0}}
 
-/* método */
-.met{background:var(--carbon);color:var(--blanco);padding-block:clamp(72px,10vw,150px)}
-.met .sec-head h2{color:var(--rojo)}
+/* método: ascenso a la cumbre */
+.met{background:var(--carbon);color:var(--blanco);padding-block:clamp(72px,10vw,150px) clamp(64px,8vw,120px);overflow:hidden}
+.met .sec-head h2{color:var(--blanco)}
+.met .sec-head h2 em{font-style:normal;color:var(--rojo)}
 .met .sec-head p{color:var(--gris-claro);font-weight:400}
-.caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:clamp(36px,5vw,64px)}
-.caps li{display:flex;flex-direction:column;gap:18px}
-.pill{border-radius:999px;color:var(--negro);padding:20px 28px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.pill b{font-family:var(--display);font-weight:600;font-size:40px;line-height:1;text-transform:uppercase}
-.pill span{font-size:10px}
-.caps h3{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:30px;line-height:1;padding-inline:8px}
-.caps p{color:var(--gris-claro);font-size:15px;padding-inline:8px;max-width:22em}
-.caps .n{color:var(--rojo);padding-inline:8px}
+.climb{position:relative;height:clamp(250px,33vw,480px);margin-top:clamp(28px,4vw,56px)}
+.climb svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.climb .route{fill:none;stroke:var(--blanco);stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:12px}
+.node .ic{width:clamp(44px,4.6vw,68px);height:clamp(44px,4.6vw,68px);color:var(--negro);box-shadow:0 0 0 6px var(--carbon)}
+.node b{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(20px,2.2vw,34px);line-height:1;position:absolute;left:calc(100% + 12px);white-space:nowrap}
+.node.top .ic{background:var(--lima)}
+.node.top b{color:var(--lima)}
+.met.in .node{animation:pop .6s var(--ease) both;animation-delay:calc(var(--i) * .16s)}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(.2)}to{transform:translate(-50%,-50%)}}
+@media (max-width:760px){.node b{display:none}}
+.stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:-1px}
+.stages li{background:var(--carbon-2);border-radius:16px;padding:22px 22px 26px;display:flex;flex-direction:column;gap:14px;border-top:4px solid var(--c)}
+.stages .e{color:var(--c)}
+.stages img{height:40px;width:auto;align-self:flex-start;display:block}
+.stages h3{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:clamp(34px,3.4vw,52px);line-height:1}
+.stages p{font-size:15px;line-height:1.45;color:var(--papel)}
+.stages ul{display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:6px}
+.stages ul li{background:none;border:0;border-radius:0;padding:0 0 0 18px;position:relative;font-size:14px;color:var(--gris-claro);display:block}
+.stages ul li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.stages .e2{color:#ff5a59}
+@media (max-width:1040px){.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.stages{grid-template-columns:1fr}}
+.loop{display:flex;align-items:center;gap:16px;margin-top:22px;color:var(--gris-claro);font-size:15px}
+.loop .ic{background:none;box-shadow:inset 0 0 0 1.5px var(--blanco);width:48px;height:48px}
+.met.in .loop .ic svg{animation:turn 6s linear infinite}
+@keyframes turn{to{transform:rotate(360deg)}}
+
+/* vlog */
+.vlog{background:var(--papel);padding-block:clamp(72px,10vw,150px)}
+.vlog .sec-head h2{color:var(--rojo)}
+.vlog .sec-head p{color:var(--gris-texto);font-weight:400}
+.vlog .k{color:var(--rojo-texto)}
+.news{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(20px,2.4vw,36px) clamp(16px,2vw,28px);margin-top:clamp(36px,5vw,64px)}
+.nw{display:flex;flex-direction:column;gap:14px;min-width:0}
+.nw .media{position:relative;border-radius:8px;overflow:hidden;background:var(--negro)}
+.nw .media video,.nw .media img{display:block;width:100%;height:100%;object-fit:cover}
+.nw .tag{position:absolute;left:12px;top:12px;background:var(--negro);color:var(--blanco);padding:6px 10px;border-radius:6px;font-size:10px;display:flex;gap:8px;align-items:center}
+.nw .tag svg{width:12px;height:12px;fill:currentColor}
+.nw .meta{color:var(--rojo-texto);font-size:10px}
+.nw h3{font-family:var(--display);font-weight:600;text-transform:uppercase;line-height:.98;font-size:clamp(28px,2.6vw,40px);text-wrap:balance}
+.nw p{color:var(--gris-texto);font-size:15px;line-height:1.5;max-width:34em}
+.nw .more{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin-top:auto;padding-top:6px;color:var(--negro)}
+.nw-a{grid-column:span 8}.nw-a .media{aspect-ratio:16/9}.nw-a h3{font-size:clamp(34px,4.4vw,68px)}
+.nw-b{grid-column:span 4}.nw-b .media{aspect-ratio:4/5}
+.nw-c{grid-column:span 5;background:var(--negro);color:var(--blanco);border-radius:8px;padding:clamp(22px,2.6vw,36px);justify-content:space-between}
+.nw-c .meta{color:var(--lima)}.nw-c p{color:var(--gris-claro)}.nw-c .more{color:var(--blanco)}
+.nw-c .fig{font-family:var(--display);font-weight:600;font-size:clamp(84px,10vw,160px);line-height:.86;color:var(--rojo)}
+.nw-c blockquote{margin:0;font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(24px,2.3vw,34px);line-height:1.05}
+.nw-d{grid-column:span 7;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:clamp(16px,2vw,28px);align-items:stretch}
+.nw-d .media{aspect-ratio:9/14}
+.nw-d .body{display:flex;flex-direction:column;gap:14px;min-width:0}
+.nw-d .cols{columns:1;color:var(--gris-texto);font-size:15px;line-height:1.55}
+.nw-d .cols::first-letter{font-family:var(--display);font-weight:600;font-size:3.4em;line-height:.8;float:left;padding:.08em .12em 0 0;color:var(--rojo)}
+@media (max-width:900px){.nw-a,.nw-b,.nw-c,.nw-d{grid-column:1/-1}.nw-b .media{aspect-ratio:4/3}}
+@media (max-width:520px){.nw-d{grid-template-columns:1fr}.nw-d .media{aspect-ratio:4/5}}
+.demo{display:inline-flex;gap:10px;align-items:center;border:1.5px solid var(--negro);border-radius:999px;padding:6px 12px;font-size:10px;margin-top:22px}
 
 /* contacto */
 .cont{padding-block:clamp(88px,12vw,180px) 0;min-height:92svh;display:flex;flex-direction:column;justify-content:space-between;gap:64px}
 .cont h2{font-size:min(14vw,250px);color:var(--blanco);line-height:.86}
 .cont .row{display:flex;flex-wrap:wrap;gap:28px 64px;align-items:flex-end;justify-content:space-between;margin-top:28px}
 .cont .lead{font-size:clamp(18px,1.7vw,24px);line-height:1.35;font-weight:500;max-width:22em}
+.cont .go{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
 .cont dl{display:flex;flex-wrap:wrap;gap:20px 48px;margin:0;min-width:0;max-width:100%;background:var(--rojo);box-shadow:0 0 0 10px var(--rojo)}
 .cont dt{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:10px;margin-bottom:6px}
 .cont dd{margin:0;overflow-wrap:anywhere;font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:30px;line-height:1;color:var(--blanco)}
@@ -173,7 +234,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 .lb h3{font-size:clamp(28px,4vw,48px)}
 .lb video{width:100%;height:100%;min-height:0;object-fit:contain;background:#000;border-radius:8px}
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tape div,.hero h1 b{animation:none}.card{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tape div,.hero h1 b,.met.in .node,.met.in .loop .ic svg{animation:none}.svc li,.svc .ic{transition:none}}
 </style>
 <!--/HEAD-->
 </head>
@@ -185,11 +246,12 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   <a href="#inicio" aria-label="Vértice, inicio"><img src="assets/img/logo-blanco.png" alt="Vértice"></a>
   <ul>
     <li><a href="#manifiesto">Estudio</a></li>
-    <li><a href="#reel">Reel</a></li>
+    <li><a href="#casos">Casos</a></li>
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#metodo">Método</a></li>
+    <li><a href="#vlog">Vlog</a></li>
   </ul>
-  <a class="btn btn-l" href="#contacto">Hablemos <i>→</i></a>
+  <a class="btn btn-l" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Hablemos <i>→</i></a>
 </header>
 
 <main>
@@ -199,18 +261,19 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <p class="nx">Content Marketing Studio · Buenos Aires</p>
   </div>
   <h1 class="tg"><span><b>Strategy that inspires.</b></span><span><b>Creativity that performs.</b></span></h1>
+  <video class="reel-fb" src="assets/video/reel-loop.mp4" poster="assets/video/reel-loop.jpg" muted loop playsinline preload="none" aria-label="Reel de Vértice"></video>
   <div class="foot">
     <p class="lead plate">No hacemos publicidad tradicional, hacemos contenido relevante y que convierte.</p>
     <div class="cta">
-      <a class="btn btn-k" href="#contacto">Hablemos <i>→</i></a>
-      <a class="btn btn-o" href="#reel">Ver el reel <i>↓</i></a>
+      <a class="btn btn-k" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Hablemos <i>→</i></a>
+      <button class="btn btn-o" id="playReel">Ver el reel con sonido <i>▶</i></button>
     </div>
   </div>
 </section>
 
 <div class="tape" aria-hidden="true"><div>
-  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Video vertical</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
-  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Video vertical</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
+  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
+  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
 </div></div>
 
 <section id="manifiesto" class="mani">
@@ -218,54 +281,53 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <div class="grid">
       <div>
         <p class="nx k">Manifiesto</p>
-        <h2 class="tg">Nacimos del encuentro entre dos mundos.</h2>
+        <h2 class="tg">Nacimos del encuentro de dos mundos</h2>
+        <p class="tm sub">y desde el know how en publicidad y entretenimientos.</p>
         <div class="txt">
           <p>La visión estratégica y la creatividad para dar vida a ideas que conectan con las audiencias y transforman marcas.</p>
           <p>Transformamos información en ideas relevantes y accionables. Títulos que afirman, cifras con fuente y nada de relleno.</p>
         </div>
       </div>
-      <figure class="duo" style="margin:0">
+      <figure class="duo">
         <video src="assets/video/rodaje.mp4" poster="assets/video/rodaje.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Equipo de Vértice en un rodaje"></video>
         <figcaption class="nx">Rodaje · detrás de escena</figcaption>
       </figure>
     </div>
     <ul class="facts">
-      <li><span class="tm">Servicio uno a uno</span><p>Somos una agencia de personas: un equipo híbrido que te conoce por tu nombre.</p></li>
-      <li><span class="tm">Boutique, con talento de grande</span><p>Agencia boutique con la experiencia de las grandes estructuras.</p></li>
-      <li><span class="tm">End-to-end</span><p>Creadores de experiencias de marketing de punta a punta, especialmente en el ecosistema digital.</p></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="9" r="2.5"></circle><path d="M3 20c0-3.5 3-6 6-6s6 2.5 6 6M15 14.5c3 0 6 2 6 5"></path></svg></span><span class="tm">Servicio uno a uno</span><p>Somos una agencia de personas: un equipo híbrido que te conoce por tu nombre.</p></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 20l6.5-11 3.5 6 2.5-4L21 20z"></path><path d="M15.5 11V4l3.5 1.5-3.5 1.5"></path></svg></span><span class="tm">Boutique, con talento de grande</span><p>Agencia boutique con la experiencia de las grandes estructuras.</p></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span><span class="tm">End-to-end</span><p>Creadores de experiencias de marketing de punta a punta, especialmente en el ecosistema digital.</p></li>
     </ul>
   </div>
 </section>
 
-<section id="reel" class="reel dk" aria-label="Reel de trabajos">
+<section id="casos" class="reel dk" aria-label="Casos">
   <div class="stick wrap">
     <div class="head">
-      <h2 class="tg">Reel 26</h2>
-      <p>Seguí bajando para girar el anillo. La pieza del frente pasa de duotono a color; tocala para verla completa.</p>
+      <h2 class="tg">Casos</h2>
+      <ol class="works" id="works">
+        <li><button data-id="aftermovie" data-t="After Movie" data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
+        <li><button data-id="vecinos" data-t="Vecinos Felices" data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
+        <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
+        <li><button data-id="verduras" data-t="Save The Verduras" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
+        <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
+        <li><button data-id="auren" data-v="1" data-t="Auren+" data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
+        <li><button data-id="soyrada" data-t="Soy Rada Show" data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
+      </ol>
     </div>
-    <button class="hit" id="hit" aria-label="Ver la pieza del frente"></button>
+    <button class="hit" id="hit" aria-label="Ver el caso del centro"></button>
     <div class="cap">
       <div class="now" aria-live="polite">
-        <span class="nx n" id="capN">01 / 08</span>
+        <span class="nx n" id="capN">01 / 07</span>
         <h3 class="tg" id="capT">After Movie</h3>
         <span class="nx c" id="capC">Eventos</span>
       </div>
       <div class="ctl">
-        <button class="rnd" id="prev" aria-label="Pieza anterior">←</button>
-        <button class="rnd" id="next" aria-label="Pieza siguiente">→</button>
-        <button class="btn btn-w" id="open">Ver clip <i>→</i></button>
+        <button class="rnd" id="prev" aria-label="Caso anterior">←</button>
+        <button class="rnd" id="next" aria-label="Caso siguiente">→</button>
+        <button class="btn btn-w" id="open">Ver caso <i>→</i></button>
       </div>
     </div>
-    <ol class="works" id="works">
-      <li><button data-id="aftermovie" data-o="L" data-t="After Movie" data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
-      <li><button data-id="auren" data-o="P" data-t="Auren+" data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
-      <li><button data-id="bakeoff" data-o="L" data-t="Bake Off Famosos" data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
-      <li><button data-id="album" data-o="P" data-t="El Álbum" data-c="Video vertical · Telefe"><img src="assets/video/album.jpg" alt="" loading="lazy">El Álbum</button></li>
-      <li><button data-id="dimaria" data-o="L" data-t="Di María × Coca-Cola" data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
-      <li><button data-id="fotlibre" data-o="P" data-t="Fot Libre" data-c="Cobertura de evento"><img src="assets/video/fotlibre.jpg" alt="" loading="lazy">Fot Libre</button></li>
-      <li><button data-id="saks" data-o="L" data-t="Saks" data-c="Contenido IA"><img src="assets/video/saks.jpg" alt="" loading="lazy">Saks</button></li>
-      <li><button data-id="soyrada" data-o="L" data-t="Soy Rada Show" data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
-    </ol>
   </div>
 </section>
 
@@ -276,19 +338,19 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       <h2 class="tg">Nuestros servicios</h2>
       <p>De estrategia a paid media, en un solo estudio.</p>
     </div>
-    <ul class="cards" id="cards">
-      <li class="card"><h3>Estrategia</h3><p>Dónde jugar y por qué: el plan antes de la pieza.</p></li>
-      <li class="card"><h3>Creatividad</h3><p>Ideas que responden primero a un porqué.</p></li>
-      <li class="card"><h3>Producción</h3><p>Rodaje, edición y postproducción con equipo propio.</p></li>
-      <li class="card"><h3>Social media</h3><p>Calendario, community y contenido para cada red.</p></li>
-      <li class="card"><h3>Video vertical</h3><p>Reels y shorts pensados para el scroll.</p></li>
-      <li class="card"><h3>Podcast</h3><p>Formato de audio y video con voz propia.</p></li>
-      <li class="card"><h3>Contenido IA</h3><p>Producción asistida con criterio editorial.</p></li>
-      <li class="card"><h3>Datos</h3><p>Información convertida en decisiones accionables.</p></li>
-      <li class="card"><h3>Contenido</h3><p>Notas, newsletters y piezas de marca.</p></li>
-      <li class="card"><h3>Eventos</h3><p>Cobertura y activaciones que se vuelven contenido.</p></li>
-      <li class="card"><h3>Web</h3><p>Sitios y landings que sostienen la campaña.</p></li>
-      <li class="card"><h3>Paid media</h3><p>Pauta con la misma estrategia que el contenido.</p></li>
+    <ul class="svc">
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span><h3>Estrategia</h3><p>Dónde jugar y por qué: el plan antes de la pieza.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2v.5h5V16c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg></span><h3>Creatividad</h3><p>Ideas que responden primero a un porqué.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"></rect><path d="M16 11l5-3v8l-5-3z"></path></svg></span><h3>Producción</h3><p>Rodaje, edición y postproducción con equipo propio.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"></path><path d="M8 9.5h8M8 12.5h5"></path></svg></span><h3>Social media</h3><p>Calendario, community y contenido para cada red.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"></path></svg></span><h3>Live streaming <small>De punta a punta</small></h3><p>Transmisiones en vivo resueltas de punta a punta.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"></path></svg></span><h3>Podcast</h3><p>Formato de audio y video con voz propia.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"></path><path d="M18.5 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg></span><h3>Contenido IA</h3><p>Producción asistida con criterio editorial.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V5M16 20v-8M21 20H3"></path></svg></span><h3>Datos</h3><p>Información convertida en decisiones accionables.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4M9 12h6M9 15.5h6M9 8.5h2"></path></svg></span><h3>Contenido</h3><p>Notas, newsletters y piezas de marca.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4z"></path><path d="M14.5 6v2M14.5 11v2M14.5 16v2"></path></svg></span><h3>Eventos</h3><p>Cobertura y activaciones que se vuelven contenido.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17"></path></svg></span><h3>Web</h3><p>Sitios y landings que sostienen la campaña.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10v4h3l7 4V6l-7 4z"></path><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span><h3>Paid media</h3><p>Pauta con la misma estrategia que el contenido.</p><span class="ar" aria-hidden="true">→</span></li>
     </ul>
   </div>
 </section>
@@ -297,15 +359,74 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   <div class="wrap">
     <span class="rule"></span>
     <div class="sec-head">
-      <h2 class="tg">Vértice CoCreate</h2>
-      <p>Nuestra metodología en cuatro fases: del dato a la pieza publicada, y de vuelta al dato.</p>
+      <h2 class="tg">Vértice <em>CoCreate</em></h2>
+      <p>Cómo creamos contenido que funciona: cuatro etapas, un mismo método, y un objetivo en la cumbre.</p>
     </div>
-    <ol class="caps">
-      <li><span class="nx n">Fase 1</span><div class="pill" style="background:var(--hub)"><b>Hub</b><span class="nx">Data · Discovery</span></div><h3>Entender</h3><p>Workshops y entrevistas de descubrimiento con el cliente.</p></li>
-      <li><span class="nx n">Fase 2</span><div class="pill" style="background:var(--lens)"><b>Lens</b><span class="nx">Strategy · Creativity</span></div><h3>Transformar</h3><p>Información convertida en ideas relevantes y accionables.</p></li>
-      <li><span class="nx n">Fase 3</span><div class="pill" style="background:var(--spark)"><b>Spark</b><span class="nx">Management · Content</span></div><h3>Conectar</h3><p>Contenido producido y gestionado para cada audiencia.</p></li>
-      <li><span class="nx n">Fase 4</span><div class="pill" style="background:var(--aon)"><b>AON</b><span class="nx">Visualization · Optimization</span></div><h3>Impactar</h3><p>Always on: medimos, aprendemos y optimizamos.</p></li>
+    <div class="climb" aria-hidden="true">
+      <svg viewBox="0 -60 520 510" preserveAspectRatio="none">
+        <path fill="#1f1f1f" d="M0,447 52,359 91,307 112,285 145,261 240,216 305,169 367,105 427,15 443,0 452,0 465,8 520,56 L520,450 L0,450 Z"></path>
+        <path fill="#2a2a2a" d="M427,15 443,0 452,0 465,8 520,56 520,120 470,70 452,40 440,52 Z"></path>
+        <polyline class="route" points="0,447 60,348 170,249 280,187 380,85 447,0"></polyline>
+      </svg>
+      <span class="node" style="left:11.5%;top:80%;--i:0"><span class="ic" style="background:var(--hub)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg></span><b>Entender</b></span>
+      <span class="node" style="left:32.7%;top:60.6%;--i:1"><span class="ic" style="background:var(--lens)"><svg viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></span><b>Transformar</b></span>
+      <span class="node" style="left:53.8%;top:48.4%;--i:2"><span class="ic" style="background:var(--spark)"><svg viewBox="0 0 24 24"><path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"></path></svg></span><b>Conectar</b></span>
+      <span class="node" style="left:73%;top:28.5%;--i:3"><span class="ic" style="background:var(--aon);color:var(--blanco)"><svg viewBox="0 0 24 24"><path d="M14 4.5c3-1.2 5.3-1.3 5.8-.8s.4 2.8-.8 5.8L13 16 8 11z"></path><path d="M8 11l-3.5-.5L7 8h4M13 16l.5 3.5L16 17v-4M8.5 15.5L5 19"></path><circle cx="15.5" cy="8.5" r="1.3"></circle></svg></span><b>Impactar</b></span>
+      <span class="node top" style="left:86%;top:11.8%;--i:4"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 20l6.5-11 3.5 6 2.5-4L21 20z"></path><path d="M15.5 11V4l3.5 1.5-3.5 1.5"></path></svg></span><b>Objetivo</b></span>
+    </div>
+    <ol class="stages">
+      <li style="--c:var(--hub)"><span class="nx e">Etapa 01 · Entender</span><img src="assets/img/cocreate-hub.svg" alt="Hub"><p>Diagnosticamos la marca y su contexto con datos y workshops de descubrimiento junto al cliente.</p><ul><li>Diagnóstico digital y de marca</li><li>Brief colaborativo</li></ul></li>
+      <li style="--c:var(--lens)"><span class="nx e">Etapa 02 · Transformar</span><img src="assets/img/cocreate-lens.svg" alt="Lens"><p>Convertimos ese diagnóstico en estrategia e ideas: territorios, conceptos y plan de contenido.</p><ul><li>Territorio de marca y mapa de contenidos</li><li>Conceptos creativos con design thinking</li></ul></li>
+      <li style="--c:var(--spark)"><span class="nx e">Etapa 03 · Conectar</span><img src="assets/img/cocreate-spark.svg" alt="Spark"><p>Producimos y gestionamos el contenido en cada canal, con la voz y la identidad de la marca.</p><ul><li>Producción audiovisual y digital</li><li>Gestión de redes y comunidad</li></ul></li>
+      <li style="--c:var(--aon)"><span class="nx e e2">Etapa 04 · Impactar</span><img src="assets/img/cocreate-aon.svg" alt="AON"><p>Medimos, aprendemos y optimizamos: el contenido queda siempre encendido.</p><ul><li>Tableros y lectura de resultados</li><li>Learning &amp; optimization continuo</li></ul></li>
     </ol>
+    <p class="loop"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"></path><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"></path></svg></span>Optimizar: cada ciclo vuelve al dato y empieza de nuevo.</p>
+  </div>
+</section>
+
+<section id="vlog" class="vlog">
+  <div class="wrap">
+    <span class="rule"></span>
+    <div class="sec-head">
+      <div>
+        <p class="nx k" style="margin-bottom:14px">Noticias de Vértice</p>
+        <h2 class="tg">Vlog</h2>
+      </div>
+      <p>Clientes nuevos, premios, festivales, research y datos. Un episodio por novedad, contado por el equipo, y la nota para leerla con calma.</p>
+    </div>
+    <p class="nx demo">Boceto · notas de ejemplo</p>
+    <div class="news">
+      <article class="nw nw-a">
+        <div class="media"><video src="assets/video/vlog-festival.mp4" poster="assets/video/vlog-festival.jpg" muted loop playsinline preload="none" data-auto aria-label="Video de ejemplo"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Ep. 03</span></div>
+        <span class="nx meta">Festival · [Fecha] · [mm:ss]</span>
+        <h3>Crónica de [festival]</h3>
+        <p>Tres días, charlas y lo que se viene para el contenido. El episodio completo y la nota con los apuntes del equipo.</p>
+        <span class="more">Ver episodio →</span>
+      </article>
+      <article class="nw nw-b">
+        <div class="media"><img src="assets/img/vlog-cliente.jpg" alt="Foto de ejemplo: producto de un cliente" loading="lazy"><span class="nx tag">Foto · Ep. 01</span></div>
+        <span class="nx meta">Nuevo cliente · [Fecha]</span>
+        <h3>[Marca] se suma al estudio</h3>
+        <p>Quién es, qué problema vino a resolver y cómo lo vamos a encarar.</p>
+        <span class="more">Leer la nota →</span>
+      </article>
+      <article class="nw nw-c">
+        <span class="nx meta">Dato · [Fecha] · [N] min de lectura</span>
+        <p class="fig">[00]%</p>
+        <blockquote>El dato que cambia cómo planificamos</blockquote>
+        <p>Una cifra con fuente y qué hacer con ella el lunes. Nota editorial, sin video.</p>
+        <span class="more">Leer la nota →</span>
+      </article>
+      <article class="nw nw-d">
+        <div class="media"><video src="assets/video/vlog-research.mp4" poster="assets/video/vlog-research.jpg" muted loop playsinline preload="none" data-auto aria-label="Video vertical de ejemplo"></video><span class="nx tag"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z"></path></svg>Video · Ep. 04</span></div>
+        <div class="body">
+          <span class="nx meta">Research · [Fecha] · [mm:ss]</span>
+          <h3>Los hallazgos de [estudio]</h3>
+          <p class="cols">Los tres datos clave del estudio, en un minuto cada uno. [Texto editorial de la nota: contexto, metodología y qué significa para las marcas. Dos o tres párrafos que acompañan al video.]</p>
+          <span class="more">Ver episodio y nota →</span>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -314,9 +435,11 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <span class="rule"></span>
     <h2 class="tg" style="margin-top:26px">¿Hablamos?</h2>
     <div class="row">
-      <p class="lead plate">Contanos qué querés mover y te respondemos con un plan.</p>
+      <div class="go">
+        <p class="lead plate">Contanos qué necesita tu marca y armamos el recorrido juntos.</p>
+        <a class="btn btn-k" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Agendar una reunión <i>→</i></a>
+      </div>
       <dl>
-        <div><dt>WhatsApp</dt><dd>[Número]</dd></div>
         <div><dt>Estudio</dt><dd>Buenos Aires, Argentina</dd></div>
         <div><dt>Web</dt><dd>verticestudios.com</dd></div>
       </dl>
@@ -335,7 +458,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 <dialog id="lb" aria-labelledby="lbT">
   <div class="lb">
     <div class="bar"><h3 class="tg" id="lbT"></h3><button class="rnd" id="lbX" aria-label="Cerrar">✕</button></div>
-    <video id="lbV" controls loop playsinline muted></video>
+    <video id="lbV" controls playsinline></video>
   </div>
 </dialog>
 
@@ -349,26 +472,27 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   var smooth = function (t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
-  var reel = $('reel'), hero = $('inicio'), cont = $('contacto');
+  var reel = $('casos'), hero = $('inicio'), cont = $('contacto');
   var btns = [].slice.call(document.querySelectorAll('#works button'));
-  var WORKS = btns.map(function (b) { return { id: b.dataset.id, o: b.dataset.o, t: b.dataset.t, c: b.dataset.c, btn: b }; });
-  var N = WORKS.length, STEP = Math.PI * 2 / N, current = -1, glOn = false;
+  var WORKS = btns.map(function (b) { return { id: b.dataset.id, v: !!b.dataset.v, t: b.dataset.t, c: b.dataset.c, btn: b }; });
+  var N = WORKS.length, current = -1, glOn = false;
 
   /* ---------- visor ---------- */
   var lb = $('lb'), lbV = $('lbV');
-  function openWork(i) {
-    var w = WORKS[i]; if (!w) return;
-    $('lbT').textContent = w.t;
-    lbV.src = 'assets/video/' + w.id + '.mp4';
+  function openVideo(title, src, sound) {
+    $('lbT').textContent = title;
+    lbV.muted = !sound; lbV.loop = !sound; lbV.src = src;
     if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
     var p = lbV.play(); if (p && p.catch) p.catch(function () {});
   }
+  function openWork(i) { var w = WORKS[i]; if (w) openVideo(w.t, 'assets/video/' + w.id + '.mp4', false); }
   function closeLb() { if (lb.close) lb.close(); else lb.removeAttribute('open'); }
   lb.addEventListener('close', function () { lbV.pause(); lbV.removeAttribute('src'); lbV.load(); });
   lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
   $('lbX').addEventListener('click', closeLb);
+  $('playReel').addEventListener('click', function () { openVideo('Reel Vértice', 'assets/video/reel.mp4', true); });
 
-  /* ---------- navegación del reel ---------- */
+  /* ---------- navegación de casos ---------- */
   function setCurrent(i) {
     if (i === current) return; current = i;
     var w = WORKS[i];
@@ -390,16 +514,17 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   $('hit').addEventListener('click', function () { openWork(Math.max(current, 0)); });
   setCurrent(0);
 
-  /* ---------- tarjetas con inclinación ---------- */
-  if (!RM && matchMedia('(hover:hover)').matches) {
-    [].forEach.call(document.querySelectorAll('.card'), function (c) {
-      c.addEventListener('pointermove', function (e) {
-        var r = c.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-        c.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (-y * 14) + 'deg) translateZ(14px)';
+  /* ---------- videos del vlog y método: se activan al entrar en pantalla ---------- */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.target.tagName === 'VIDEO') {
+          if (e.isIntersecting && !RM) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); } else e.target.pause();
+        } else if (e.isIntersecting) e.target.classList.add('in');
       });
-      c.addEventListener('pointerleave', function () { c.style.transform = ''; });
-    });
+    }, { threshold: .25 });
+    [].forEach.call(document.querySelectorAll('video[data-auto]'), function (v) { io.observe(v); });
+    io.observe($('metodo'));
   }
 
   /* ---------- WebGL ---------- */
@@ -407,7 +532,11 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   try {
     if (!THREE) throw new Error('three');
     renderer = new THREE.WebGLRenderer({ canvas: $('gl'), antialias: true, powerPreference: 'high-performance' });
-  } catch (e) { document.documentElement.classList.add('no-gl'); return; }
+  } catch (e) {
+    document.documentElement.classList.add('no-gl');
+    var fb = document.querySelector('.reel-fb'); if (fb && !RM) { var q = fb.play(); if (q && q.catch) q.catch(function () {}); }
+    return;
+  }
   glOn = true;
 
   var ROJO = new THREE.Color('#f10a09'), NEGRO = new THREE.Color('#000000');
@@ -447,41 +576,49 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   terrain.position.set(0, -3.4, -9);
   scene.add(terrain);
 
-  /* anillo de videos */
-  var R = 4.3, ring = new THREE.Group();
-  scene.add(ring);
+  /* paneles de video: duotono rojo·negro que pasa a color */
   var loader = new THREE.TextureLoader();
   var panelVS = 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}';
   var panelFS = [
-    'uniform sampler2D map;uniform float uMix,uDim;uniform vec3 uRed;varying vec2 vUv;',
-    'void main(){vec2 uv=gl_FrontFacing?vUv:vec2(1.-vUv.x,vUv.y);vec3 c=texture2D(map,uv).rgb;',
+    'uniform sampler2D map;uniform float uMix,uDim;uniform vec3 uRed;uniform vec2 uCrop;varying vec2 vUv;',
+    'void main(){vec2 uv=(vUv-.5)*uCrop+.5;vec3 c=texture2D(map,uv).rgb;',
     ' float l=dot(c,vec3(.299,.587,.114));l=smoothstep(.04,.82,l);',
     ' vec3 duo=mix(vec3(0.),uRed,l)+vec3(1.,.9,.86)*smoothstep(.78,1.,l)*.35;',
-    ' vec3 o=mix(duo,c,uMix);if(!gl_FrontFacing)o*=.32;gl_FragColor=vec4(o*uDim,1.);}'
+    ' gl_FragColor=vec4(mix(duo,c,uMix)*uDim,1.);}'
   ].join('\n');
-  WORKS.forEach(function (w, i) {
-    var pw = w.o === 'P' ? 1.42 : 2.9, ph = w.o === 'P' ? 2.52 : 1.63;
-    var g = new THREE.PlaneGeometry(pw, ph, 24, 1), pos = g.attributes.position;
-    for (var k = 0; k < pos.count; k++) { var a = pos.getX(k) / R; pos.setXYZ(k, R * Math.sin(a), pos.getY(k), R * Math.cos(a)); }
-    var tex = loader.load('assets/video/' + w.id + '.jpg');
-    tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+  function makePanel(w, h, radius, concave, poster, src, crop) {
+    var g = new THREE.PlaneGeometry(w, h, 32, 1), pos = g.attributes.position, s = concave ? -1 : 1;
+    for (var k = 0; k < pos.count; k++) { var a = pos.getX(k) / radius; pos.setXYZ(k, radius * Math.sin(a), pos.getY(k), s * radius * Math.cos(a)); }
+    var tex = loader.load(poster); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
     var m = new THREE.ShaderMaterial({ side: THREE.DoubleSide, vertexShader: panelVS, fragmentShader: panelFS,
-      uniforms: { map: { value: tex }, uMix: { value: 0 }, uDim: { value: 1 }, uRed: { value: ROJO } } });
-    var mesh = new THREE.Mesh(g, m); mesh.rotation.y = i * STEP; ring.add(mesh);
+      uniforms: { map: { value: tex }, uMix: { value: 0 }, uDim: { value: 1 }, uRed: { value: ROJO }, uCrop: { value: new THREE.Vector2(1, crop || 1) } } });
     var v = document.createElement('video');
     v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
-    v.preload = 'none'; v.src = 'assets/video/' + w.id + '.mp4';
+    v.preload = 'none'; v.src = src;
+    var o = { mesh: new THREE.Mesh(g, m), mat: m, video: v, on: false };
     v.addEventListener('playing', function () {
-      if (w.vt) return;
-      w.vt = new THREE.VideoTexture(v); w.vt.minFilter = THREE.LinearFilter; w.vt.generateMipmaps = false;
-      m.uniforms.map.value = w.vt;
+      if (o.vt) return;
+      o.vt = new THREE.VideoTexture(v); o.vt.minFilter = THREE.LinearFilter; o.vt.generateMipmaps = false;
+      m.uniforms.map.value = o.vt;
     });
-    w.video = v; w.mat = m; w.on = false;
-  });
-  function setPlay(w, on) {
-    if (w.on === on) return; w.on = on;
-    if (on) { var p = w.video.play(); if (p && p.catch) p.catch(function () { w.on = false; }); } else w.video.pause();
+    return o;
   }
+  function setPlay(o, on) {
+    if (o.on === on) return; o.on = on;
+    if (on) { var p = o.video.play(); if (p && p.catch) p.catch(function () { o.on = false; }); } else o.video.pause();
+  }
+
+  /* pantalla del reel de agencia en el hero */
+  var sc = makePanel(4.6, 2.5875, 9, false, 'assets/video/reel-loop.jpg', 'assets/video/reel-loop.mp4');
+  sc.pivot = new THREE.Group(); sc.mesh.position.z = -9; sc.pivot.add(sc.mesh); sc.mat.uniforms.uMix.value = 1; scene.add(sc.pivot);
+
+  /* pared curva de casos: la cámara queda del lado cóncavo */
+  var R = 6.6, STEP = .68, PW = 4.2, PH = PW * 9 / 16, wall = new THREE.Group();
+  scene.add(wall);
+  WORKS.forEach(function (w, i) {
+    var o = makePanel(PW, PH, R, true, 'assets/video/' + w.id + '.jpg', 'assets/video/' + w.id + '.mp4', w.v ? (9 / 16) / (16 / 9) : 1);
+    o.mesh.rotation.y = -i * STEP; wall.add(o.mesh); w.p = o;
+  });
 
   var W = 0, H = 0, mx = 0, my = 0, cmx = 0, cmy = 0;
   function resize() {
@@ -493,48 +630,52 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   addEventListener('resize', resize); resize();
   addEventListener('pointermove', function (e) { mx = e.clientX / W - .5; my = e.clientY / H - .5; }, { passive: true });
 
-  var spin = 0, last = performance.now();
+  var clock = 0, last = performance.now();
   function frame(now) {
     requestAnimationFrame(frame);
     var dt = Math.min((now - last) / 1000, .1); last = now;
     var hr = hero.getBoundingClientRect(), rr = reel.getBoundingClientRect(), cr = cont.getBoundingClientRect();
-    var seen = hr.bottom > 0 || (rr.top < H && rr.bottom > 0) || cr.top < H;
-    if (!seen) { WORKS.forEach(function (w) { setPlay(w, false); }); return; }
-
-    var aspect = W / H;
-    var rIn = smooth(1 - rr.top / H);
-    var rOut = smooth(1 - rr.bottom / H);
+    var heroOn = hr.bottom > 0, reelOn = rr.top < H && rr.bottom > 0;
+    if (!(heroOn || reelOn || cr.top < H)) {
+      WORKS.forEach(function (w) { setPlay(w.p, false); }); setPlay(sc, false); return;
+    }
+    var aspect = W / H, narrow = aspect < .9, VH = 20 * TAN;
+    var rIn = smooth(1 - rr.top / H), rOut = smooth(1 - rr.bottom / H);
     var r = clamp(-rr.top / Math.max(rr.height - H, 1), 0, 1);
     var cIn = smooth(1 - cr.top / H);
     var k = smooth(rIn * 1.5) * (1 - smooth(rOut * 1.5));
 
     bg.copy(ROJO).lerp(NEGRO, k); ink.copy(NEGRO).lerp(ROJO, k);
     renderer.setClearColor(bg, 1);
-
-    if (!RM) { terrain.material.uniforms.uTime.value += dt; spin += dt * .16; }
+    if (!RM) { terrain.material.uniforms.uTime.value += dt; clock += dt; }
     terrain.material.uniforms.uAmp.value = lerp(1, 1.7, cIn);
     terrain.position.y = lerp(-3.4, -4.6, k) + cIn * .5;
 
-    /* pose del anillo: escultura en el hero, carrusel centrado en el reel */
+    /* pantalla del reel: flota, sigue al mouse y se va con el scroll del hero */
+    sc.pivot.visible = heroOn;
+    var sy = -hr.top / H;
+    var fit = narrow ? VH * aspect * .8 / 4.6 : clamp(aspect / 1.75, .7, 1.05);
+    sc.pivot.scale.setScalar(fit);
+    sc.pivot.position.set(narrow ? 0 : VH * aspect * .285, (narrow ? -.2 : .6) + sy * VH + Math.sin(clock * .7) * .06, 0);
+    sc.pivot.rotation.set(-cmy * .25 + sy * .5, (narrow ? 0 : -.34) + cmx * .3 + Math.sin(clock * .45) * .04, narrow ? -.03 : .025);
+    setPlay(sc, heroOn && !RM && !lb.open);
+
+    /* pared de casos */
     var x = r * (N - 1), fx = x - Math.floor(x), sx = Math.floor(x) + smooth((fx - .18) / .64);
     setCurrent(clamp(Math.round(sx), 0, N - 1));
-    var narrow = aspect < .9;
-    var dist = Math.max(7.4, 3.3 / (2 * TAN * aspect * .86));
-    var hs = narrow ? .46 : .78;
-    var hx = narrow ? 0 : Math.min(4.2, 2.6 * aspect), hy = narrow ? -.9 : .7;
-    ring.position.set(lerp(hx, 0, rIn), lerp(hy, 0, rIn) + rOut * 9 + (1 - rIn) * hr.top / H * -3.2, lerp(-2, 10 - dist - R, rIn));
-    ring.rotation.set(lerp(.3, 0, rIn), lerp(spin, -sx * STEP, rIn), lerp(-.14, 0, rIn));
-    ring.scale.setScalar(lerp(hs, 1, rIn));
-    var live = (hr.bottom > 0 || (rr.top < H && rr.bottom > 0)) && !RM && !lb.open;
+    var dist = Math.max(8.2, PW / (2 * TAN * aspect * .9));
+    wall.visible = reelOn;
+    wall.position.set(0, (1 - rIn) * -5 + rOut * 8 + .1, 10 - dist + R);
+    wall.rotation.y = sx * STEP + (1 - rIn) * -.5;
     WORKS.forEach(function (w, i) {
-      var a = i * STEP + ring.rotation.y; a = Math.atan2(Math.sin(a), Math.cos(a)); var d = Math.abs(a);
-      w.mat.uniforms.uMix.value = rIn * (1 - smooth((d - .12) / (STEP * .7)));
-      w.mat.uniforms.uDim.value = lerp(1, lerp(1, .55, smooth(d / 1.6)), rIn);
-      setPlay(w, live && d < (rIn > .5 ? 1.25 : 1.7));
+      var d = Math.abs(i - sx) * STEP;
+      w.p.mat.uniforms.uMix.value = 1 - smooth((d - .1) / (STEP * .75));
+      w.p.mat.uniforms.uDim.value = lerp(1, .5, smooth(d / 1.5));
+      setPlay(w.p, reelOn && !RM && !lb.open && d < 1.5);
     });
 
     cmx += (mx - cmx) * .06; cmy += (my - cmy) * .06;
-    camera.position.set(cmx * .7, -cmy * .45, 10);
+    camera.position.set(cmx * .5, -cmy * .35, 10);
     camera.lookAt(0, 0, 0);
     renderer.render(scene, camera);
   }
