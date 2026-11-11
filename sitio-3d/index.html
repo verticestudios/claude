@@ -58,12 +58,17 @@ main,footer{position:relative;z-index:1}
 .btn-o{background:var(--rojo);box-shadow:inset 0 0 0 1.5px currentColor}.btn-o:hover{background:var(--negro);color:var(--blanco)}
 .btn-w{background:var(--blanco);color:var(--negro)}.btn-w:hover{background:var(--lima)}
 .nav .btn{min-height:40px;padding:0 18px;font-size:11px}
-@media (max-width:860px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+.soc{display:flex;gap:6px}
+.soc a{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35);transition:background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease)}
+.soc a:hover{background:var(--lima);color:var(--negro);box-shadow:none}
+.soc svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.soc circle[r=".6"]{fill:currentColor}
+@media (max-width:860px){.nav{gap:14px}.nav ul{display:none}.nav .soc{margin-left:auto}}
 
 /* hero */
 .hero{min-height:min(100svh,980px);display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding-block:120px 44px;color:var(--negro)}
 .hero .top{display:flex;flex-direction:column;gap:10px;max-width:620px}
-.hero h1{color:var(--blanco);font-size:clamp(46px,7.6vw,146px)}
+.hero h1{color:var(--blanco);font-size:clamp(50px,9vw,172px)}
 .hero h1 span{display:block;overflow:hidden}
 .hero h1 b{display:block;font-weight:inherit;animation:rise .9s var(--ease) both}
 .hero h1 span:nth-child(2) b{animation-delay:.12s}
@@ -72,9 +77,7 @@ main,footer{position:relative;z-index:1}
 .hero .foot{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between}
 .hero .lead{font-size:clamp(17px,1.5vw,22px);line-height:1.35;max-width:26em;font-weight:500}
 .hero .cta{display:flex;flex-wrap:wrap;gap:12px}
-.reel-fb{display:none}
 @media (max-width:760px){.hero{justify-content:flex-start;min-height:100svh;padding-block:100px 28px}.hero .foot{margin-top:auto}}
-.no-gl .reel-fb{display:block;width:100%;max-width:720px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:var(--negro)}
 
 /* cinta */
 .tape{background:var(--negro);color:var(--blanco);overflow:hidden;padding-block:18px;border-block:1px solid rgba(255,255,255,.14)}
@@ -82,6 +85,17 @@ main,footer{position:relative;z-index:1}
 .tape span{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(26px,3vw,40px);line-height:1;display:flex;align-items:center;gap:36px;white-space:nowrap}
 .tape span::after{content:"";width:.7em;height:.7em;background:url("assets/img/isotipo-rojo.png") center/contain no-repeat}
 @keyframes tape{to{transform:translateX(-50%)}}
+
+/* clientes */
+.clients{background:var(--papel);padding-top:clamp(40px,5vw,72px)}
+.clients .k{color:var(--rojo-texto);margin-bottom:26px}
+.marq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;align-items:center;width:max-content;animation:tape 44s linear infinite;--u:1}
+.track li{margin-right:clamp(48px,6vw,96px);flex:none}
+.track img{display:block;height:calc(var(--h) * var(--u));width:auto}
+.marq:hover .track{animation-play-state:paused}
+@media (max-width:640px){.track{--u:.72}}
+.clients + .mani{padding-top:clamp(48px,6vw,96px)}
 
 /* manifiesto */
 .mani{background:var(--papel);padding-block:clamp(72px,10vw,150px)}
@@ -104,12 +118,14 @@ main,footer{position:relative;z-index:1}
 
 /* casos */
 .reel{height:520vh;color:var(--blanco)}
-.reel .stick{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding-block:92px 28px;pointer-events:none}
+.reel .stick{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding-block:92px 28px;pointer-events:none}
 .reel .stick>*{pointer-events:auto}
 .reel .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap}
 .reel h2{font-size:clamp(44px,6vw,96px);color:var(--rojo)}
-.hit{justify-self:center;align-self:center;width:min(52vw,820px);height:min(48vh,460px);border-radius:8px;cursor:pointer}
-.reel .cap{display:flex;justify-content:space-between;align-items:flex-end;gap:20px 32px;flex-wrap:wrap}
+.hit{justify-self:center;align-self:center;width:min(52vw,820px);height:100%;max-height:460px;min-height:0;border-radius:8px;cursor:pointer}
+.reel .cap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;align-items:end;gap:16px 40px}
+.cap .desc{color:var(--papel);font-size:15px;line-height:1.5;max-width:30em;opacity:.92}
+@media (max-width:980px){.reel .cap{grid-template-columns:minmax(0,1fr)}.cap .desc{font-size:14px;max-width:none}}
 .cap .now{display:flex;flex-direction:column;gap:6px;min-width:0}
 .cap .n{color:var(--lima);font-variant-numeric:tabular-nums}
 .cap h3{font-size:clamp(40px,5.2vw,84px);color:var(--blanco)}
@@ -150,34 +166,45 @@ main,footer{position:relative;z-index:1}
 @media (max-width:760px){.svc li{grid-template-columns:auto minmax(0,1fr)}.svc .ic{width:44px;height:44px}.svc p{grid-column:2}.svc .ar{display:none}.svc h3 small{display:block;margin:6px 0 0;vertical-align:0}}
 
 /* método: ascenso a la cumbre */
-.met{background:var(--carbon);color:var(--blanco);padding-block:clamp(72px,10vw,150px) clamp(64px,8vw,120px);overflow:hidden}
+.met{background:var(--carbon);color:var(--blanco);padding-block:clamp(72px,10vw,150px) clamp(64px,8vw,120px)}
 .met .sec-head h2{color:var(--blanco)}
 .met .sec-head h2 em{font-style:normal;color:var(--rojo)}
 .met .sec-head p{color:var(--gris-claro);font-weight:400}
-.climb{position:relative;height:clamp(250px,33vw,480px);margin-top:clamp(28px,4vw,56px)}
-.climb svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-.climb .route{fill:none;stroke:var(--blanco);stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round;vector-effect:non-scaling-stroke}
-.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:12px}
-.node .ic{width:clamp(44px,4.6vw,68px);height:clamp(44px,4.6vw,68px);color:var(--negro);box-shadow:0 0 0 6px var(--carbon)}
-.node b{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(20px,2.2vw,34px);line-height:1;position:absolute;left:calc(100% + 12px);white-space:nowrap}
-.node.top .ic{background:var(--lima)}
+.climb{position:relative;margin-top:clamp(28px,4vw,56px)}
+.art{position:relative;height:clamp(260px,36vw,540px)}
+.art svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.route{fill:none;stroke:rgba(255,255,255,.5);stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round}
+.route-on{fill:none;stroke:var(--lima);stroke-width:3;stroke-linecap:round;opacity:0;transition:stroke-dashoffset 1.1s var(--ease)}
+.climb.js .route-on{opacity:1}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;z-index:3;color:var(--blanco)}
+.node .ic{position:relative;width:clamp(44px,4.6vw,68px);height:clamp(44px,4.6vw,68px);background:var(--c);color:var(--negro);box-shadow:0 0 0 6px var(--carbon);transition:transform .5s var(--ease),opacity .4s,filter .4s}
+.node .ic::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--c);opacity:0}
+.node b{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(20px,2.2vw,34px);line-height:1;position:absolute;left:calc(100% + 12px);white-space:nowrap;transition:opacity .4s,color .4s}
+.node:hover .ic,.node:focus-visible .ic{transform:scale(1.1)}
+#n3 .ic{color:var(--blanco)}
 .node.top b{color:var(--lima)}
-.met.in .node{animation:pop .6s var(--ease) both;animation-delay:calc(var(--i) * .16s)}
-@keyframes pop{from{transform:translate(-50%,-50%) scale(.2)}to{transform:translate(-50%,-50%)}}
-@media (max-width:760px){.node b{display:none}}
-.stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:-1px}
-.stages li{background:var(--carbon-2);border-radius:16px;padding:22px 22px 26px;display:flex;flex-direction:column;gap:14px;border-top:4px solid var(--c)}
-.stages .e{color:var(--c)}
-.stages img{height:40px;width:auto;align-self:flex-start;display:block}
-.stages h3{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:clamp(34px,3.4vw,52px);line-height:1}
-.stages p{font-size:15px;line-height:1.45;color:var(--papel)}
-.stages ul{display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:6px}
-.stages ul li{background:none;border:0;border-radius:0;padding:0 0 0 18px;position:relative;font-size:14px;color:var(--gris-claro);display:block}
-.stages ul li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--c)}
-.stages .e2{color:#ff5a59}
-@media (max-width:1040px){.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.stages{grid-template-columns:1fr}}
-.loop{display:flex;align-items:center;gap:16px;margin-top:22px;color:var(--gris-claro);font-size:15px}
+.climb.js .node:not(.done) .ic{filter:grayscale(1);opacity:.38}
+.climb.js .node:not(.done) b{opacity:.4}
+.node.on .ic{transform:scale(1.12)}
+.node.on .ic::after{animation:ping 1.6s var(--ease) infinite}
+@keyframes ping{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
+.pop{position:absolute;z-index:6;left:clamp(150px,var(--x),calc(100% - 150px));top:var(--y);width:300px;max-width:100%;background:var(--carbon-2);border-top:4px solid var(--c);border-radius:16px;padding:18px 22px 22px;box-shadow:0 28px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:12px;opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,calc(-100% - 46px)) scale(.96);transform-origin:50% 100%;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility 0s .4s}
+.pop.below{transform:translate(-50%,46px) scale(.96);transform-origin:50% 0}
+.pop.on{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,calc(-100% - 46px));transition:opacity .3s var(--ease),transform .4s var(--ease)}
+.pop.below.on{transform:translate(-50%,46px)}
+.pop .ph{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.pop .ph img{height:38px;width:auto;display:block}
+.pop .e{color:var(--ct,var(--c))}
+.pop p{font-size:15px;line-height:1.45;color:var(--papel)}
+.pop ul{display:flex;flex-direction:column;gap:6px}
+.pop li{padding-left:18px;position:relative;font-size:14px;color:var(--gris-claro)}
+.pop li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:var(--c)}
+@media (max-width:760px){
+  .node b{display:none}
+  .pop{position:static;display:none;width:auto;max-width:none;margin-top:18px;transform:none!important;opacity:1;visibility:visible;pointer-events:auto}
+  .pop.on{display:flex}
+}
+.loop{display:flex;align-items:center;gap:16px;margin-top:clamp(64px,7vw,96px);color:var(--gris-claro);font-size:15px}
 .loop .ic{background:none;box-shadow:inset 0 0 0 1.5px var(--blanco);width:48px;height:48px}
 .met.in .loop .ic svg{animation:turn 6s linear infinite}
 @keyframes turn{to{transform:rotate(360deg)}}
@@ -234,7 +261,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 .lb h3{font-size:clamp(28px,4vw,48px)}
 .lb video{width:100%;height:100%;min-height:0;object-fit:contain;background:#000;border-radius:8px}
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tape div,.hero h1 b,.met.in .node,.met.in .loop .ic svg{animation:none}.svc li,.svc .ic{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tape div,.hero h1 b,.met.in .loop .ic svg,.node .ic::after{animation:none}.track{animation:none;flex-wrap:wrap;width:auto;gap:24px 40px;justify-content:center}.track li:nth-child(n+9){display:none}.track li{margin:0}.svc li,.svc .ic{transition:none}}
 </style>
 <!--/HEAD-->
 </head>
@@ -251,6 +278,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <li><a href="#metodo">Método</a></li>
     <li><a href="#vlog">Vlog</a></li>
   </ul>
+  <span class="soc"><a href="https://www.instagram.com/vertice.estudios/" target="_blank" rel="noopener" aria-label="Instagram de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r=".6"></circle></svg></a><a href="https://www.linkedin.com/company/vertice-content-marketing/" target="_blank" rel="noopener" aria-label="LinkedIn de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10.5V16M8 7.8v.01M12 16v-5.5M12 13a2.6 2.6 0 0 1 5.2 0V16"></path></svg></a></span>
   <a class="btn btn-l" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Hablemos <i>→</i></a>
 </header>
 
@@ -261,7 +289,6 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <p class="nx">Content Marketing Studio · Buenos Aires</p>
   </div>
   <h1 class="tg"><span><b>Strategy that inspires.</b></span><span><b>Creativity that performs.</b></span></h1>
-  <video class="reel-fb" src="assets/video/reel-loop.mp4" poster="assets/video/reel-loop.jpg" muted loop playsinline preload="none" aria-label="Reel de Vértice"></video>
   <div class="foot">
     <p class="lead plate">No hacemos publicidad tradicional, hacemos contenido relevante y que convierte.</p>
     <div class="cta">
@@ -276,13 +303,18 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
 </div></div>
 
+<section class="clients" aria-label="Marcas que crean con nosotros">
+  <div class="wrap"><p class="nx k">Marcas que crean con nosotros</p></div>
+  <div class="marq"><ul class="track"><li><img src="assets/img/clients/telefe.png" alt="Telefe" style="--h:60px" loading="lazy"></li><li><img src="assets/img/clients/fotlibre.png" alt="Fot Libre" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/ihsa.png" alt="Grupo IHSA" style="--h:54px" loading="lazy"></li><li><img src="assets/img/clients/osa.png" alt="OSA" style="--h:44px" loading="lazy"></li><li><img src="assets/img/clients/ferrini.png" alt="Laboratorios Ferrini" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/emergencias.png" alt="Emergencias" style="--h:50px" loading="lazy"></li><li><img src="assets/img/clients/fenix.png" alt="Fénix" style="--h:28px" loading="lazy"></li><li><img src="assets/img/clients/auren.png" alt="Auren+" style="--h:40px" loading="lazy"></li><li><img src="assets/img/clients/telefe.png" alt="" style="--h:60px" loading="lazy"></li><li><img src="assets/img/clients/fotlibre.png" alt="" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/ihsa.png" alt="" style="--h:54px" loading="lazy"></li><li><img src="assets/img/clients/osa.png" alt="" style="--h:44px" loading="lazy"></li><li><img src="assets/img/clients/ferrini.png" alt="" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/emergencias.png" alt="" style="--h:50px" loading="lazy"></li><li><img src="assets/img/clients/fenix.png" alt="" style="--h:28px" loading="lazy"></li><li><img src="assets/img/clients/auren.png" alt="" style="--h:40px" loading="lazy"></li></ul></div>
+</section>
+
 <section id="manifiesto" class="mani">
   <div class="wrap">
     <div class="grid">
       <div>
         <p class="nx k">Manifiesto</p>
         <h2 class="tg">Nacimos del encuentro de dos mundos</h2>
-        <p class="tm sub">y desde el know how en publicidad y entretenimientos.</p>
+        <p class="tm sub">y desde el know how en publicidad y la industria de los contenidos y el entretenimiento.</p>
         <div class="txt">
           <p>La visión estratégica y la creatividad para dar vida a ideas que conectan con las audiencias y transforman marcas.</p>
           <p>Transformamos información en ideas relevantes y accionables. Títulos que afirman, cifras con fuente y nada de relleno.</p>
@@ -306,13 +338,13 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <div class="head">
       <h2 class="tg">Casos</h2>
       <ol class="works" id="works">
-        <li><button data-id="aftermovie" data-t="After Movie" data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
-        <li><button data-id="vecinos" data-t="Vecinos Felices" data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
-        <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
-        <li><button data-id="verduras" data-t="Save The Verduras" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
-        <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
-        <li><button data-id="auren" data-v="1" data-t="Auren+" data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
-        <li><button data-id="soyrada" data-t="Soy Rada Show" data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
+        <li><button data-id="aftermovie" data-t="After Movie" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
+        <li><button data-id="vecinos" data-t="Vecinos Felices" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
+        <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Promo TV · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
+        <li><button data-id="verduras" data-t="Save The Verduras" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
+        <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
+        <li><button data-id="auren" data-v="1" data-t="Auren+" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
+        <li><button data-id="soyrada" data-t="Soy Rada Show" data-d="[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]" data-c="Promo TV · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
       </ol>
     </div>
     <button class="hit" id="hit" aria-label="Ver el caso del centro"></button>
@@ -322,6 +354,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
         <h3 class="tg" id="capT">After Movie</h3>
         <span class="nx c" id="capC">Eventos</span>
       </div>
+      <p class="desc" id="capD">[Marca. Qué necesitaba, qué hicimos y qué pasó después, en dos o tres líneas, con cifra y fuente.]</p>
       <div class="ctl">
         <button class="rnd" id="prev" aria-label="Caso anterior">←</button>
         <button class="rnd" id="next" aria-label="Caso siguiente">→</button>
@@ -343,7 +376,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2v.5h5V16c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg></span><h3>Creatividad</h3><p>Ideas que responden primero a un porqué.</p><span class="ar" aria-hidden="true">→</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"></rect><path d="M16 11l5-3v8l-5-3z"></path></svg></span><h3>Producción</h3><p>Rodaje, edición y postproducción con equipo propio.</p><span class="ar" aria-hidden="true">→</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"></path><path d="M8 9.5h8M8 12.5h5"></path></svg></span><h3>Social media</h3><p>Calendario, community y contenido para cada red.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"></path></svg></span><h3>Live streaming <small>De punta a punta</small></h3><p>Transmisiones en vivo resueltas de punta a punta.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"></path></svg></span><h3>Live streaming</h3><p>Transmisiones en vivo resueltas de punta a punta.</p><span class="ar" aria-hidden="true">→</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"></path></svg></span><h3>Podcast</h3><p>Formato de audio y video con voz propia.</p><span class="ar" aria-hidden="true">→</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"></path><path d="M18.5 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg></span><h3>Contenido IA</h3><p>Producción asistida con criterio editorial.</p><span class="ar" aria-hidden="true">→</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V5M16 20v-8M21 20H3"></path></svg></span><h3>Datos</h3><p>Información convertida en decisiones accionables.</p><span class="ar" aria-hidden="true">→</span></li>
@@ -360,26 +393,28 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <span class="rule"></span>
     <div class="sec-head">
       <h2 class="tg">Vértice <em>CoCreate</em></h2>
-      <p>Cómo creamos contenido que funciona: cuatro etapas, un mismo método, y un objetivo en la cumbre.</p>
+      <p>Cómo creamos contenido que funciona: cuatro etapas, un mismo método y un objetivo en la cumbre. Pasá el mouse por cada etapa para ver qué hacemos.</p>
     </div>
-    <div class="climb" aria-hidden="true">
-      <svg viewBox="0 -60 520 510" preserveAspectRatio="none">
-        <path fill="#1f1f1f" d="M0,447 52,359 91,307 112,285 145,261 240,216 305,169 367,105 427,15 443,0 452,0 465,8 520,56 L520,450 L0,450 Z"></path>
-        <path fill="#2a2a2a" d="M427,15 443,0 452,0 465,8 520,56 520,120 470,70 452,40 440,52 Z"></path>
-        <polyline class="route" points="0,447 60,348 170,249 280,187 380,85 447,0"></polyline>
-      </svg>
-      <span class="node" style="left:11.5%;top:80%;--i:0"><span class="ic" style="background:var(--hub)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg></span><b>Entender</b></span>
-      <span class="node" style="left:32.7%;top:60.6%;--i:1"><span class="ic" style="background:var(--lens)"><svg viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></span><b>Transformar</b></span>
-      <span class="node" style="left:53.8%;top:48.4%;--i:2"><span class="ic" style="background:var(--spark)"><svg viewBox="0 0 24 24"><path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"></path></svg></span><b>Conectar</b></span>
-      <span class="node" style="left:73%;top:28.5%;--i:3"><span class="ic" style="background:var(--aon);color:var(--blanco)"><svg viewBox="0 0 24 24"><path d="M14 4.5c3-1.2 5.3-1.3 5.8-.8s.4 2.8-.8 5.8L13 16 8 11z"></path><path d="M8 11l-3.5-.5L7 8h4M13 16l.5 3.5L16 17v-4M8.5 15.5L5 19"></path><circle cx="15.5" cy="8.5" r="1.3"></circle></svg></span><b>Impactar</b></span>
-      <span class="node top" style="left:86%;top:11.8%;--i:4"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 20l6.5-11 3.5 6 2.5-4L21 20z"></path><path d="M15.5 11V4l3.5 1.5-3.5 1.5"></path></svg></span><b>Objetivo</b></span>
+    <div class="climb" id="climb">
+      <div class="art" id="art">
+        <svg id="climbSvg" viewBox="0 0 520 510" preserveAspectRatio="none" aria-hidden="true">
+          <polygon id="mtn" fill="#1f1f1f" points="0,507 52,419 91,367 112,345 145,321 240,276 305,229 367,165 427,75 443,60 452,60 465,68 520,116 520,510 0,510"></polygon>
+          <polygon id="ridge" fill="#2a2a2a" points="427,75 443,60 452,60 465,68 520,116 520,180 470,130 452,100 440,112"></polygon>
+          <polyline id="route" class="route" points="0,507 60,408 170,309 280,247 380,145 447,60"></polyline>
+          <polyline id="routeOn" class="route-on" points="0,507 60,408 170,309 280,247 380,145 447,60"></polyline>
+        </svg>
+        <button class="node" id="n0" style="left:11.5%;top:80%;--c:var(--hub)" aria-expanded="false" aria-controls="pop0"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg></span><b>Entender</b></button>
+        <button class="node" id="n1" style="left:32.7%;top:60.6%;--c:var(--lens)" aria-expanded="false" aria-controls="pop1"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></span><b>Transformar</b></button>
+        <button class="node" id="n2" style="left:53.8%;top:48.4%;--c:var(--spark)" aria-expanded="false" aria-controls="pop2"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"></path></svg></span><b>Conectar</b></button>
+        <button class="node" id="n3" style="left:73%;top:28.5%;--c:var(--aon)" aria-expanded="false" aria-controls="pop3"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.5c3-1.2 5.3-1.3 5.8-.8s.4 2.8-.8 5.8L13 16 8 11z"></path><path d="M8 11l-3.5-.5L7 8h4M13 16l.5 3.5L16 17v-4M8.5 15.5L5 19"></path><circle cx="15.5" cy="8.5" r="1.3"></circle></svg></span><b>Impactar</b></button>
+        <button class="node top" id="n4" style="left:86%;top:11.8%;--c:var(--lima)" aria-expanded="false" aria-controls="pop4"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6.5-11 3.5 6 2.5-4L21 20z"></path><path d="M15.5 11V4l3.5 1.5-3.5 1.5"></path></svg></span><b>Objetivo</b></button>
+      </div>
+      <div class="pop" id="pop0" style="--x:11.5%;--y:80%;--c:var(--hub)" role="group" aria-label="Etapa 01 · Entender"><div class="ph"><img src="assets/img/cocreate-hub.svg" alt="Hub"><span class="nx e">Etapa 01 · Entender</span></div><p>Diagnosticamos la marca y su contexto con datos y workshops de descubrimiento junto al cliente.</p><ul><li>Diagnóstico digital y de marca</li><li>Brief colaborativo</li></ul></div>
+      <div class="pop" id="pop1" style="--x:32.7%;--y:60.6%;--c:var(--lens)" role="group" aria-label="Etapa 02 · Transformar"><div class="ph"><img src="assets/img/cocreate-lens.svg" alt="Lens"><span class="nx e">Etapa 02 · Transformar</span></div><p>Convertimos ese diagnóstico en estrategia e ideas: territorios, conceptos y plan de contenido.</p><ul><li>Territorio de marca y mapa de contenidos</li><li>Conceptos creativos con design thinking</li></ul></div>
+      <div class="pop below" id="pop2" style="--x:53.8%;--y:48.4%;--c:var(--spark)" role="group" aria-label="Etapa 03 · Conectar"><div class="ph"><img src="assets/img/cocreate-spark.svg" alt="Spark"><span class="nx e">Etapa 03 · Conectar</span></div><p>Producimos y gestionamos el contenido en cada canal, con la voz y la identidad de la marca.</p><ul><li>Producción audiovisual y digital</li><li>Gestión de redes y comunidad</li></ul></div>
+      <div class="pop below" id="pop3" style="--x:73%;--y:28.5%;--c:var(--aon);--ct:#ff5a59" role="group" aria-label="Etapa 04 · Impactar"><div class="ph"><img src="assets/img/cocreate-aon.svg" alt="AON"><span class="nx e">Etapa 04 · Impactar</span></div><p>Medimos, aprendemos y optimizamos: el contenido queda siempre encendido.</p><ul><li>Tableros y lectura de resultados</li><li>Learning &amp; optimization continuo</li></ul></div>
+      <div class="pop below" id="pop4" style="--x:86%;--y:11.8%;--c:var(--lima)" role="group" aria-label="Objetivo"><div class="ph"><img src="assets/img/isotipo-blanco.png" alt="Isotipo de Vértice"><span class="nx e">Objetivo</span></div><p>Contenido relevante y que convierte.</p></div>
     </div>
-    <ol class="stages">
-      <li style="--c:var(--hub)"><span class="nx e">Etapa 01 · Entender</span><img src="assets/img/cocreate-hub.svg" alt="Hub"><p>Diagnosticamos la marca y su contexto con datos y workshops de descubrimiento junto al cliente.</p><ul><li>Diagnóstico digital y de marca</li><li>Brief colaborativo</li></ul></li>
-      <li style="--c:var(--lens)"><span class="nx e">Etapa 02 · Transformar</span><img src="assets/img/cocreate-lens.svg" alt="Lens"><p>Convertimos ese diagnóstico en estrategia e ideas: territorios, conceptos y plan de contenido.</p><ul><li>Territorio de marca y mapa de contenidos</li><li>Conceptos creativos con design thinking</li></ul></li>
-      <li style="--c:var(--spark)"><span class="nx e">Etapa 03 · Conectar</span><img src="assets/img/cocreate-spark.svg" alt="Spark"><p>Producimos y gestionamos el contenido en cada canal, con la voz y la identidad de la marca.</p><ul><li>Producción audiovisual y digital</li><li>Gestión de redes y comunidad</li></ul></li>
-      <li style="--c:var(--aon)"><span class="nx e e2">Etapa 04 · Impactar</span><img src="assets/img/cocreate-aon.svg" alt="AON"><p>Medimos, aprendemos y optimizamos: el contenido queda siempre encendido.</p><ul><li>Tableros y lectura de resultados</li><li>Learning &amp; optimization continuo</li></ul></li>
-    </ol>
     <p class="loop"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"></path><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"></path></svg></span>Optimizar: cada ciclo vuelve al dato y empieza de nuevo.</p>
   </div>
 </section>
@@ -448,6 +483,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   <footer class="dk">
     <div class="wrap">
       <img src="assets/img/logo-blanco.png" alt="Vértice">
+      <span class="soc"><a href="https://www.instagram.com/vertice.estudios/" target="_blank" rel="noopener" aria-label="Instagram de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r=".6"></circle></svg></a><a href="https://www.linkedin.com/company/vertice-content-marketing/" target="_blank" rel="noopener" aria-label="LinkedIn de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10.5V16M8 7.8v.01M12 16v-5.5M12 13a2.6 2.6 0 0 1 5.2 0V16"></path></svg></a></span>
       <p class="nx">Strategy that inspires. Creativity that performs.</p>
       <p class="nx">© 2026 Vértice Content Marketing Studio</p>
     </div>
@@ -474,7 +510,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 
   var reel = $('casos'), hero = $('inicio'), cont = $('contacto');
   var btns = [].slice.call(document.querySelectorAll('#works button'));
-  var WORKS = btns.map(function (b) { return { id: b.dataset.id, v: !!b.dataset.v, t: b.dataset.t, c: b.dataset.c, btn: b }; });
+  var WORKS = btns.map(function (b) { return { id: b.dataset.id, v: !!b.dataset.v, t: b.dataset.t, c: b.dataset.c, d: b.dataset.d || '', btn: b }; });
   var N = WORKS.length, current = -1, glOn = false;
 
   /* ---------- visor ---------- */
@@ -497,7 +533,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     if (i === current) return; current = i;
     var w = WORKS[i];
     $('capN').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
-    $('capT').textContent = w.t; $('capC').textContent = w.c;
+    $('capT').textContent = w.t; $('capC').textContent = w.c; $('capD').textContent = w.d;
     btns.forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
   }
   function goTo(i) {
@@ -527,6 +563,63 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     io.observe($('metodo'));
   }
 
+
+  /* ---------- CoCreate: ascenso paso a paso ---------- */
+  (function () {
+    var climb = $('climb'); if (!climb) return;
+    var nodes = [].slice.call(climb.querySelectorAll('.node')), pops = [].slice.call(climb.querySelectorAll('.pop'));
+    var svg = $('climbSvg'), art = $('art'), routeOn = $('routeOn');
+    var VBW = 520, VBH = 510;
+    var PTS = [[0, 507], [60, 408], [170, 309], [280, 247], [380, 145], [447, 60]];
+    var MTN = [[0, 507], [52, 419], [91, 367], [112, 345], [145, 321], [240, 276], [305, 229], [367, 165], [427, 75], [443, 60], [452, 60], [465, 68], [520, 116], [520, 510], [0, 510]];
+    var RIDGE = [[427, 75], [443, 60], [452, 60], [465, 68], [520, 116], [520, 180], [470, 130], [452, 100], [440, 112]];
+    var L = 1, frac = [0, 0, 0, 0, 0], cur = -1, hold = false, timer = null, inView = false;
+    climb.classList.add('js');
+
+    function pts(a, w, h) { return a.map(function (q) { return (q[0] * w / VBW).toFixed(1) + ',' + (q[1] * h / VBH).toFixed(1); }).join(' '); }
+    function build() {
+      var w = art.clientWidth, h = art.clientHeight; if (!w || !h) return;
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      $('mtn').setAttribute('points', pts(MTN, w, h)); $('ridge').setAttribute('points', pts(RIDGE, w, h));
+      $('route').setAttribute('points', pts(PTS, w, h)); routeOn.setAttribute('points', pts(PTS, w, h));
+      var cum = [0], t = 0;
+      for (var i = 1; i < PTS.length; i++) { t += Math.hypot((PTS[i][0] - PTS[i - 1][0]) * w / VBW, (PTS[i][1] - PTS[i - 1][1]) * h / VBH); cum.push(t); }
+      L = t; for (var k = 0; k < 5; k++) frac[k] = cum[k + 1] / L;
+      routeOn.style.strokeDasharray = L + ' ' + L;
+      paint(true);
+    }
+    function paint(instant) {
+      if (instant) routeOn.style.transition = 'none';
+      routeOn.style.strokeDashoffset = cur < 0 ? L : L * (1 - frac[cur]);
+      if (instant) { routeOn.getBoundingClientRect(); routeOn.style.transition = ''; }
+    }
+    function show(i) {
+      cur = i;
+      nodes.forEach(function (n, k) { n.classList.toggle('done', k <= i); n.classList.toggle('on', k === i); n.setAttribute('aria-expanded', k === i ? 'true' : 'false'); });
+      pops.forEach(function (p, k) { p.classList.toggle('on', k === i); });
+      paint(false);
+    }
+    function step() {
+      clearTimeout(timer); if (hold || !inView || RM) return;
+      if (cur >= 4) { timer = setTimeout(function () { cur = -1; nodes.forEach(function (n) { n.classList.remove('done', 'on'); n.setAttribute('aria-expanded', 'false'); }); pops.forEach(function (p) { p.classList.remove('on'); }); paint(false); timer = setTimeout(step, 900); }, 3800); return; }
+      show(cur + 1); timer = setTimeout(step, cur === 0 ? 3000 : 2600);
+    }
+    nodes.forEach(function (n, i) {
+      var open = function () { hold = true; clearTimeout(timer); show(i); };
+      n.addEventListener('pointerenter', open); n.addEventListener('focus', open); n.addEventListener('click', open);
+    });
+    function release() { if (!hold) return; hold = false; clearTimeout(timer); if (!RM) timer = setTimeout(step, 2400); }
+    climb.addEventListener('pointerleave', release);
+    climb.addEventListener('focusout', function (e) { if (!climb.contains(e.relatedTarget)) release(); });
+    addEventListener('resize', build); build();
+    if (RM) { nodes.forEach(function (n) { n.classList.add('done'); }); cur = 4; paint(true); return; }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { inView = e.isIntersecting; if (inView) { if (!hold) { clearTimeout(timer); timer = setTimeout(step, 500); } } else clearTimeout(timer); });
+      }, { threshold: .35 }).observe(climb);
+    } else { inView = true; step(); }
+  })();
+
   /* ---------- WebGL ---------- */
   var THREE = window.THREE, renderer;
   try {
@@ -534,7 +627,6 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     renderer = new THREE.WebGLRenderer({ canvas: $('gl'), antialias: true, powerPreference: 'high-performance' });
   } catch (e) {
     document.documentElement.classList.add('no-gl');
-    var fb = document.querySelector('.reel-fb'); if (fb && !RM) { var q = fb.play(); if (q && q.catch) q.catch(function () {}); }
     return;
   }
   glOn = true;
@@ -546,32 +638,53 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   camera.position.set(0, 0, 10);
   var TAN = Math.tan(17.5 * Math.PI / 180);
 
-  /* cordillera: una superficie del color del campo con una línea por fila */
-  var terrain = new THREE.Mesh(
-    new THREE.PlaneGeometry(64, 30, 260, 110),
-    new THREE.ShaderMaterial({
-      extensions: { derivatives: true },
-      uniforms: { uTime: { value: 0 }, uAmp: { value: 1 }, uBg: { value: bg }, uLine: { value: ink }, uRows: { value: 56 } },
-      vertexShader: [
-        'uniform float uTime,uAmp; varying vec2 vUv;',
-        'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
-        'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
-        'float fbm(vec2 p){float a=.5,s=0.;for(int i=0;i<4;i++){s+=a*noise(p);p*=2.03;a*=.5;}return s;}',
-        'void main(){vUv=uv;vec3 p=position;',
-        ' vec2 q=vec2(p.x*.2,p.y*.2-uTime*.045);float n=fbm(q);float r=1.-abs(2.*n-1.);',
-        ' float env=exp(-pow(p.x/8.5,2.))*smoothstep(-15.,2.,p.y);',
-        ' p.z+=(r*r*3.4*env+n*.7)*uAmp;',
-        ' gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}'
-      ].join('\n'),
-      fragmentShader: [
-        'uniform vec3 uBg,uLine; uniform float uRows; varying vec2 vUv;',
-        'void main(){float v=vUv.y*uRows;float w=fwidth(v);float d=abs(fract(v)-.5)/max(w,1e-4);',
-        ' float line=(1.-smoothstep(.55,1.5,d))*(1.-smoothstep(.22,.5,w));',
-        ' float fade=smoothstep(0.,.12,vUv.y)*smoothstep(1.,.72,vUv.y)*smoothstep(0.,.1,vUv.x)*smoothstep(1.,.9,vUv.x);',
-        ' gl_FragColor=vec4(mix(uBg,uLine,line*fade),1.);}'
-      ].join('\n')
-    })
-  );
+  /* cordillera: una cinta por fila, con ancho fijo en pantalla, sobre una superficie que tapa lo que queda atrás */
+  var TW = 64, TH = 30, ROWS = 56, SEG = 240;
+  var tu = { uTime: { value: 0 }, uAmp: { value: 1 }, uBg: { value: bg }, uLine: { value: ink }, uRes: { value: new THREE.Vector2(1, 1) }, uPx: { value: 1.1 } };
+  var NOISE = [
+    'uniform float uTime,uAmp;',
+    'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+    'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*f*(f*(f*6.-15.)+10.);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
+    'float fbm(vec2 p){float a=.55,s=0.;for(int i=0;i<3;i++){s+=a*noise(p);p*=2.;a*=.45;}return s;}',
+    'vec3 disp(vec2 q0){',
+    ' vec2 q=vec2(q0.x*.2+sin(uTime*.12)*.35,q0.y*.2-uTime*.05);',
+    ' float n=fbm(q);float t=2.*n-1.;float r=(1.-sqrt(t*t+.03))/.827;',
+    ' float env=exp(-pow(q0.x/8.5,2.))*smoothstep(-15.,2.,q0.y);',
+    ' return vec3(q0,(max(r,0.)*max(r,0.)*3.4*env+n*.7)*uAmp);}'
+  ].join('\n');
+  var surfMat = new THREE.ShaderMaterial({
+    side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 3, polygonOffsetUnits: 3, uniforms: tu,
+    vertexShader: NOISE + '\nvoid main(){gl_Position=projectionMatrix*modelViewMatrix*vec4(disp(position.xy),1.);}',
+    fragmentShader: 'uniform vec3 uBg;void main(){gl_FragColor=vec4(uBg,1.);}'
+  });
+  var surf = new THREE.Mesh(new THREE.PlaneGeometry(TW, TH, 160, 70), surfMat); surf.frustumCulled = false;
+  var rp = new Float32Array(ROWS * (SEG + 1) * 2 * 3), rs = new Float32Array(ROWS * (SEG + 1) * 2), ri = [], vi = 0;
+  for (var rr0 = 0; rr0 < ROWS; rr0++) {
+    var ry = -TH / 2 + TH * rr0 / (ROWS - 1);
+    for (var ci = 0; ci <= SEG; ci++) {
+      var rx = -TW / 2 + TW * ci / SEG;
+      for (var sd = 0; sd < 2; sd++) { rp[vi * 3] = rx; rp[vi * 3 + 1] = ry; rs[vi] = sd ? 1 : -1; vi++; }
+      if (ci > 0) { var a0 = vi - 4, b0 = vi - 3, c0 = vi - 2, d0 = vi - 1; ri.push(a0, b0, c0, b0, d0, c0); }
+    }
+  }
+  var rg = new THREE.BufferGeometry();
+  rg.setAttribute('position', new THREE.BufferAttribute(rp, 3)); rg.setAttribute('aSide', new THREE.BufferAttribute(rs, 1)); rg.setIndex(new THREE.BufferAttribute(new Uint16Array(ri), 1));
+  var ribMat = new THREE.ShaderMaterial({
+    side: THREE.DoubleSide, uniforms: tu,
+    vertexShader: NOISE + [
+      'uniform vec2 uRes;uniform float uPx;attribute float aSide;varying float vFade;',
+      'vec4 clipAt(vec2 q){return projectionMatrix*modelViewMatrix*vec4(disp(q),1.);}',
+      'void main(){vec2 q=position.xy;vec4 c=clipAt(q);vec4 a=clipAt(q-vec2(.25,0.));vec4 b=clipAt(q+vec2(.25,0.));',
+      ' vec2 d=(b.xy/b.w-a.xy/a.w)*uRes*.5;float l=length(d);d=l>1e-4?d/l:vec2(1.,0.);',
+      ' vec2 off=vec2(-d.y,d.x)*aSide*uPx/(uRes*.5);',
+      ' gl_Position=c+vec4(off*c.w,0.,0.);',
+      ' vec2 u=vec2((q.x+32.)/64.,(q.y+15.)/30.);',
+      ' vFade=smoothstep(0.,.12,u.y)*smoothstep(1.,.72,u.y)*smoothstep(0.,.1,u.x)*smoothstep(1.,.9,u.x);}'
+    ].join('\n'),
+    fragmentShader: 'uniform vec3 uBg,uLine;varying float vFade;void main(){gl_FragColor=vec4(mix(uBg,uLine,vFade),1.);}'
+  });
+  var ribbons = new THREE.Mesh(rg, ribMat); ribbons.frustumCulled = false; ribbons.renderOrder = 1;
+  var terrain = new THREE.Group(); terrain.add(surf); terrain.add(ribbons);
   terrain.rotation.x = -1.2;
   terrain.position.set(0, -3.4, -9);
   scene.add(terrain);
@@ -608,10 +721,6 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     if (on) { var p = o.video.play(); if (p && p.catch) p.catch(function () { o.on = false; }); } else o.video.pause();
   }
 
-  /* pantalla del reel de agencia en el hero */
-  var sc = makePanel(4.6, 2.5875, 9, false, 'assets/video/reel-loop.jpg', 'assets/video/reel-loop.mp4');
-  sc.pivot = new THREE.Group(); sc.mesh.position.z = -9; sc.pivot.add(sc.mesh); sc.mat.uniforms.uMix.value = 1; scene.add(sc.pivot);
-
   /* pared curva de casos: la cámara queda del lado cóncavo */
   var R = 6.6, STEP = .68, PW = 4.2, PH = PW * 9 / 16, wall = new THREE.Group();
   scene.add(wall);
@@ -625,6 +734,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     W = innerWidth; H = innerHeight;
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.setSize(W, H, false);
+    var pr = renderer.getPixelRatio(); tu.uRes.value.set(W * pr, H * pr); tu.uPx.value = 1.1 * pr;
     camera.aspect = W / H; camera.updateProjectionMatrix();
   }
   addEventListener('resize', resize); resize();
@@ -637,7 +747,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     var hr = hero.getBoundingClientRect(), rr = reel.getBoundingClientRect(), cr = cont.getBoundingClientRect();
     var heroOn = hr.bottom > 0, reelOn = rr.top < H && rr.bottom > 0;
     if (!(heroOn || reelOn || cr.top < H)) {
-      WORKS.forEach(function (w) { setPlay(w.p, false); }); setPlay(sc, false); return;
+      WORKS.forEach(function (w) { setPlay(w.p, false); }); return;
     }
     var aspect = W / H, narrow = aspect < .9, VH = 20 * TAN;
     var rIn = smooth(1 - rr.top / H), rOut = smooth(1 - rr.bottom / H);
@@ -647,25 +757,17 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 
     bg.copy(ROJO).lerp(NEGRO, k); ink.copy(NEGRO).lerp(ROJO, k);
     renderer.setClearColor(bg, 1);
-    if (!RM) { terrain.material.uniforms.uTime.value += dt; clock += dt; }
-    terrain.material.uniforms.uAmp.value = lerp(1, 1.7, cIn);
+    if (!RM) { tu.uTime.value += dt; clock += dt; }
+    tu.uAmp.value = lerp(1, 1.7, cIn);
     terrain.position.y = lerp(-3.4, -4.6, k) + cIn * .5;
-
-    /* pantalla del reel: flota, sigue al mouse y se va con el scroll del hero */
-    sc.pivot.visible = heroOn;
-    var sy = -hr.top / H;
-    var fit = narrow ? VH * aspect * .8 / 4.6 : clamp(aspect / 1.75, .7, 1.05);
-    sc.pivot.scale.setScalar(fit);
-    sc.pivot.position.set(narrow ? 0 : VH * aspect * .285, (narrow ? -.2 : .6) + sy * VH + Math.sin(clock * .7) * .06, 0);
-    sc.pivot.rotation.set(-cmy * .25 + sy * .5, (narrow ? 0 : -.34) + cmx * .3 + Math.sin(clock * .45) * .04, narrow ? -.03 : .025);
-    setPlay(sc, heroOn && !RM && !lb.open);
+    terrain.position.x = narrow ? 0 : (1 - k) * (1 - cIn) * 3.2 * clamp(aspect / 1.7, .6, 1.2);
 
     /* pared de casos */
     var x = r * (N - 1), fx = x - Math.floor(x), sx = Math.floor(x) + smooth((fx - .18) / .64);
     setCurrent(clamp(Math.round(sx), 0, N - 1));
     var dist = Math.max(8.2, PW / (2 * TAN * aspect * .9));
     wall.visible = reelOn;
-    wall.position.set(0, (1 - rIn) * -5 + rOut * 8 + .1, 10 - dist + R);
+    wall.position.set(0, (1 - rIn) * -5 + rOut * 8 + (narrow ? .6 : .2), 10 - dist + R);
     wall.rotation.y = sx * STEP + (1 - rIn) * -.5;
     WORKS.forEach(function (w, i) {
       var d = Math.abs(i - sx) * STEP;
