@@ -10,6 +10,11 @@ import json, re, html, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 CAL = 'https://calendar.app.google/fQACh8Sen125STmX6'
+BASE = 'https://verticestudios.com'
+SITE_NAME = 'Vértice Content Marketing Studio'
+DATES = {'effie-jurado-2026': '2026-10-01', 'highlights-octubre': '2026-11-11', 'streaming-marcas': '2026-08-05', 'auren-plus': '2026-06-01', 'ferrini-cuestion-de-piel': '2026-05-01', 'dato': '2026-11-11'}
+OG_IMG = {'effie-jurado-2026': 'blog-effie.jpg', 'streaming-marcas': 'blog-streaming.jpg', 'auren-plus': 'blog-auren.jpg', 'ferrini-cuestion-de-piel': 'blog-ferrini.jpg',
+          'highlights-octubre': 'assets/video/highlights-adlatina.jpg', 'dato': 'og-home.jpg'}
 IG = 'https://www.instagram.com/vertice.estudios/'
 LI = 'https://www.linkedin.com/company/vertice-content-marketing/'
 NJ = json.load(open(os.path.join(HERE, 'notes.json')))
@@ -135,15 +140,36 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 32px;justify-content:space-bet
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card .m img{transition:none}}
 '''
 
-def page(title, desc, body, extra_css=''):
+def page(title, desc, body, extra_css='', head=''):
     return ('<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            '<title>%s</title>\n<link rel="icon" href="../favicon.ico" sizes="any">\n<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">\n<link rel="apple-touch-icon" href="../apple-touch-icon.png">\n<meta name="description" content="%s">\n<style>%s%s</style>\n</head>\n<body>\n%s\n</body>\n</html>\n') % (
-        html.escape(title), html.escape(desc, quote=True), CSS, extra_css, body)
+            '<title>%s</title>\n<link rel="icon" href="../favicon.ico" sizes="any">\n<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">\n<link rel="apple-touch-icon" href="../apple-touch-icon.png">\n<meta name="description" content="%s">\n%s<style>%s%s</style>\n</head>\n<body>\n%s\n</body>\n</html>\n') % (
+        html.escape(title), html.escape(desc, quote=True), head, CSS, extra_css, body)
 
 NAV = ('<header class="nav"><a href="../index.html" aria-label="Vértice, inicio"><img src="../assets/img/logo-blanco.png" alt="Vértice"></a>'
        '<a class="back" href="index.html">← <span class="x">Todas las </span>notas</a>' + SOC + '<a class="btn btn-l" href="' + CAL + '" target="_blank" rel="noopener">Hablemos <i>→</i></a></header>')
 FOOT = ('<footer class="dk"><div class="wrap"><a href="../index.html" aria-label="Vértice, inicio"><img src="../assets/img/logo-blanco.png" alt="Vértice"></a>' + SOC + WA +
         '<p class="nx">Strategy that inspires. Creativity that performs.</p><p class="nx">© 2026 Vértice Content Marketing Studio</p></div></footer>')
+
+def seo(path, title, desc, image, typ='article', ld=None, noindex=False):
+    url = BASE + path
+    q = lambda t: html.escape(t, quote=True)
+    out = ['<link rel="canonical" href="%s">' % url]
+    if noindex: out.append('<meta name="robots" content="noindex, follow">')
+    out += ['<meta name="theme-color" content="#f10a09">',
+            '<meta property="og:type" content="%s">' % typ, '<meta property="og:site_name" content="%s">' % SITE_NAME, '<meta property="og:locale" content="es_AR">',
+            '<meta property="og:title" content="%s">' % q(title), '<meta property="og:description" content="%s">' % q(desc), '<meta property="og:url" content="%s">' % url,
+            '<meta property="og:image" content="%s/%s">' % (BASE, image),
+            '<meta name="twitter:card" content="summary_large_image">', '<meta name="twitter:title" content="%s">' % q(title), '<meta name="twitter:description" content="%s">' % q(desc), '<meta name="twitter:image" content="%s/%s">' % (BASE, image)]
+    if ld: out.append('<script type="application/ld+json">%s</script>' % json.dumps(ld, ensure_ascii=False))
+    return '\n'.join(out) + '\n'
+
+def note_head(n):
+    path = '/blog/%s.html' % n['slug']; img = OG_IMG[n['slug']]
+    ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': n['title'], 'description': n['desc'], 'datePublished': DATES[n['slug']], 'dateModified': DATES[n['slug']],
+          'url': BASE + path, 'mainEntityOfPage': BASE + path, 'image': '%s/%s' % (BASE, img), 'inLanguage': 'es-AR',
+          'author': {'@type': 'Person', 'name': 'Hernán Sampó', 'url': BASE + '/'},
+          'publisher': {'@type': 'Organization', 'name': SITE_NAME, 'url': BASE, 'logo': {'@type': 'ImageObject', 'url': BASE + '/logo-rojo.png'}}}
+    return seo(path, n['title'] + ' | Vértice', n['desc'], img, 'article', ld, noindex=bool(n.get('dato')))
 
 def card(n):
     if n.get('dato'):
@@ -183,7 +209,7 @@ def note_page(n):
     body = (NAV + '<main>' + hero(d['badge'], d['title']) + '<section class="paper"><div class="wrap">' + cover(n) + meta(d['meta']) +
             '<div class="col"><p class="lead">%s</p>%s</div>' % (d['lead'], ''.join(parts)) +
             cta_box(d['cta']['h3'], d['cta']['p'], 'Hablemos →') + related(n) + '</div></section></main>' + FOOT)
-    return page(n['title'] + ' | Vértice', n['desc'], body)
+    return page(n['title'] + ' | Vértice', n['desc'], body, head=note_head(n))
 
 def highlights_page(n):
     body = (NAV + '<main>' + hero('Lanzamiento · Contenido', 'Los highlights de Octubre para <br>Adlatina y Marketers', 'Lanzamos los highlights de Octubre para Adlatina y Marketers by Adlatina.') +
@@ -201,7 +227,7 @@ def highlights_page(n):
             '<section class="mod" aria-label="Episodio de Marketers en vertical"><div><span class="nx">Episodio vertical · 9:16</span><h2>Marketers by Adlatina, en vertical</h2><p>El mismo mes, contado para la pantalla del celular. Mirá el episodio de Marketers en formato vertical.</p></div>'
             '<video controls playsinline preload="metadata" poster="../assets/video/highlights-marketers.jpg" src="../assets/video/highlights-marketers.mp4" aria-label="Marketers by Adlatina, vertical"></video></section>' +
             cta_box('¿Querés un contenido así para tu marca?', 'Contanos qué querés mover y armamos el recorrido juntos.', 'Hablemos →') + related(n) + '</div></section></main>' + FOOT)
-    return page(n['title'] + ' | Vértice', n['desc'], body)
+    return page(n['title'] + ' | Vértice', n['desc'], body, head=note_head(n))
 
 def reel_page():
     body = (NAV.replace('<a class="back" href="index.html">← <span class="x">Todas las </span>notas</a>', '<a class="back" href="../index.html">← <span class="x">Volver al </span>sitio</a>') + '<main>' +
@@ -209,7 +235,8 @@ def reel_page():
             '<section class="paper"><div class="wrap"><figure class="single" style="margin-top:calc(-1 * clamp(56px,7vw,100px))"><video id="reel" controls playsinline preload="auto" poster="../assets/video/reel.jpg" src="../assets/video/reel.mp4" aria-label="Reel de Vértice"></video></figure>' +
             cta_box('¿Hablamos?', 'Contanos qué necesita tu marca y armamos el recorrido juntos.', 'Hablemos →') + '</div></section></main>' + FOOT +
             '<script>(function(){var v=document.getElementById("reel");if(!v)return;try{var p=v.play();if(p&&p.catch)p.catch(function(){})}catch(e){}})();</script>')
-    return page('VERTICE STUDIOS', 'Reel de Vértice Content Marketing Studio.', body)
+    d = 'Reel de Vértice Content Marketing Studio: estrategia, creatividad y contenido que funciona.'
+    return page('VERTICE STUDIOS', d, body, head=seo('/blog/reel.html', 'VERTICE STUDIOS', d, 'assets/video/reel.jpg', 'website'))
 
 def dato_page(n):
     body = (NAV + '<main>' + hero('Dato · [Fecha]', 'El dato que cambia <br>cómo planificamos') + '<section class="paper"><div class="wrap">' +
@@ -217,13 +244,15 @@ def dato_page(n):
             '<h2>[Qué dice el dato]</h2><p>[Texto editorial de la nota: de dónde sale la cifra, qué significa para las marcas y cómo cambia la forma de planificar. Dos o tres párrafos.]</p>'
             '<h2>[Qué hacer el lunes]</h2><p>[Una recomendación concreta y accionable.]</p><p class="src">Fuente: [Fuente de la cifra]</p></div>' +
             cta_box('¿Querés que tu estrategia de contenidos dé resultados medibles?', 'Contanos qué querés mover y armamos el recorrido juntos.', 'Hablemos →') + related(n) + '</div></section></main>' + FOOT)
-    return page(n['title'] + ' | Vértice', n['desc'], body)
+    return page(n['title'] + ' | Vértice', n['desc'], body, head=note_head(n))
 
 def index_page():
     body = (NAV.replace('<a class="back" href="index.html">← <span class="x">Todas las </span>notas</a>', '<a class="back" href="../index.html#vlog">← <span class="x">Volver al </span>sitio</a>') + '<main>' +
             hero('Noticias de Vértice', 'Vlog', 'Clientes nuevos, premios, festivales, research y datos. Un episodio por novedad, contado por el equipo, y la nota para leerla con calma.') +
             '<section class="paper"><div class="wrap"><div class="cards" style="margin-top:clamp(40px,5vw,64px)">%s</div></div></section></main>' % ''.join(card(n) for n in NOTES) + FOOT)
-    return page('Vlog | Vértice', 'Noticias de Vértice Content Marketing Studio.', body)
+    d = 'Noticias de Vértice Content Marketing Studio: clientes, premios, lanzamientos y datos de la industria.'
+    ld = {'@context': 'https://schema.org', '@type': 'Blog', 'name': 'Vlog de Vértice', 'url': BASE + '/blog/', 'inLanguage': 'es-AR', 'publisher': {'@type': 'Organization', 'name': SITE_NAME, 'url': BASE}}
+    return page('Vlog | Vértice', d, body, head=seo('/blog/', 'Vlog | Vértice', d, 'og-home.jpg', 'website', ld))
 
 def home_cards():
     def media_img(n, aspect_cls=''):
@@ -246,6 +275,9 @@ if __name__ == '__main__':
         open(os.path.join(HERE, n['href']), 'w').write(highlights_page(n) if n.get('video') else dato_page(n) if n.get('dato') else note_page(n))
     open(os.path.join(HERE, 'reel.html'), 'w').write(reel_page())
     open(os.path.join(HERE, 'index.html'), 'w').write(index_page())
+    urls = [('/', '2026-11-11'), ('/blog/', '2026-11-11'), ('/blog/reel.html', '2026-11-11')] + [('/blog/%s.html' % n['slug'], DATES[n['slug']]) for n in NOTES if not n.get('dato')]
+    open(os.path.join(ROOT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join('  <url><loc>%s%s</loc><lastmod>%s</lastmod></url>\n' % (BASE, u, d) for u, d in urls) + '</urlset>\n')
+    open(os.path.join(ROOT, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n' % BASE)
     p = os.path.join(ROOT, 'index.html'); s = open(p).read()
     s = re.sub(r'<!--VLOG-->.*?<!--/VLOG-->', lambda m: '<!--VLOG-->\n      ' + home_cards() + '\n      <!--/VLOG-->', s, flags=re.S)
     open(p, 'w').write(s)

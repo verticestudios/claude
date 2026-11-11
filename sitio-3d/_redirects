@@ -1,3 +1,9 @@
+/blog/equipo-estrategia    /blog/    301
+/blog/equipo-estrategia.html    /blog/    301
+/blog/el-album    /blog/    301
+/blog/el-album.html    /blog/    301
+/blog/emergencias-ihsa    /blog/    301
+/blog/emergencias-ihsa.html    /blog/    301
 # Misma configuración que netlify.toml: Netlify la lee también al subir la carpeta arrastrándola.
 /blog/:slug    /blog/:slug.html    200
 /noticias      /blog/              301

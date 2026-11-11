@@ -2,6 +2,37 @@
 [build]
   publish = "."
 
+# Notas de la web anterior que todavía no están en este sitio: van al listado hasta que se migren.
+[[redirects]]
+  from = "/blog/equipo-estrategia"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/equipo-estrategia.html"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/el-album"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/el-album.html"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/emergencias-ihsa"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/emergencias-ihsa.html"
+  to = "/blog/"
+  status = 301
+
 # Las notas del blog de la web anterior (verticestudios.com/blog/<nota>) siguen funcionando.
 # La nota se sirve desde su archivo .html sin cambiar la dirección que ve la persona.
 [[redirects]]
