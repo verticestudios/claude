@@ -55,3 +55,9 @@ npx serve sitio-3d
 ## Casos agregados: Mayumana 2025 y El Regreso de La Voz Argentina
 
 Salen de "Mayumana 2025.mp4" y "La Voz Argentina El Regreso TELEFE.mp4" (Drive). Los clips son los primeros 8 s de La Voz y los segundos 3 a 11 de Mayumana. Los textos son los que dio el cliente; validar el de La Voz.
+
+## Videos de los casos
+
+- Cada caso tiene un loop corto (`<caso>.mp4`, 6 a 8 s) para la pared 3D y el video completo (`<caso>-full.mp4`, 480p con audio) que abre "Ver caso".
+- La Voz: el video original es un episodio de 26 minutos; se publica un fragmento de los primeros 3 minutos. Para ver más, recodificar `lavoz.mp4` con un tramo más largo (pesa unos 3,7 MB por minuto).
+- Auren+: el loop es un collage vertical de tres tramos del video (producto, textura, rostro).
