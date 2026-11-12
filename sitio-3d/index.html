@@ -85,6 +85,7 @@ main,footer{position:relative;z-index:1}
 .soc circle[r=".6"]{fill:currentColor}
 .wa{min-height:40px;padding:0 18px;font-size:11px;gap:10px}.wa svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:860px){.nav{gap:14px}.nav ul{display:none}.nav .soc{margin-left:auto}}
+@media (max-width:380px){.nav .soc{display:none}.nav .btn{margin-left:auto}}
 
 /* hero */
 .hero{min-height:min(100svh,980px);display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding-block:120px 44px;color:var(--negro)}
@@ -715,6 +716,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   }
 
   /* pared curva de casos: la cámara queda del lado cóncavo */
+  var capHead = reel.querySelector('.head'), capBox = reel.querySelector('.cap');
   var R = 6.6, STEP = .68, PW = 4.2, PH = PW * 9 / 16, wall = new THREE.Group();
   scene.add(wall);
   WORKS.forEach(function (w, i) {
@@ -757,12 +759,20 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     /* pared de casos */
     var x = r * (N - 1), fx = x - Math.floor(x), sx = Math.floor(x) + smooth((fx - .18) / .64);
     setCurrent(clamp(Math.round(sx), 0, N - 1));
-    var dist = Math.max(8.2, PW / (2 * TAN * aspect * .9));
+    var dist = Math.max(8.2, PW / (2 * TAN * aspect * .9)), cyOff = .2;
+    if (narrow) {
+      /* en celular el panel se ajusta al hueco entre el título y el texto del caso */
+      var hb = capHead.getBoundingClientRect().bottom, ct = capBox.getBoundingClientRect().top;
+      var free = Math.max(ct - hb - 24, 120);
+      dist = Math.max(dist, PH * H / (2 * TAN * free * .95));
+      cyOff = (H / 2 - (hb + ct) / 2) / H * 2 * dist * TAN;
+    }
     wall.visible = reelOn;
-    wall.position.set(0, (1 - rIn) * -5 + rOut * 8 + (narrow ? .6 : .2), 10 - dist + R);
+    wall.position.set(0, (1 - rIn) * -5 + rOut * 8 + cyOff, 10 - dist + R);
     wall.rotation.y = sx * STEP + (1 - rIn) * -.5;
     WORKS.forEach(function (w, i) {
       var d = Math.abs(i - sx) * STEP;
+      w.p.mesh.visible = d < 1.8;
       w.p.mat.uniforms.uMix.value = 1 - smooth((d - .1) / (STEP * .75));
       w.p.mat.uniforms.uDim.value = lerp(1, .5, smooth(d / 1.5));
       setPlay(w.p, reelOn && !RM && !lb.open && d < 1.5);
