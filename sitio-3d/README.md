@@ -39,7 +39,7 @@ npx serve sitio-3d
 
 ## Netlify
 
-- `netlify.toml`, `_redirects` y `_headers` quedan dentro de la carpeta. Si se sube arrastrando la carpeta, Netlify aplica `_redirects` y `_headers`; si se conecta el repo (publish directory `sitio-3d`), aplica `netlify.toml`.
+- `netlify.toml` y `_redirects` quedan dentro de la carpeta. Si se sube arrastrando la carpeta, Netlify aplica `_redirects`; si se conecta el repo (publish directory `sitio-3d`), aplica `netlify.toml`.
 - Redirects: `/blog/<nota>` sirve `/blog/<nota>.html` (las notas de la web anterior siguen funcionando) y `/noticias` lleva a `/blog/`.
 - Favicon: `favicon.ico`, `favicon-32.png`, `favicon-192.png` y `apple-touch-icon.png` en la raíz, a partir del isotipo.
 - Casos: los clips tienen audio; el botón de sonido de la sección activa el del caso del centro y "Ver caso" lo abre con sonido.
@@ -60,4 +60,5 @@ Salen de "Mayumana 2025.mp4" y "La Voz Argentina El Regreso TELEFE.mp4" (Drive).
 
 - Cada caso tiene un loop corto (`<caso>.mp4`, 6 a 8 s) para la pared 3D y el video completo (`<caso>-full.mp4`, 480p con audio) que abre "Ver caso".
 - La Voz: el video original es un episodio de 26 minutos; se publica un fragmento de los primeros 3 minutos. Para ver más, recodificar `lavoz.mp4` con un tramo más largo (pesa unos 3,7 MB por minuto).
-- Auren+: el loop es un collage de tres columnas verticales con tres tramos del video (producto, textura, rostro) que cubre todo el panel.
+- Auren+ (`auren-collage*`): collage de tres columnas verticales con tres momentos distintos del video. El loop usa tres tramos (producto, textura, rostro) y "Ver caso" abre el video completo con las tres columnas desfasadas en el tiempo.
+- Caché: no se fuerza caché en `assets/`; si se reemplaza un archivo, conviene cambiarle el nombre.

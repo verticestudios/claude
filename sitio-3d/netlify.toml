@@ -50,9 +50,3 @@
   from = "/noticias/"
   to = "/blog/"
   status = 301
-
-# Videos, imágenes y fuentes: caché de un día.
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
