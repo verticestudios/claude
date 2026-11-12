@@ -60,4 +60,4 @@ Salen de "Mayumana 2025.mp4" y "La Voz Argentina El Regreso TELEFE.mp4" (Drive).
 
 - Cada caso tiene un loop corto (`<caso>.mp4`, 6 a 8 s) para la pared 3D y el video completo (`<caso>-full.mp4`, 480p con audio) que abre "Ver caso".
 - La Voz: el video original es un episodio de 26 minutos; se publica un fragmento de los primeros 3 minutos. Para ver más, recodificar `lavoz.mp4` con un tramo más largo (pesa unos 3,7 MB por minuto).
-- Auren+: el loop es un collage vertical de tres tramos del video (producto, textura, rostro).
+- Auren+: el loop es un collage de tres columnas verticales con tres tramos del video (producto, textura, rostro) que cubre todo el panel.
