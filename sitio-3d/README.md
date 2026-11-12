@@ -52,6 +52,6 @@ npx serve sitio-3d
 - Las notas anteriores que aún no se migraron (`equipo-estrategia`, `el-album`, `emergencias-ihsa`) redirigen a `/blog/` con 301; cuando se migren, quitar la regla en `netlify.toml` y `_redirects`.
 - La nota `dato` es un placeholder: tiene `noindex` y no está en el sitemap.
 
-## Pendiente: caso "El Regreso de La Voz Argentina"
+## Casos agregados: Mayumana 2025 y El Regreso de La Voz Argentina
 
-Hay que sumarlo a Casos (Telefe, branded content: una competencia paralela para digital que le daba a los participantes eliminados la chance de volver en las instancias finales). El video está en Drive como "La Voz Argentina El Regreso TELEFE.mp4", pero es privado: hay que compartirlo con "cualquier persona con el enlace" o ponerlo en la carpeta compartida para poder bajarlo.
+Salen de "Mayumana 2025.mp4" y "La Voz Argentina El Regreso TELEFE.mp4" (Drive). Los clips son los primeros 8 s de La Voz y los segundos 3 a 11 de Mayumana. Los textos son los que dio el cliente; validar el de La Voz.

@@ -139,7 +139,7 @@ main,footer{position:relative;z-index:1}
 @media (max-width:860px){.mani .grid{grid-template-columns:1fr}.duo{aspect-ratio:16/10}.facts{grid-template-columns:1fr}}
 
 /* casos */
-.reel{height:520vh;color:var(--blanco)}
+.reel{height:680vh;color:var(--blanco)}
 .reel .stick{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding-block:92px 28px;pointer-events:none}
 .reel .stick>*{pointer-events:auto}
 .reel .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap}
@@ -151,7 +151,7 @@ main,footer{position:relative;z-index:1}
 @media (max-width:980px){.reel .cap{grid-template-columns:minmax(0,1fr)}.cap .desc{font-size:14px;max-width:none}}
 .cap .now{display:flex;flex-direction:column;gap:6px;min-width:0}
 .cap .n{color:var(--lima);font-variant-numeric:tabular-nums}
-.cap h3{font-size:clamp(40px,5.2vw,84px);color:var(--blanco)}
+.cap h3{font-size:clamp(34px,4vw,64px);color:var(--blanco)}
 .cap .c{color:var(--gris-claro)}
 .cap .ctl{display:flex;gap:10px;align-items:center}
 .rnd{width:48px;height:48px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--blanco);display:grid;place-items:center;font-size:18px;transition:background .3s var(--ease),color .3s var(--ease)}
@@ -159,8 +159,8 @@ main,footer{position:relative;z-index:1}
 #snd svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #snd .on{display:none}#snd[aria-pressed="true"] .on{display:block}#snd[aria-pressed="true"] .off{display:none}
 #snd[aria-pressed="true"]{background:var(--lima);color:var(--negro);box-shadow:none}
-.works{display:flex;flex-wrap:wrap;gap:4px 22px;justify-content:flex-end;max-width:640px}
-.works button{font-family:var(--ext);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--gris-claro);padding:8px 0;border-bottom:1.5px solid transparent}
+.works{display:flex;flex-wrap:wrap;gap:0 18px;justify-content:flex-end;max-width:760px}
+.works button{font-family:var(--ext);text-transform:uppercase;letter-spacing:.12em;font-size:9.5px;color:var(--gris-claro);padding:6px 0;border-bottom:1.5px solid transparent}
 .works button[aria-current="true"]{color:var(--blanco);border-color:var(--rojo)}
 .works button:hover{color:var(--blanco)}
 .works img{display:none}
@@ -364,8 +364,10 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       <h2 class="tg">Casos</h2>
       <ol class="works" id="works">
         <li><button data-id="aftermovie" data-t="After Movie" data-d="El evento no termina cuando se apagan las luces. Este after movie condensa [nombre del evento] en un video con ritmo y emoción: el escenario, los protagonistas y la energía de la sala, listo para volver a compartirse en redes." data-c="Eventos"><img src="assets/video/aftermovie.jpg" alt="" loading="lazy">After Movie</button></li>
+        <li><button data-id="mayumana" data-t="Mayumana 2025" data-d="Hicimos toda la campaña de Mayumana 2025, el show musical, de destreza y percusión producido por Fenix Entertainment: social media, producción de todos los assets de campaña, cobertura de los shows en vivo y el key visual." data-c="Campaña · Fenix Entertainment"><img src="assets/video/mayumana.jpg" alt="" loading="lazy">Mayumana 2025</button></li>
         <li><button data-id="vecinos" data-t="Vecinos Felices" data-d="Una campaña de Prime contada como una serie de situaciones de consorcio: avisos en el ascensor, vecinos y notas pegadas en la puerta. Con humor y un tono cercano, convirtió un tema delicado en conversación, y la pieza cierra con un +9% en ventas." data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
         <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-d="Para Bake Off Famosos Argentina presentamos tres conceptos creativos a Telefe y el canal eligió uno: «Detrás de cada pastel, hay que estar al horno». Con esa idea armamos una campaña con 9 spots de TV, contenido digital y más." data-c="Campaña · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
+        <li><button data-id="lavoz" data-t="El Regreso de La Voz Argentina" data-d="Un caso de branded content para Telefe. El Regreso de La Voz Argentina fue una competencia paralela pensada para digital, que le daba a los participantes eliminados la chance de volver en las instancias finales." data-c="Branded content · Telefe"><img src="assets/video/lavoz.jpg" alt="" loading="lazy">El Regreso de La Voz Argentina</button></li>
         <li><button data-id="verduras" data-t="Save The Verduras" data-d="Cada año, miles de personas usan objetos del hogar para explorar su sexualidad, y eso puede terminar en un riesgo real para la salud. Para Prime, una campaña de concientización en «modo protesta»: humor, verduras como protagonistas y un mensaje claro, ¡hoy decimos basta!" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
         <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-d="Cuando Di María anunció su retiro de la Selección tras la Copa América 2024, Coca-Cola convirtió el momento en una acción de marca en el Obelisco. El caso reúne la pantalla en vivo y la conversación que generó: +3M de impactos orgánicos y +70k asistentes." data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
         <li><button data-id="auren" data-v="1" data-t="Auren+" data-d="Para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini, produjimos fotografía de producto, contenido lifestyle y piezas verticales para redes y e-commerce. Una gota de sérum dice más que un cuadro de ingredientes." data-c="Producto · Video vertical"><img src="assets/video/auren.jpg" alt="" loading="lazy">Auren+</button></li>
@@ -375,7 +377,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <button class="hit" id="hit" aria-label="Ver el caso del centro"></button>
     <div class="cap">
       <div class="now" aria-live="polite">
-        <span class="nx n" id="capN">01 / 07</span>
+        <span class="nx n" id="capN">01 / 09</span>
         <h3 class="tg" id="capT">After Movie</h3>
         <span class="nx c" id="capC">Eventos</span>
       </div>
