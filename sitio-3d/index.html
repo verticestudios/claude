@@ -111,7 +111,7 @@ main,footer{position:relative;z-index:1}
 @keyframes tape{to{transform:translateX(-50%)}}
 
 /* clientes */
-.clients{background:var(--papel);padding-top:clamp(40px,5vw,72px)}
+.clients{background:var(--papel);padding-block:clamp(40px,5vw,72px) clamp(56px,7vw,96px);border-top:1px solid var(--negro)}
 .clients .k{color:var(--rojo-texto);margin-bottom:26px}
 .marq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .track{display:flex;align-items:center;width:max-content;animation:tape 44s linear infinite;--u:1}
@@ -119,10 +119,9 @@ main,footer{position:relative;z-index:1}
 .track img{display:block;height:calc(var(--h) * var(--u));width:auto}
 .marq:hover .track{animation-play-state:paused}
 @media (max-width:640px){.track{--u:.72}}
-.clients + .mani{padding-top:clamp(48px,6vw,96px)}
 
 /* manifiesto */
-.mani{background:var(--papel);padding-block:clamp(72px,10vw,150px)}
+.mani{background:var(--papel);padding-block:clamp(72px,10vw,150px) clamp(56px,7vw,104px)}
 .mani .grid>*{min-width:0}
 .mani .grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(32px,5vw,80px);align-items:end}
 .mani .k{color:var(--rojo-texto);margin-bottom:22px}
@@ -331,11 +330,6 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
   <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
 </div></div>
 
-<section class="clients" aria-label="Marcas que crean con nosotros">
-  <div class="wrap"><p class="nx k">Marcas que crean con nosotros</p></div>
-  <div class="marq"><ul class="track"><li><img src="assets/img/clients/telefe.png" alt="Telefe" style="--h:60px" loading="lazy"></li><li><img src="assets/img/clients/fotlibre.png" alt="Fot Libre" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/ihsa.png" alt="Grupo IHSA" style="--h:54px" loading="lazy"></li><li><img src="assets/img/clients/osa.png" alt="OSA" style="--h:44px" loading="lazy"></li><li><img src="assets/img/clients/ferrini.png" alt="Laboratorios Ferrini" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/emergencias.png" alt="Emergencias" style="--h:50px" loading="lazy"></li><li><img src="assets/img/clients/fenix.png" alt="Fénix" style="--h:28px" loading="lazy"></li><li><img src="assets/img/clients/auren.png" alt="Auren+" style="--h:40px" loading="lazy"></li><li><img src="assets/img/clients/telefe.png" alt="" style="--h:60px" loading="lazy"></li><li><img src="assets/img/clients/fotlibre.png" alt="" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/ihsa.png" alt="" style="--h:54px" loading="lazy"></li><li><img src="assets/img/clients/osa.png" alt="" style="--h:44px" loading="lazy"></li><li><img src="assets/img/clients/ferrini.png" alt="" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/emergencias.png" alt="" style="--h:50px" loading="lazy"></li><li><img src="assets/img/clients/fenix.png" alt="" style="--h:28px" loading="lazy"></li><li><img src="assets/img/clients/auren.png" alt="" style="--h:40px" loading="lazy"></li></ul></div>
-</section>
-
 <section id="manifiesto" class="mani">
   <div class="wrap">
     <div class="grid">
@@ -359,6 +353,11 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span><span class="tm">End-to-end</span><p>Creadores de experiencias de marketing de punta a punta, especialmente en el ecosistema digital.</p></li>
     </ul>
   </div>
+</section>
+
+<section class="clients" aria-label="Marcas que crean con nosotros">
+  <div class="wrap"><p class="nx k">Marcas que crean con nosotros</p></div>
+  <div class="marq"><ul class="track"><li><img src="assets/img/clients/telefe.png" alt="Telefe" style="--h:60px" loading="lazy"></li><li><img src="assets/img/clients/fotlibre.png" alt="Fot Libre" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/ihsa.png" alt="Grupo IHSA" style="--h:54px" loading="lazy"></li><li><img src="assets/img/clients/osa.png" alt="OSA" style="--h:44px" loading="lazy"></li><li><img src="assets/img/clients/ferrini.png" alt="Laboratorios Ferrini" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/emergencias.png" alt="Emergencias" style="--h:50px" loading="lazy"></li><li><img src="assets/img/clients/fenix.png" alt="Fénix" style="--h:28px" loading="lazy"></li><li><img src="assets/img/clients/auren.png" alt="Auren+" style="--h:40px" loading="lazy"></li><li><img src="assets/img/clients/telefe.png" alt="" style="--h:60px" loading="lazy"></li><li><img src="assets/img/clients/fotlibre.png" alt="" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/ihsa.png" alt="" style="--h:54px" loading="lazy"></li><li><img src="assets/img/clients/osa.png" alt="" style="--h:44px" loading="lazy"></li><li><img src="assets/img/clients/ferrini.png" alt="" style="--h:62px" loading="lazy"></li><li><img src="assets/img/clients/emergencias.png" alt="" style="--h:50px" loading="lazy"></li><li><img src="assets/img/clients/fenix.png" alt="" style="--h:28px" loading="lazy"></li><li><img src="assets/img/clients/auren.png" alt="" style="--h:40px" loading="lazy"></li></ul></div>
 </section>
 
 <section id="casos" class="reel dk" aria-label="Casos">
