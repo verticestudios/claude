@@ -92,7 +92,9 @@ main,footer{position:relative;z-index:1}
 .hero .top{display:flex;flex-direction:column;gap:10px;max-width:620px}
 .hero h1{color:var(--blanco);font-size:clamp(50px,9vw,172px)}
 .hero h1 span{display:block;overflow:hidden;padding:.09em 0 .05em;margin:-.09em 0 -.05em}
-.hero h1 span+span{margin-top:-.09em}
+.hero h1 span+span{margin-top:-.14em}
+.hero h1 span:first-child{text-shadow:0 0 16px rgba(0,0,0,.45),0 0 4px rgba(0,0,0,.3)}
+.hero h1 span.done{overflow:visible}
 .hero h1 span:nth-child(2){color:var(--negro)}
 .hero h1 b{display:block;font-weight:inherit;animation:rise .9s var(--ease) both}
 .hero h1 span:nth-child(2) b{animation-delay:.12s}
@@ -148,11 +150,12 @@ main,footer{position:relative;z-index:1}
 .hit{justify-self:center;align-self:center;width:min(52vw,820px);height:100%;max-height:460px;min-height:0;border-radius:8px;cursor:pointer}
 .reel .cap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;align-items:end;gap:16px 40px}
 .cap .desc{color:var(--papel);font-size:15px;line-height:1.5;max-width:30em;opacity:.95}
+.cap .desc .cred{display:block;margin-top:10px;font-size:13px;line-height:1.45;color:var(--gris-claro)}
 .reel .cap h3,.reel .cap .desc,.reel .cap .nx{text-shadow:0 0 16px #000,0 0 5px #000}
 @media (max-width:980px){.reel .cap{grid-template-columns:minmax(0,1fr)}.cap .desc{font-size:14px;max-width:none}}
 .cap .now{display:flex;flex-direction:column;gap:6px;min-width:0}
 .cap .n{color:var(--lima);font-variant-numeric:tabular-nums}
-.cap h3{font-size:clamp(34px,4vw,64px);color:var(--blanco)}
+.cap h3{font-size:clamp(34px,4vw,64px);color:var(--blanco);line-height:.97}
 .cap .c{color:var(--gris-claro)}
 .cap .ctl{display:flex;gap:10px;align-items:center}
 .rnd{width:48px;height:48px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--blanco);display:grid;place-items:center;font-size:18px;transition:background .3s var(--ease),color .3s var(--ease)}
@@ -265,6 +268,35 @@ main,footer{position:relative;z-index:1}
 @media (max-width:900px){.nw-a,.nw-b,.nw-s{grid-column:1/-1}.nw-b .media{aspect-ratio:4/3}.nw-b .media img{object-position:50% 20%}}
 .vlog-all{margin-top:clamp(36px,5vw,64px)}
 
+
+/* popup de servicios */
+.svc li{position:relative}
+.svc h3 button{text-transform:inherit;letter-spacing:inherit;text-align:left;padding:0}
+.svc h3 button::after{content:"";position:absolute;inset:0}
+.svc li:focus-within{outline:2px solid var(--negro);outline-offset:-2px}
+.svc h3 button:focus-visible{outline:0}
+#svc{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;color:var(--blanco)}
+#svc[open]{display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) var(--gut-r) max(16px,env(safe-area-inset-bottom,0px)) var(--gut-l)}
+#svc::backdrop{background:rgba(0,0,0,.78)}
+.sd{position:relative;width:min(760px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--carbon);border-radius:16px;box-shadow:0 0 0 1.5px rgba(255,255,255,.14),0 40px 100px -20px rgba(0,0,0,.7);overflow:hidden}
+#svc[open] .sd{animation:sdin .4s var(--ease)}
+@keyframes sdin{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.sdb{overflow:auto;padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:20px}
+.sdx{position:absolute;top:14px;right:14px;z-index:2;background:var(--carbon)}
+.sdh{display:flex;align-items:center;gap:18px;padding-right:56px}
+.sdh .ic{width:64px;height:64px}
+.sdh .nx{color:var(--lima);font-size:11px;margin-bottom:12px}
+.sdh h3{font-size:clamp(40px,7vw,76px);color:var(--blanco);line-height:.98}
+.sd .lead{font-size:clamp(18px,2.2vw,22px);line-height:1.4;color:var(--papel)}
+.sd h4{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:400;color:var(--gris-claro);margin:6px 0 -6px}
+.sd ul.u{display:flex;flex-direction:column;gap:10px}
+.sd ul.u li{position:relative;padding-left:24px;font-size:16px;line-height:1.5;color:var(--papel)}
+.sd ul.u li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--rojo)}
+.sd .note{font-size:15px;line-height:1.5;color:var(--gris-claro)}
+.sd .how{border-top:1px solid rgba(255,255,255,.16);padding-top:18px;font-size:14px;color:var(--gris-claro)}
+.sdf{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+@media (prefers-reduced-motion:reduce){#svc[open] .sd{animation:none}}
+
 /* contacto */
 .cont{padding-block:clamp(88px,12vw,180px) 0;min-height:92svh;display:flex;flex-direction:column;justify-content:space-between;gap:64px}
 .cont h2{font-size:min(14vw,250px);color:var(--blanco);line-height:.86}
@@ -288,7 +320,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 .lbt{display:flex;flex-direction:column;gap:6px;min-width:0}.lbt .nx{color:var(--gris-claro);font-size:10px}
 .lb video{width:100%;height:100%;min-height:0;object-fit:contain;background:#000;border-radius:8px}
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tape div,.hero h1 b,.met.in .loop .ic svg,.node .ic::after{animation:none}.track{animation:none;flex-wrap:wrap;width:auto;gap:24px 40px;justify-content:center}.track li:nth-child(n+9){display:none}.track li{margin:0}.svc li,.svc .ic{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero h1 span{overflow:visible}.tape div,.hero h1 b,.met.in .loop .ic svg,.node .ic::after{animation:none}.track{animation:none;flex-wrap:wrap;width:auto;gap:24px 40px;justify-content:center}.track li:nth-child(n+9){display:none}.track li{margin:0}.svc li,.svc .ic{transition:none}}
 </style>
 <!--/HEAD-->
 </head>
@@ -326,8 +358,8 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 </section>
 
 <div class="tape" aria-hidden="true"><div>
-  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
-  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
+  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>UGC</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
+  <span>Estrategia</span><span>Creatividad</span><span>Producción</span><span>Social media</span><span>UGC</span><span>Live streaming</span><span>Podcast</span><span>Contenido IA</span><span>Datos</span>
 </div></div>
 
 <section id="manifiesto" class="mani">
@@ -365,21 +397,21 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <div class="head">
       <h2 class="tg">Casos</h2>
       <ol class="works" id="works">
-        <li><button data-id="mayumana" data-t="Mayumana 2025" data-d="Hicimos toda la campaña de Mayumana 2025, el show musical, de destreza y percusión producido por Fenix Entertainment: social media, producción de todos los assets de campaña, cobertura de los shows en vivo y el key visual." data-c="Campaña · Fenix Entertainment"><img src="assets/video/mayumana.jpg" alt="" loading="lazy">Mayumana 2025</button></li>
-        <li><button data-id="vecinos" data-t="Vecinos Felices" data-d="Una campaña de Prime contada como una serie de situaciones de consorcio: avisos en el ascensor, vecinos y notas pegadas en la puerta. Con humor y un tono cercano, convirtió un tema delicado en conversación, y la pieza cierra con un +9% en ventas." data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
-        <li><button data-id="bakeoff" data-t="Bake Off Famosos" data-d="Para Bake Off Famosos Argentina presentamos tres conceptos creativos a Telefe y el canal eligió uno: «Detrás de cada pastel, hay que estar al horno». Con esa idea armamos una campaña con 9 spots de TV, contenido digital y más." data-c="Campaña · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
-        <li><button data-id="lavoz" data-n="Fragmento: los primeros 3 minutos del episodio" data-t="El Regreso de La Voz Argentina" data-d="Un caso de branded content para Telefe. El Regreso de La Voz Argentina fue una competencia paralela pensada para digital, que le daba a los participantes eliminados la chance de volver en las instancias finales." data-c="Branded content · Telefe"><img src="assets/video/lavoz.jpg" alt="" loading="lazy">El Regreso de La Voz Argentina</button></li>
-        <li><button data-id="verduras" data-t="Save The Verduras" data-d="Cada año, miles de personas usan objetos del hogar para explorar su sexualidad, y eso puede terminar en un riesgo real para la salud. Para Prime, una campaña de concientización en «modo protesta»: humor, verduras como protagonistas y un mensaje claro, ¡hoy decimos basta!" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
-        <li><button data-id="dimaria" data-t="Di María × Coca-Cola" data-d="Cuando Di María anunció su retiro de la Selección tras la Copa América 2024, Coca-Cola convirtió el momento en una acción de marca en el Obelisco. El caso reúne la pantalla en vivo y la conversación que generó: +3M de impactos orgánicos y +70k asistentes." data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María × Coca-Cola</button></li>
-        <li><button data-id="auren-collage" data-t="Auren+" data-d="Para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini, produjimos fotografía de producto, contenido lifestyle y piezas verticales para redes y e-commerce. Una gota de sérum dice más que un cuadro de ingredientes." data-c="Producto · Video vertical"><img src="assets/video/auren-collage.jpg" alt="" loading="lazy">Auren+</button></li>
-        <li><button data-id="soyrada" data-t="Soy Rada Show" data-d="Soy Rada Show fue el primer streaming original de una señal de TV abierta, con un contenido agnóstico a la pantalla. Un show con música, invitados y el humor de Soy Rada, en 2017. Hernán Sampó participó en la creatividad y la producción de este contenido." data-c="Streaming · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
+        <li><button data-id="mayumana" data-b="Fenix" data-t="Mayumana" data-k="" data-d="Hicimos toda la campaña de Mayumana 2025, el show musical, de destreza y percusión producido por Fenix Entertainment: social media, producción de todos los assets de campaña, cobertura de los shows en vivo y el key visual." data-c="Campaña · Fenix Entertainment"><img src="assets/video/mayumana.jpg" alt="" loading="lazy">Mayumana</button></li>
+        <li><button data-id="vecinos" data-b="Prime" data-t="Vecinos Felices" data-k="Dirección general creativa: Hernán Sampó · Dupla de directores: Fito Domínguez y Juan Laverde" data-d="Una campaña de Prime contada como una serie de situaciones de consorcio: avisos en el ascensor, vecinos y notas pegadas en la puerta. Con humor y un tono cercano, convirtió un tema delicado en conversación, y la pieza cierra con un +9% en ventas." data-c="Campaña · Prime"><img src="assets/video/vecinos.jpg" alt="" loading="lazy">Vecinos Felices</button></li>
+        <li><button data-id="bakeoff" data-b="Telefe" data-t="Bake Off Famosos" data-k="Dirección general creativa: Bruno Macri · Dupla de directores: Fito Domínguez y Juan Laverde" data-d="Para Bake Off Famosos Argentina presentamos tres conceptos creativos a Telefe y el canal eligió uno: «Detrás de cada pastel, hay que estar al horno». Con esa idea armamos una campaña con 9 spots de TV, contenido digital y más." data-c="Campaña · Telefe"><img src="assets/video/bakeoff.jpg" alt="" loading="lazy">Bake Off Famosos</button></li>
+        <li><button data-id="lavoz" data-n="Fragmento: los primeros 3 minutos del episodio" data-b="" data-t="El Regreso de La Voz Argentina" data-k="" data-d="Un caso de branded content para Telefe. El Regreso de La Voz Argentina fue una competencia paralela pensada para digital, que le daba a los participantes eliminados la chance de volver en las instancias finales." data-c="Branded content · Telefe"><img src="assets/video/lavoz.jpg" alt="" loading="lazy">El Regreso de La Voz Argentina</button></li>
+        <li><button data-id="verduras" data-b="Prime" data-t="Save The Verduras" data-k="Dirección general creativa: Hernán Sampó · Dupla de directores: Fito Domínguez y Juan Laverde" data-d="Cada año, miles de personas usan objetos del hogar para explorar su sexualidad, y eso puede terminar en un riesgo real para la salud. Para Prime, una campaña de concientización en «modo protesta»: humor, verduras como protagonistas y un mensaje claro, ¡hoy decimos basta!" data-c="Campaña · Prime"><img src="assets/video/verduras.jpg" alt="" loading="lazy">Save The Verduras</button></li>
+        <li><button data-id="dimaria" data-b="Coca Cola" data-t="Di María" data-k="Dirección general creativa: Bruno Macri · Dupla de directores: Fito Domínguez y Juan Laverde" data-d="Cuando Di María anunció su retiro de la Selección tras la Copa América 2024, Coca-Cola convirtió el momento en una acción de marca en el Obelisco. El caso reúne la pantalla en vivo y la conversación que generó: +3M de impactos orgánicos y +70k asistentes." data-c="Caso"><img src="assets/video/dimaria.jpg" alt="" loading="lazy">Di María</button></li>
+        <li><button data-id="auren-collage" data-b="Lab. Ferrini" data-t="Auren+" data-k="" data-d="Para el lanzamiento de Auren+, la nueva línea de skincare de Laboratorios Ferrini, produjimos fotografía de producto, contenido lifestyle y piezas verticales para redes y e-commerce. Una gota de sérum dice más que un cuadro de ingredientes." data-c="Producto · Video vertical"><img src="assets/video/auren-collage.jpg" alt="" loading="lazy">Auren+</button></li>
+        <li><button data-id="soyrada" data-b="Telefe" data-t="Soy Rada Show" data-k="" data-d="Soy Rada Show fue el primer streaming original de una señal de TV abierta, con un contenido agnóstico a la pantalla. Un show con música, invitados y el humor de Soy Rada, en 2017. Hernán Sampó participó en la creatividad y la producción de este contenido." data-c="Streaming · Telefe"><img src="assets/video/soyrada.jpg" alt="" loading="lazy">Soy Rada Show</button></li>
       </ol>
     </div>
     <button class="hit" id="hit" aria-label="Ver el caso del centro"></button>
     <div class="cap">
       <div class="now" aria-live="polite">
         <span class="nx n" id="capN">01 / 08</span>
-        <h3 class="tg" id="capT">Mayumana 2025</h3>
+        <h3 class="tg" id="capT">Fenix<br>Mayumana</h3>
         <span class="nx c" id="capC">Campaña · Fenix Entertainment</span>
       </div>
       <p class="desc" id="capD">Hicimos toda la campaña de Mayumana 2025, el show musical, de destreza y percusión producido por Fenix Entertainment: social media, producción de todos los assets de campaña, cobertura de los shows en vivo y el key visual.</p>
@@ -401,18 +433,18 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
       <p>De estrategia a paid media, en un solo estudio.</p>
     </div>
     <ul class="svc">
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span><h3>Estrategia</h3><p>Dónde jugar y por qué: el plan antes de la pieza.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2v.5h5V16c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg></span><h3>Creatividad</h3><p>Ideas que responden primero a un porqué.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"></rect><path d="M16 11l5-3v8l-5-3z"></path></svg></span><h3>Producción</h3><p>Rodaje, edición y postproducción con equipo propio.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"></path><path d="M8 9.5h8M8 12.5h5"></path></svg></span><h3>Social media</h3><p>Calendario, community y contenido para cada red.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"></path></svg></span><h3>Live streaming</h3><p>Transmisiones en vivo resueltas de punta a punta.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"></path></svg></span><h3>Podcast</h3><p>Formato de audio y video con voz propia.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"></path><path d="M18.5 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg></span><h3>Contenido IA</h3><p>Producción asistida con criterio editorial.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V5M16 20v-8M21 20H3"></path></svg></span><h3>Datos</h3><p>Información convertida en decisiones accionables.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4M9 12h6M9 15.5h6M9 8.5h2"></path></svg></span><h3>Contenido</h3><p>Notas, newsletters y piezas de marca.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4z"></path><path d="M14.5 6v2M14.5 11v2M14.5 16v2"></path></svg></span><h3>Eventos</h3><p>Cobertura y activaciones que se vuelven contenido.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17"></path></svg></span><h3>Web</h3><p>Sitios y landings que sostienen la campaña.</p><span class="ar" aria-hidden="true">→</span></li>
-      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10v4h3l7 4V6l-7 4z"></path><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span><h3>Paid media</h3><p>Pauta con la misma estrategia que el contenido.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Estrategia</button></h3><p>Dónde jugar y por qué: el plan antes de la pieza.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2v.5h5V16c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Creatividad</button></h3><p>Ideas que responden primero a un porqué.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"></rect><path d="M16 11l5-3v8l-5-3z"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Producción</button></h3><p>Rodaje, edición y postproducción con equipo propio.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"></path><path d="M8 9.5h8M8 12.5h5"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Social media</button></h3><p>Calendario, community y contenido para cada red.</p><span class="ar" aria-hidden="true">→</span></li><li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"></rect><circle cx="12" cy="13.5" r="3.5"></circle><path d="M8.5 7l1.5-3h4l1.5 3"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">UGC</button></h3><p>Gestión de creadores con brief, criterio de marca y métricas.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Live streaming</button></h3><p>Transmisiones en vivo resueltas de punta a punta.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Podcast</button></h3><p>Formato de audio y video con voz propia.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"></path><path d="M18.5 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Contenido IA</button></h3><p>Producción asistida con criterio editorial.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V5M16 20v-8M21 20H3"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Datos</button></h3><p>Información convertida en decisiones accionables.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4M9 12h6M9 15.5h6M9 8.5h2"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Contenido</button></h3><p>Notas, newsletters y piezas de marca.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4z"></path><path d="M14.5 6v2M14.5 11v2M14.5 16v2"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Eventos</button></h3><p>Cobertura y activaciones que se vuelven contenido.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Web</button></h3><p>Sitios y landings que sostienen la campaña.</p><span class="ar" aria-hidden="true">→</span></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10v4h3l7 4V6l-7 4z"></path><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span><h3><button class="sv" type="button" aria-haspopup="dialog">Paid media</button></h3><p>Pauta con la misma estrategia que el contenido.</p><span class="ar" aria-hidden="true">→</span></li>
     </ul>
   </div>
 </section>
@@ -499,6 +531,21 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 </section>
 </main>
 
+<dialog id="svc" aria-labelledby="svcT">
+  <div class="sd">
+    <button class="rnd sdx" id="svcX" type="button" aria-label="Cerrar">✕</button>
+    <div class="sdb">
+      <div class="sdh"><span class="ic" aria-hidden="true"><svg id="svcI" viewBox="0 0 24 24"></svg></span><div><p class="nx" id="svcK"></p><h3 class="tg" id="svcT"></h3></div></div>
+      <p class="lead" id="svcL"></p>
+      <h4>Qué incluye</h4>
+      <ul class="u" id="svcU"></ul>
+      <p class="note" id="svcN" hidden></p>
+      <p class="how">Trabajamos con retainer mensual, por proyecto o junto a tu equipo.</p>
+      <div class="sdf"><a class="btn btn-l" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Hablemos <i>→</i></a><button class="btn btn-o" id="svcC" type="button">Cerrar</button></div>
+    </div>
+  </div>
+</dialog>
+
 <dialog id="lb" aria-labelledby="lbT">
   <div class="lb">
     <div class="bar"><div class="lbt"><h3 class="tg" id="lbT"></h3><span class="nx" id="lbN"></span></div><button class="rnd" id="lbX" aria-label="Cerrar">✕</button></div>
@@ -511,14 +558,16 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 (function () {
   'use strict';
   var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  [].forEach.call(document.querySelectorAll('.hero h1 b'), function (b) { b.addEventListener('animationend', function () { b.parentNode.classList.add('done'); }); });
   var $ = function (id) { return document.getElementById(id); };
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
   var smooth = function (t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
+  var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
   var reel = $('casos'), hero = $('inicio'), cont = $('contacto'), met = $('metodo');
   var btns = [].slice.call(document.querySelectorAll('#works button'));
-  var WORKS = btns.map(function (b) { return { id: b.dataset.id, v: !!b.dataset.v, t: b.dataset.t, c: b.dataset.c, d: b.dataset.d || '', n: b.dataset.n || '', btn: b }; });
+  var WORKS = btns.map(function (b) { return { id: b.dataset.id, v: !!b.dataset.v, b: b.dataset.b || '', t: b.dataset.t, c: b.dataset.c, d: b.dataset.d || '', k: b.dataset.k || '', n: b.dataset.n || '', btn: b }; });
   var N = WORKS.length, current = -1, glOn = false;
 
   /* ---------- visor ---------- */
@@ -529,7 +578,7 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
     var p = lbV.play(); if (p && p.catch) p.catch(function () {});
   }
-  function openWork(i) { var w = WORKS[i]; if (w) openVideo(w.t, 'assets/video/' + w.id + '-full.mp4', true, 'assets/video/' + w.id + '.jpg', w.n); }
+  function openWork(i) { var w = WORKS[i]; if (w) openVideo((w.b ? w.b + ' · ' : '') + w.t, 'assets/video/' + w.id + '-full.mp4', true, 'assets/video/' + w.id + '.jpg', w.n); }
   function closeLb() { if (lb.close) lb.close(); else lb.removeAttribute('open'); }
   lb.addEventListener('close', function () { lbV.pause(); lbV.removeAttribute('src'); lbV.load(); });
   lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
@@ -540,7 +589,8 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     if (i === current) return; current = i;
     var w = WORKS[i];
     $('capN').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
-    $('capT').textContent = w.t; $('capC').textContent = w.c; $('capD').textContent = w.d;
+    $('capT').innerHTML = (w.b ? esc(w.b) + '<br>' : '') + esc(w.t); $('capC').textContent = w.c;
+    $('capD').innerHTML = esc(w.d) + (w.k ? '<span class="cred">' + esc(w.k) + '</span>' : '');
     btns.forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
     applySound();
   }
@@ -577,6 +627,30 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     io.observe($('metodo'));
   }
 
+
+
+  /* ---------- servicios: ficha ampliada ---------- */
+  (function () {
+    var SVC = [{"t": "Estrategia", "l": "Diagnóstico de marca, territorios y hoja de ruta de contenido.", "u": ["Diagnóstico de la marca y su contexto, con datos y workshops de descubrimiento junto a tu equipo", "Territorio de marca: quién sos, para quién hablás y qué territorio podés ocupar vos solo", "El ángulo único desde el que tu marca ve el mundo, para que su contenido sea inconfundible", "Mapa de contenidos y hoja de ruta", "Brief colaborativo"], "n": "Es el punto de partida de nuestra metodología CoCreate™: HUB y LENS."}, {"t": "Creatividad", "l": "Conceptos y campañas con CoCreate™: ideas con un porqué.", "u": ["Conceptos creativos con design thinking", "Creatividad como consecuencia de la estrategia: la idea nace del territorio y del ángulo de la marca, no al revés", "Sistema de mensajes, tono y estilo para cada pieza", "Key visual y dirección creativa de campañas", "Manual de aplicación para redes, punto de venta y piezas impresas"], "n": "Es el SPARK de CoCreate™."}, {"t": "Producción", "l": "Video, foto, diseño y motion con nivel de agencia y trato 1 a 1.", "u": ["Rodaje, edición y postproducción con equipo propio", "Fotografía de producto y contenido lifestyle", "Video en formato nativo para cada red y para e-commerce", "Diseño y motion", "Todos los assets de la campaña, de un mismo equipo"], "n": ""}, {"t": "Social media", "l": "Calendario, community y contenido para cada red.", "u": ["Estrategia de contenidos por red y calendario editorial", "Producción de piezas nativas para cada formato", "Gestión de redes y comunidad", "Cobertura en vivo de eventos y shows", "Reportes de métricas y recomendaciones de mejora"], "n": ""}, {"t": "UGC", "l": "Gestión de creadores con brief, criterio de marca y métricas.", "u": ["Búsqueda y selección de creadores afines a la marca", "Brief claro, con criterio de marca", "Seguimiento de entregas y aprobación de piezas", "Medición por creador y por pieza"], "n": ""}, {"t": "Live streaming", "l": "Transmisiones en vivo con calidad broadcast y criterio de estudio boutique.", "u": ["Producción técnica: switcher, captura multicámara, encoding y distribución en plataformas", "Dirección de contenidos: guion, flujo del evento y manejo de imprevistos", "Moderación y comunidad en tiempo real", "Amplificación: contenido antes y después del vivo", "Reportes: audiencia, picos de atención y oportunidades de mejora"], "n": "Para lanzamientos de producto, presentaciones, training corporativo, conferencias de prensa, eventos de comunidad y activaciones."}, {"t": "Podcast", "l": "Formato de audio y video con voz propia.", "u": ["Concepto, formato y línea editorial del programa", "Guion o escaleta y producción de la grabación, en audio y video", "Edición, cortes para redes y publicación en plataformas", "Seguimiento de audiencia y mejoras por episodio"], "n": ""}, {"t": "Contenido IA", "l": "La identidad de cada marca, convertida en un sistema que produce.", "u": ["CEREBRO: el ADN de la marca en un sistema, con identidad y boards, catálogo, mensajes y voz, fuentes y research", "Piezas con la voz de la marca", "Revisión y ajustes", "Calendario y programación"], "n": "Cada pieza parte del ADN de la marca, no de cero: producción a escala, con consistencia y un costo por pieza más bajo. Podemos hacerte una demo en vivo."}, {"t": "Datos", "l": "Información convertida en decisiones accionables.", "u": ["Diagnóstico digital y de marca", "Tableros y lectura de resultados", "Métricas de negocio, no de vanidad: lo que se mide, se puede mejorar", "Learning y optimización continuos"], "n": "Es el AON de CoCreate™: Always On."}, {"t": "Contenido", "l": "Notas, newsletters y piezas de marca.", "u": ["Línea editorial y calendario", "Notas y artículos para el sitio y los medios", "Newsletters", "Piezas de marca: gráficas, carruseles e infografías"], "n": ""}, {"t": "Eventos", "l": "Cobertura y activaciones que se vuelven contenido.", "u": ["Cobertura audiovisual de eventos y shows en vivo", "Contenido en tiempo real para redes durante el evento", "Resúmenes en video y piezas posteriores", "Activaciones pensadas para generar contenido", "Streaming del evento, si lo necesita"], "n": ""}, {"t": "Web", "l": "Sitios, landings y e-commerce pensados desde el contenido.", "u": ["Arquitectura y diseño a partir de la estrategia de contenidos", "Landings de campaña", "E-commerce", "Desarrollo y puesta en línea", "Medición y mejoras posteriores"], "n": ""}, {"t": "Paid media", "l": "Pauta con la misma estrategia que el contenido.", "u": ["Plan de medios y segmentación", "Piezas producidas pensando en la pauta", "Gestión y optimización de campañas", "Reportes de resultados"], "n": ""}];
+    var sd = $('svc'), rows = [].slice.call(document.querySelectorAll('.svc li'));
+    if (!sd || !rows.length) return;
+    function openSvc(i) {
+      var d = SVC[i]; if (!d) return;
+      $('svcK').textContent = 'Servicio ' + String(i + 1).padStart(2, '0');
+      $('svcT').textContent = d.t; $('svcL').textContent = d.l;
+      $('svcU').innerHTML = d.u.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+      var n = $('svcN'); n.textContent = d.n; n.hidden = !d.n;
+      $('svcI').innerHTML = rows[i].querySelector('.ic svg').innerHTML;
+      document.body.style.overflow = 'hidden';
+      if (sd.showModal) sd.showModal(); else sd.setAttribute('open', '');
+      sd.querySelector('.sdb').scrollTop = 0;
+    }
+    function closeSvc() { if (sd.close) sd.close(); else sd.removeAttribute('open'); }
+    rows.forEach(function (li, i) { li.querySelector('.sv').addEventListener('click', function () { openSvc(i); }); });
+    sd.addEventListener('close', function () { document.body.style.overflow = ''; });
+    sd.addEventListener('click', function (e) { if (e.target === sd) closeSvc(); });
+    $('svcX').addEventListener('click', closeSvc); $('svcC').addEventListener('click', closeSvc);
+  })();
 
   /* ---------- CoCreate: ascenso paso a paso ---------- */
   (function () {

@@ -62,3 +62,15 @@ Salen de "Mayumana 2025.mp4" y "La Voz Argentina El Regreso TELEFE.mp4" (Drive).
 - La Voz: el video original es un episodio de 26 minutos; se publica un fragmento de los primeros 3 minutos. Para ver más, recodificar `lavoz.mp4` con un tramo más largo (pesa unos 3,7 MB por minuto).
 - Auren+ (`auren-collage*`): collage de tres columnas verticales con tres momentos distintos del video. El loop usa tres tramos (producto, textura, rostro) y "Ver caso" abre el video completo con las tres columnas desfasadas en el tiempo.
 - Caché: no se fuerza caché en `assets/`; si se reemplaza un archivo, conviene cambiarle el nombre.
+
+## Servicios: fichas ampliadas
+
+Al hacer clic en un servicio se abre una ficha (con cierre por ✕, botón Cerrar, Esc o clic afuera). El contenido vive en el arreglo `SVC` de `index.html`.
+
+- Salen de la presentación de servicios y de las notas del blog: Estrategia, Creatividad, Producción, Live streaming, Contenido IA (CEREBRO), Datos y los textos de Web y UGC.
+- Propuestos por IA, para validar: viñetas de Social media, UGC, Podcast, Contenido, Eventos, Web y Paid media.
+- Se sumó UGC como servicio porque figura en la presentación y no estaba en la web.
+
+## Casos: créditos
+
+Cada caso tiene `data-k` con los créditos (dirección general creativa y dupla de directores) y `data-b` con la marca que va en la primera línea del título.
