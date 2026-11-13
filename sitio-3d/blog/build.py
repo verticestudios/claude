@@ -254,6 +254,93 @@ def index_page():
     ld = {'@context': 'https://schema.org', '@type': 'Blog', 'name': 'Vlog de Vértice', 'url': BASE + '/blog/', 'inLanguage': 'es-AR', 'publisher': {'@type': 'Organization', 'name': SITE_NAME, 'url': BASE}}
     return page('Vlog | Vértice', d, body, head=seo('/blog/', 'Vlog | Vértice', d, 'og-home.jpg', 'website', ld))
 
+# ---------- Descargas ----------
+# Para sumar una presentación: copiar el PDF a descargas/files/, la portada a assets/descargas/ y agregar un item acá.
+DOWNLOADS = [
+    {'id': 'servicios', 'title': 'Presentación de servicios', 'tag': 'Presentación · 2026', 'file': 'descargas/files/vertice-presentacion-de-servicios-2026.pdf',
+     'cover': 'assets/descargas/servicios-portada.jpg', 'info': 'PDF · 9 páginas · 2,2 MB',
+     'desc': 'Qué hacemos y cómo trabajamos: estrategia, creatividad, producción, live streaming, contenido con IA y datos, en una sola presentación.'},
+]
+DL_CSS = r'''
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:clamp(20px,2.6vw,40px);margin-top:calc(-1 * clamp(56px,7vw,100px))}
+.dl{background:var(--blanco);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px -40px rgba(0,0,0,.45)}
+.dl .m{aspect-ratio:16/9;background:var(--negro)}.dl .m img{display:block;width:100%;height:100%;object-fit:cover}
+.dl .b{display:flex;flex-direction:column;gap:12px;padding:clamp(20px,2.2vw,30px);flex:1}
+.dl .k{color:var(--rojo-texto);font-size:10px}
+.dl h2{font-family:var(--display);font-weight:600;text-transform:uppercase;line-height:.96;font-size:clamp(34px,3.4vw,48px);text-wrap:balance}
+.dl p{color:var(--gris-texto);font-size:16px;line-height:1.5}
+.dl .f{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-top:auto;padding-top:10px}.dl .f span{font-size:10px;color:var(--gris-texto)}
+.soon{margin-top:clamp(28px,3vw,44px);font-size:15px;color:var(--gris-texto)}
+dialog.fm{border:0;padding:0;border-radius:12px;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);background:var(--papel);color:#111;overflow:auto;margin:auto}
+dialog.fm::backdrop{background:rgba(0,0,0,.72)}
+.fm .in{padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;gap:16px;position:relative}
+.fm .x{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:999px;border:0;background:var(--negro);color:var(--blanco);font-size:18px;cursor:pointer}.fm .x:hover{background:var(--rojo)}
+.fm h2{font-family:var(--display);font-weight:600;text-transform:uppercase;color:var(--rojo-texto);font-size:clamp(34px,5vw,48px);line-height:.96;padding-right:44px}
+.fm .lede{font-size:16px;line-height:1.5;color:var(--gris-texto)}
+.fm label{display:flex;flex-direction:column;gap:6px;font-family:var(--ext);text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.fm input[type=text],.fm input[type=email]{font:inherit;font-family:var(--body);text-transform:none;letter-spacing:0;font-size:16px;min-height:48px;padding:0 14px;border:1.5px solid var(--negro);border-radius:8px;background:var(--blanco);color:#111}
+.fm input:focus-visible{outline:2px solid var(--rojo);outline-offset:1px}
+.fm .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media (max-width:520px){.fm .row{grid-template-columns:1fr}}
+.fm .ck{flex-direction:row;align-items:flex-start;gap:10px;text-transform:none;letter-spacing:0;font-family:var(--body);font-size:13px;line-height:1.4;color:var(--gris-texto)}
+.fm .ck input{margin-top:2px;width:18px;height:18px;accent-color:var(--rojo);flex:none}
+.fm .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.fm button.btn{border:0;cursor:pointer;font-size:12px;align-self:flex-start}.fm button.btn[disabled]{opacity:.6;cursor:wait}
+.fm .err{color:var(--rojo-texto);font-size:14px;line-height:1.4}.fm .err a{font-weight:700}
+.fm .ok{display:none;flex-direction:column;gap:16px}.fm.done .ok{display:flex}.fm.done form,.fm.done .lede,.fm.done .ttl{display:none}
+.fm .ok p{font-size:16px;line-height:1.5}.fm .ok a.btn{align-self:flex-start}
+'''
+
+def dl_form(d):
+    return ('<dialog class="fm" id="fm" aria-labelledby="fm-t"><div class="in"><button class="x" type="button" aria-label="Cerrar" data-close>✕</button>'
+            '<p class="nx" style="color:var(--rojo-texto);font-size:10px">Descarga gratuita</p><h2 id="fm-t" class="ttl">Dejanos tus datos y descargá</h2>'
+            '<p class="lede">Completá el formulario y la descarga empieza sola. Así sabemos a quién le sirve y podemos mandarte lo que viene.</p>'
+            '<form name="descargas" method="POST" action="/descargas/gracias.html" data-netlify="true" netlify-honeypot="bot-field">'
+            '<input type="hidden" name="form-name" value="descargas"><input type="hidden" name="archivo" id="fm-a" value="">'
+            '<p class="hp"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>'
+            '<div class="row"><label>Nombre y apellido<input type="text" name="nombre" required autocomplete="name"></label>'
+            '<label>Email de trabajo<input type="email" name="email" required autocomplete="email"></label></div>'
+            '<div class="row" style="margin-top:14px"><label>Empresa<input type="text" name="empresa" required autocomplete="organization"></label>'
+            '<label>Cargo<input type="text" name="cargo" autocomplete="organization-title"></label></div>'
+            '<label class="ck" style="margin-top:14px"><input type="checkbox" name="consentimiento" value="si" required><span>Acepto que Vértice use estos datos para enviarme el material y contactarme. Puedo pedir la baja cuando quiera.</span></label>'
+            '<p class="err" id="fm-e" role="alert" hidden></p>'
+            '<button class="btn btn-k" type="submit" style="margin-top:14px"><span>Descargar</span> <i>↓</i></button></form>'
+            '<div class="ok" role="status"><h2>¡Listo! Ya es tuyo</h2><p>La descarga empezó. Si no arrancó, usá este botón.</p>'
+            '<a class="btn btn-k" id="fm-l" href="#" download>Descargar de nuevo <i>↓</i></a>'
+            '<p>¿Querés ver cómo lo aplicamos a tu marca? <a href="%s" target="_blank" rel="noopener">Agendá una charla</a>.</p></div></div></dialog>') % CAL
+
+DL_JS = r'''(function(){
+var dlg=document.getElementById("fm"),f=dlg.querySelector("form"),err=document.getElementById("fm-e"),btn=f.querySelector("button[type=submit]"),cur=null;
+function open(b){cur={t:b.dataset.title,f:b.dataset.file};document.getElementById("fm-a").value=cur.t;dlg.classList.remove("done");err.hidden=true;btn.disabled=false;document.getElementById("fm-t").textContent="Dejanos tus datos y descargá";
+ if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","")}
+document.querySelectorAll("[data-dl]").forEach(function(b){b.addEventListener("click",function(){open(b)})});
+dlg.querySelectorAll("[data-close]").forEach(function(b){b.addEventListener("click",function(){dlg.close()})});
+dlg.addEventListener("click",function(e){if(e.target===dlg)dlg.close()});
+function go(){var a=document.getElementById("fm-l");a.href=cur.f;a.setAttribute("download",cur.f.split("/").pop());dlg.classList.add("done");a.click()}
+f.addEventListener("submit",function(e){e.preventDefault();if(!cur)return;err.hidden=true;btn.disabled=true;
+ var body=new URLSearchParams(new FormData(f)).toString();
+ fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body}).then(function(r){if(!r.ok)throw new Error(r.status);go()}).catch(function(){
+  btn.disabled=false;err.hidden=false;err.innerHTML="No pudimos enviar el formulario. Probá de nuevo o escribinos por <a href=\"%s\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>."})});
+})();''' % WA_URL
+
+def dl_card(d):
+    return ('<article class="dl"><div class="m"><img src="../%s" alt="Portada: %s" loading="lazy"></div><div class="b"><span class="nx k">%s</span><h2>%s</h2><p>%s</p>'
+            '<div class="f"><button class="btn btn-k" type="button" data-dl data-title="%s" data-file="../%s">Descargar <i>↓</i></button><span class="nx">%s</span></div></div></article>') % (
+        d['cover'], html.escape(d['title'], quote=True), html.escape(d['tag']), html.escape(d['title']), html.escape(d['desc']), html.escape(d['title'], quote=True), d['file'], html.escape(d['info']))
+
+def descargas_page():
+    body = (NAV.replace('<a class="back" href="index.html">← <span class="x">Todas las </span>notas</a>', '<a class="back" href="../index.html">← <span class="x">Volver al </span>sitio</a>') + '<main>' +
+            hero('Material de Vértice', 'Descargas', 'Presentaciones y guías para llevarte. Dejás tus datos y la descarga empieza sola.') +
+            '<section class="paper"><div class="wrap"><div class="dl-grid">%s</div><p class="soon">Vamos sumando material nuevo. Escribinos si buscás algo en particular.</p></div></section></main>' % ''.join(dl_card(d) for d in DOWNLOADS) +
+            ''.join([dl_form(DOWNLOADS[0])]) + FOOT + '<script>' + DL_JS + '</script>')
+    d = 'Descargá las presentaciones de Vértice Content Marketing Studio: servicios, casos y material para marcas y agencias.'
+    return page('Descargas | Vértice', d, body, extra_css=DL_CSS, head=seo('/descargas/', 'Descargas | Vértice', d, DOWNLOADS[0]['cover'], 'website'))
+
+def gracias_page():
+    body = (NAV.replace('<a class="back" href="index.html">← <span class="x">Todas las </span>notas</a>', '<a class="back" href="../index.html">← <span class="x">Volver al </span>sitio</a>') + '<main>' +
+            hero('Gracias', 'Recibimos tus datos', 'Si la descarga no empezó, volvé a Descargas y probá de nuevo.') +
+            '<section class="paper"><div class="wrap"><p style="margin-top:32px"><a class="btn btn-k" href="index.html">Ir a Descargas <i>→</i></a></p></div></section></main>' + FOOT)
+    return page('Gracias | Vértice', 'Gracias por tu interés en Vértice.', body, head=seo('/descargas/gracias.html', 'Gracias | Vértice', 'Gracias', 'og-home.jpg', 'website', noindex=True))
+
 def home_cards():
     def media_img(n, aspect_cls=''):
         return '<img src="%s" alt="%s" loading="lazy"%s>' % (img_url(n), html.escape(n['cover_alt']), ' style="object-position:50% 35%"' if n['slug'].startswith('ferrini') else '')
@@ -275,9 +362,12 @@ if __name__ == '__main__':
         open(os.path.join(HERE, n['href']), 'w').write(highlights_page(n) if n.get('video') else dato_page(n) if n.get('dato') else note_page(n))
     open(os.path.join(HERE, 'reel.html'), 'w').write(reel_page())
     open(os.path.join(HERE, 'index.html'), 'w').write(index_page())
-    urls = [('/', '2026-11-11'), ('/blog/', '2026-11-11'), ('/blog/reel.html', '2026-11-11')] + [('/blog/%s.html' % n['slug'], DATES[n['slug']]) for n in NOTES if not n.get('dato')]
+    os.makedirs(os.path.join(ROOT, 'descargas'), exist_ok=True)
+    open(os.path.join(ROOT, 'descargas', 'index.html'), 'w').write(descargas_page())
+    open(os.path.join(ROOT, 'descargas', 'gracias.html'), 'w').write(gracias_page())
+    urls = [('/', '2026-11-11'), ('/blog/', '2026-11-11'), ('/blog/reel.html', '2026-11-11'), ('/descargas/', '2026-11-13')] + [('/blog/%s.html' % n['slug'], DATES[n['slug']]) for n in NOTES if not n.get('dato')]
     open(os.path.join(ROOT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join('  <url><loc>%s%s</loc><lastmod>%s</lastmod></url>\n' % (BASE, u, d) for u, d in urls) + '</urlset>\n')
-    open(os.path.join(ROOT, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n' % BASE)
+    open(os.path.join(ROOT, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\nDisallow: /descargas/files/\nDisallow: /descargas/gracias.html\n\nSitemap: %s/sitemap.xml\n' % BASE)
     p = os.path.join(ROOT, 'index.html'); s = open(p).read()
     s = re.sub(r'<!--VLOG-->.*?<!--/VLOG-->', lambda m: '<!--VLOG-->\n      ' + home_cards() + '\n      <!--/VLOG-->', s, flags=re.S)
     open(p, 'w').write(s)

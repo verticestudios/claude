@@ -84,8 +84,14 @@ main,footer{position:relative;z-index:1}
 .soc svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .soc circle[r=".6"]{fill:currentColor}
 .wa{min-height:40px;padding:0 18px;font-size:11px;gap:10px}.wa svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:860px){.nav{gap:14px}.nav ul{display:none}.nav .soc{margin-left:auto}}
-@media (max-width:380px){.nav .soc{display:none}.nav .btn{margin-left:auto}}
+.burger{display:none;width:40px;height:40px;border-radius:999px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35);cursor:pointer;position:relative;flex:none}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:transform .3s var(--ease),top .3s var(--ease)}.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:23px}
+.burger[aria-expanded=true] span:nth-child(1){top:19px;transform:rotate(45deg)}.burger[aria-expanded=true] span:nth-child(2){top:19px;transform:rotate(-45deg)}
+.mm{position:absolute;left:0;right:0;top:calc(100% + 8px);background:var(--negro);border-radius:24px;box-shadow:0 0 0 1px rgba(255,255,255,.14);padding:10px 22px;display:flex;flex-direction:column}
+.mm[hidden]{display:none}.mm a{font-family:var(--ext);text-transform:uppercase;letter-spacing:.16em;font-size:13px;text-decoration:none;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.14)}.mm a:last-child{border:0}.mm a:hover{color:var(--lima)}
+@media (min-width:861px){.mm{display:none!important}}
+@media (max-width:860px){.nav{gap:14px}.nav ul{display:none}.nav .soc{margin-left:auto}.burger{display:block}}
+@media (max-width:560px){.nav .soc{display:none}.nav .btn{margin-left:auto}.nav{padding-right:8px}}
 
 /* hero */
 .hero{min-height:min(100svh,980px);display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding-block:120px 44px;color:var(--negro)}
@@ -336,9 +342,14 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#metodo">Método</a></li>
     <li><a href="#vlog">Vlog</a></li>
+    <li><a href="descargas/index.html">Descargas</a></li>
   </ul>
   <span class="soc"><a href="https://www.instagram.com/vertice.estudios/" target="_blank" rel="noopener" aria-label="Instagram de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r=".6"></circle></svg></a><a href="https://www.linkedin.com/company/vertice-content-marketing/" target="_blank" rel="noopener" aria-label="LinkedIn de Vértice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10.5V16M8 7.8v.01M12 16v-5.5M12 13a2.6 2.6 0 0 1 5.2 0V16"></path></svg></a></span>
   <a class="btn btn-l" href="https://calendar.app.google/fQACh8Sen125STmX6" target="_blank" rel="noopener">Hablemos <i>→</i></a>
+  <button class="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mm"><span></span><span></span></button>
+  <nav id="mm" class="mm" aria-label="Menú" hidden>
+    <a href="#manifiesto">Estudio</a><a href="#casos">Casos</a><a href="#servicios">Servicios</a><a href="#metodo">Método</a><a href="#vlog">Vlog</a><a href="descargas/index.html">Descargas</a>
+  </nav>
 </header>
 
 <main>
@@ -861,5 +872,8 @@ dialog::backdrop{background:rgba(0,0,0,.92)}
 })();
 </script>
 <!--/BODY-->
+<script>(function(){var b=document.querySelector(".burger"),m=document.getElementById("mm");if(!b||!m)return;function c(){m.hidden=true;b.setAttribute("aria-expanded","false");b.setAttribute("aria-label","Abrir menú")}
+b.addEventListener("click",function(){var o=m.hidden;m.hidden=!o;b.setAttribute("aria-expanded",o?"true":"false");b.setAttribute("aria-label",o?"Cerrar menú":"Abrir menú")});
+m.addEventListener("click",function(e){if(e.target.tagName==="A")c()});document.addEventListener("keydown",function(e){if(e.key==="Escape")c()});})();</script>
 </body>
 </html>

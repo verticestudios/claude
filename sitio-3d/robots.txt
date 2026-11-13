@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /descargas/files/
+Disallow: /descargas/gracias.html
 
 Sitemap: https://verticestudios.com/sitemap.xml

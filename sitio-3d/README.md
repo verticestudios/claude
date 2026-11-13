@@ -74,3 +74,12 @@ Al hacer clic en un servicio se abre una ficha (con cierre por ✕, botón Cerra
 ## Casos: créditos
 
 Cada caso tiene `data-k` con los créditos (dirección general creativa y dupla de directores) y `data-b` con la marca que va en la primera línea del título.
+
+## Descargas
+
+- Menú superior (y menú mobile con ☰): "Descargas" lleva a `descargas/index.html`. No está en las secciones de la home ni en el footer.
+- Cada presentación es un item de `DOWNLOADS` en `blog/build.py`. Para sumar una: copiar el PDF a `descargas/files/`, la portada a `assets/descargas/`, agregar el item y correr `python3 blog/build.py`.
+- Al apretar "Descargar" se abre el formulario (nombre, email, empresa, cargo, consentimiento). Se envía por Netlify Forms (formulario `descargas`) y, si salió bien, la descarga empieza sola; queda un botón por si el navegador la bloquea. Si falla el envío, no se descarga y se ofrece WhatsApp.
+- Netlify: tras publicar, en Forms → `descargas` → Settings & notifications, activar el aviso por email. Los contactos quedan en Forms → Submissions (exportables a CSV).
+- Importante: es una "puerta blanda". El PDF es un archivo público (`/descargas/files/…`): está fuera del sitemap y con Disallow en robots.txt, pero quien tenga la URL puede bajarlo sin formulario. Para protegerlo de verdad haría falta una Netlify Function que entregue un link firmado.
+- `descargas/gracias.html` es noindex (fallback si el navegador envía el formulario sin JS).
